@@ -11,6 +11,13 @@
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@material-tailwind/react": "^2.1.10",
+    "@mui/icons-material": "^7.0.0-alpha.2",
+    "@mui/material": "^7.0.0-alpha.2",
+    "@mui/material-nextjs": "^6.4.3",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -18,7 +25,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/react": "^19.0.10",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",

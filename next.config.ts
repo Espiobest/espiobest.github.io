@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig: NextConfig = {
   /**
    * Enable static exports.
@@ -13,7 +15,7 @@ const nextConfig: NextConfig = {
    *
    * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
    */
-  basePath: "/espiobest.github.io",
+  basePath: isProd ? "/espiobest.github.io" : "",
 
   /**
    * Disable server-based image optimization. Next.js does not support
