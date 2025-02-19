@@ -17,7 +17,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 @keyframes fadeIn {
@@ -30,3 +30,26 @@ body {
     transform: translateY(0);
   }
 }
+
+.nav-link:hover {
+  color: #0070f3;
+}
+
+.profile-img {
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+  padding-bottom: 1rem;
+}
+
+.profile-img:hover {
+  transform: scale(1.1);
+}
+
+.section-link {
+  padding: 0.5rem;
+  text-underline-offset: 0.4rem;
+}
+.section-link:hover {
+  color: #0070f3;
+};
