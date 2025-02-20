@@ -103,7 +103,7 @@ body {
 .project-card {
   max-width: 300px;
   max-height: 500px;
-  background: transparent;
+  background-color: rgb(28 28 34);
   box-shadow: none;
 }
 
