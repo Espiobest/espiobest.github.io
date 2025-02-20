@@ -18,6 +18,19 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Inter', sans-serif;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+
+  100% {
+      opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
@@ -50,6 +63,100 @@ body {
   padding: 0.5rem;
   text-underline-offset: 0.4rem;
 }
+
 .section-link:hover {
   color: #0070f3;
-};
+}
+
+@media screen and (max-width: 640px) {
+  .section-link {
+    text-align: center;
+    padding: 0.1rem;
+  }
+  .nav-link {
+    text-align: center;
+  }
+  
+}
+
+.projects-grid {
+  -webkit-margin-start: auto;
+  -webkit-margin-end: auto;
+  max-width: 550px;
+}
+
+.project-link {
+  color: white
+}
+
+.project-link:hover {
+  color: #0070f3;
+}
+
+.project-image {
+  width: auto;
+  max-width: 200px;
+  height: 125px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.project-card {
+  max-width: 300px;
+  max-height: 500px;
+  background: transparent;
+  box-shadow: none;
+}
+
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.tilt-shaking {
+  animation: tilt-shaking 1s infinite;
+}
+
+.org-text {
+  color: #ca444a;
+}
+
+.org-text:hover {
+  text-decoration: underline;
+}
+
+.main-text {
+  display: flex;
+  max-width: 800px;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  text-align: justify;
+  text-align-last: center;
+}
+
+@media screen and (max-width: 700px) {
+  .main-text {
+    text-align-last: unset;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .project-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+  .project-card {
+    max-width: 400px;
+    max-height: 100%;
+  }
+}
+
+.MuiDrawer-paper {
+  background-color: rgb(28 28 34);
+  color: #ededed;
+}
