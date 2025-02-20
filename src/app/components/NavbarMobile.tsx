@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, Typography, Menu, MenuItem } from '@mui/material';
+import { IconButton, Typography, Menu, MenuItem, Button} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -10,7 +10,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 const MobileNavbar = (props: { currentPath: string }) => {
   const isActive = (path: string) =>
-    props.currentPath === path ? { fontWeight: 'bold', backgroundColor: '#3b4352' } : {};
+    props.currentPath === path ? { justifyContent: 'center', fontWeight: 'bold', backgroundColor: '#3b4352' } : {justifyContent: 'center'};
 
   return (
     <div
@@ -46,7 +46,7 @@ const MobileNavbar = (props: { currentPath: string }) => {
               </IconButton>
               <Menu
                 {...bindMenu(popupState)}
-                style={{ color: 'white' }}
+                style={{ color: 'white', textAlign: 'center' }}
                 PaperProps={{
                   sx: {
                     borderRadius: '12px',
@@ -69,6 +69,20 @@ const MobileNavbar = (props: { currentPath: string }) => {
                   style={isActive('/projects')}
                 >
                   Projects
+                </MenuItem>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
+                  href="mailto:ayushravicha@umass.edu"
+                  >
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    className="px-6 capitalize"
+                    style={{ borderRadius: '100px' }}
+                    >
+                    <Typography>Contact Me</Typography>
+                    </Button>
                 </MenuItem>
               </Menu>
             </>
