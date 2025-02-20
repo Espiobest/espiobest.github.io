@@ -10,9 +10,7 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 const MobileNavbar = (props: { currentPath: string }) => {
   const isActive = (path: string) =>
-    props.currentPath === path
-      ? { fontWeight: 'bold', textDecoration: 'underline', color: '#0070f3' }
-      : {};
+    props.currentPath === path ? { fontWeight: 'bold', backgroundColor: '#3b4352' } : {};
 
   return (
     <div
@@ -34,10 +32,28 @@ const MobileNavbar = (props: { currentPath: string }) => {
         <PopupState variant="popover" popupId="mobile-menu-popup">
           {(popupState) => (
             <>
-              <IconButton {...bindTrigger(popupState)} edge="end" color="inherit" aria-label="menu">
+              <IconButton
+                {...bindTrigger(popupState)}
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                sx={{
+                  transition: 'background-color 0.3s ease',
+                  borderRadius: '50%',
+                }}
+              >
                 <MenuIcon />
               </IconButton>
-              <Menu {...bindMenu(popupState)}>
+              <Menu
+                {...bindMenu(popupState)}
+                style={{ color: 'white' }}
+                PaperProps={{
+                  sx: {
+                    borderRadius: '12px',
+                    minWidth: '150px',
+                  },
+                }}
+              >
                 <MenuItem
                   onClick={popupState.close}
                   component={Link}
@@ -53,14 +69,6 @@ const MobileNavbar = (props: { currentPath: string }) => {
                   style={isActive('/projects')}
                 >
                   Projects
-                </MenuItem>
-                <MenuItem
-                  onClick={popupState.close}
-                  component={Link}
-                  href="/contact"
-                  style={isActive('/contact')}
-                >
-                  Contact
                 </MenuItem>
               </Menu>
             </>

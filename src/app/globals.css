@@ -103,7 +103,7 @@ body {
 .project-card {
   max-width: 300px;
   max-height: 500px;
-  background-color: rgb(28 28 34);
+  background-color: rgb(28 28 34) !important;
   box-shadow: none;
 }
 
@@ -165,7 +165,8 @@ body {
   }
 }
 
-.MuiDrawer-paper {
-  background-color: rgb(28 28 34);
-  color: #ededed;
+.MuiList-root {
+  background-color: #2f3747;
+  color: white;
+  padding: 0.5rem;
 }
