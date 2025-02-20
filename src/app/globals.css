@@ -25,11 +25,11 @@ body {
 
 @keyframes fadeInAnimation {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
 
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -76,7 +76,6 @@ body {
   .nav-link {
     text-align: center;
   }
-  
 }
 
 .projects-grid {
@@ -86,7 +85,7 @@ body {
 }
 
 .project-link {
-  color: white
+  color: white;
 }
 
 .project-link:hover {
@@ -109,11 +108,21 @@ body {
 }
 
 @keyframes tilt-shaking {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(10deg); }
-  50% { transform: rotate(0deg); }
-  75% { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .tilt-shaking {

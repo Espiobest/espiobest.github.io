@@ -9,13 +9,21 @@ import Link from 'next/link';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 const MobileNavbar = (props: { currentPath: string }) => {
-  const isActive = (path: string) => (props.currentPath === path ? { fontWeight: 'bold', textDecoration: 'underline', color: '#0070f3' } : {});
+  const isActive = (path: string) =>
+    props.currentPath === path
+      ? { fontWeight: 'bold', textDecoration: 'underline', color: '#0070f3' }
+      : {};
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 1rem' }}>
-      <Typography variant="h6">
-        Ayush
-      </Typography>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 1rem',
+      }}
+    >
+      <Typography variant="h6">Ayush</Typography>
       <div>
         <IconButton color="inherit" href="https://github.com/espiobest">
           <GitHubIcon sx={{ marginRight: '0.5rem', fontSize: 30 }} />
@@ -30,13 +38,28 @@ const MobileNavbar = (props: { currentPath: string }) => {
                 <MenuIcon />
               </IconButton>
               <Menu {...bindMenu(popupState)}>
-                <MenuItem onClick={popupState.close} component={Link} href="/" style={isActive('/')}>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
+                  href="/"
+                  style={isActive('/')}
+                >
                   Home
                 </MenuItem>
-                <MenuItem onClick={popupState.close} component={Link} href="/projects" style={isActive('/projects')}>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
+                  href="/projects"
+                  style={isActive('/projects')}
+                >
                   Projects
                 </MenuItem>
-                <MenuItem onClick={popupState.close} component={Link} href="/contact" style={isActive('/contact')}>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
+                  href="/contact"
+                  style={isActive('/contact')}
+                >
                   Contact
                 </MenuItem>
               </Menu>
