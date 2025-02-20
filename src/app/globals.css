@@ -87,7 +87,7 @@ body {
 }
 
 .project-link {
-  color: white;
+  color: white !important;
 }
 
 .project-link:hover {

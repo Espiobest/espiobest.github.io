@@ -35,7 +35,7 @@ const DesktopNavbar = (props: { currentPath: string }) => {
               className="px-6 capitalize"
               style={{ borderRadius: '100px' }}
             >
-              <Typography>Contact Me</Typography>
+              <Typography className="button-text capitalize">Contact Me</Typography>
             </Button>
           </Link>
           <IconButton
