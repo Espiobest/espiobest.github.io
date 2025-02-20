@@ -154,6 +154,12 @@ body {
 }
 
 @media screen and (max-width: 640px) {
+  .main-text {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 640px) {
   .project-image {
     width: 100%;
     max-width: 400px;
