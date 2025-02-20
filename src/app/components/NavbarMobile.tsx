@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, Typography, Menu, MenuItem, Button} from '@mui/material';
+import { IconButton, Typography, Menu, MenuItem, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -10,7 +10,9 @@ import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 const MobileNavbar = (props: { currentPath: string }) => {
   const isActive = (path: string) =>
-    props.currentPath === path ? { justifyContent: 'center', fontWeight: 'bold', backgroundColor: '#3b4352' } : {justifyContent: 'center'};
+    props.currentPath === path
+      ? { justifyContent: 'center', fontWeight: 'bold', backgroundColor: '#3b4352' }
+      : { justifyContent: 'center' };
 
   return (
     <div
@@ -74,15 +76,15 @@ const MobileNavbar = (props: { currentPath: string }) => {
                   onClick={popupState.close}
                   component={Link}
                   href="mailto:ayushravicha@umass.edu"
-                  >
-                    <Button
+                >
+                  <Button
                     variant="contained"
                     color="primary"
-                    className="px-6 capitalize"
+                    className="px-6"
                     style={{ borderRadius: '100px' }}
-                    >
-                    <Typography>Contact Me</Typography>
-                    </Button>
+                  >
+                    <Typography className="button-text capitalize">Contact Me</Typography>
+                  </Button>
                 </MenuItem>
               </Menu>
             </>
