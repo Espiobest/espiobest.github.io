@@ -24,7 +24,7 @@ const MobileNavbar = (props: { currentPath: string }) => {
       }}
     >
       <Link href="/" passHref>
-        <h1 className="text-3xl font-semibold">Ayush</h1>
+        <h1 className="text-xl font-semibold">Ayush</h1>
       </Link>
       <div>
         <IconButton color="inherit" href="https://github.com/espiobest">
