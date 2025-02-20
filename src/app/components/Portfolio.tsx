@@ -1,21 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { Container, Typography, Button } from '@mui/material';
 import StartIcon from '@mui/icons-material/Start';
+import Picture from './Picture';
 
 const Portfolio = () => {
   return (
     <div>
       {/* Introduction Section */}
       <Container style={{ marginTop: '2rem', textAlign: 'center' }}>
-        <Image
-          className={'profile-img'}
-          src="/images/profile.jpg"
-          alt="Profile Picture"
-          width={200}
-          height={200}
-        />
+        <Picture></Picture>
 
         <Typography variant="h4" color="primary" gutterBottom>
           Ayush Ravi Chandran
