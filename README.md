@@ -15,7 +15,7 @@ To run this project locally:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/portfolio.git
+   git clone https://github.com/Espiobest/espiobest.github.io.git
    ```
 
 2. Install dependencies:
