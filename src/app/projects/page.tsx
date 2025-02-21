@@ -100,22 +100,12 @@ const Projects = () => {
                   {project.technologies.join(', ')}
                 </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <IconButton
-                    className={'project-link'}
-                    color="inherit"
-                    href={project.github}
-                    target="_blank"
-                  >
-                    <GitHubIcon sx={{ fontSize: 40 }} />
+                  <IconButton href={project.github} target="_blank">
+                    <GitHubIcon className={'project-link'} sx={{ fontSize: 40 }} />
                   </IconButton>
                   {project.link && (
-                    <IconButton
-                      className={'project-link'}
-                      color="inherit"
-                      href={project.link}
-                      target="_blank"
-                    >
-                      <ArrowOutwardIcon sx={{ fontSize: 40 }} />
+                    <IconButton href={project.link} target="_blank">
+                      <ArrowOutwardIcon className={'project-link'} sx={{ fontSize: 40 }} />
                     </IconButton>
                   )}
                 </div>

@@ -87,11 +87,11 @@ body {
 }
 
 .project-link {
-  color: white !important;
+  color: white;
 }
 
 .project-link:hover {
-  color: #0070f3 !important;
+  color: #0070f3;
 }
 
 .project-image {
