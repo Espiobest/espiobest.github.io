@@ -30,7 +30,7 @@ const Projects = () => {
     {
       title: 'Instilt Educate Website',
       description:
-        'A map-based application that uses crowd-sourced data to help disabled people determine accessible areas',
+        'Built to connect students and organizations globally, featuring a redesigned, user-friendly interface',
       github: 'https://github.com/Instilt-Educate/instilt-educate.github.io',
       link: 'https://edu.instilt.com',
       image: './images/projects/instilt2.png',

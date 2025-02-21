@@ -91,7 +91,7 @@ body {
 }
 
 .project-link:hover {
-  color: #0070f3;
+  color: #0070f3 !important;
 }
 
 .project-image {
