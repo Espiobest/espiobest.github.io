@@ -2,6 +2,7 @@
 
 import { Container, Typography, Button } from '@mui/material';
 import StartIcon from '@mui/icons-material/Start';
+import TypewriterEffect from './TypewriterEffect';
 import Picture from './Picture';
 
 const Portfolio = () => {
@@ -25,18 +26,23 @@ const Portfolio = () => {
             animationDelay: '0.3s',
           }}
         >
-          <span style={{ color: '#4B9EA3' }}>Building</span> experiences,{' '}
-          <span style={{ color: '#4B9EA3' }}>creating</span> solutions,{' '}
-          <span style={{ color: '#4B9EA3' }}>driven</span> by excellence.
+          <TypewriterEffect></TypewriterEffect>
         </Typography>
+
+        <br></br>
+
+        <div>
+            <p className="sub-text">
+            I am seeking internships for Summer 2025!
+            </p>
+        </div>
         <br></br>
 
         <div className="main-text">
           <Typography variant="body1">
             I am currently a junior at UMass Amherst majoring in Computer Science and Mathematics.
-            With extensive experience in fullstack web and app development, I have a strong
-            background in building scalable, intuitive, and dynamic web applications. I am seeking
-            internships for Summer 2025.
+            With extensive experience in fullstack web development, app development, and Machine Learning, I have a strong
+            background in building scalable, intuitive, and dynamic applications.
           </Typography>
         </div>
 

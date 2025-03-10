@@ -1,9 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import { Container, Typography, Card, CardContent } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // Crown/Award icon
+import Setup from '../components/Setup';
 import Tooltip from '@mui/material/Tooltip';
 
 const Projects = () => {
@@ -24,7 +27,7 @@ const Projects = () => {
       description: 'A comprehensive dashboard that visualizes Spotify listening history and habits',
       github: 'https://github.com/Espiobest/Spotify-Stats-Viewer',
       link: 'https://stats-viewer.vercel.app/',
-      image: './images/projects/spotify.png',
+      image: './images/projects/spotify-stats.png',
       technologies: ['Next.js', 'React', 'TypeScript', 'Vercel', 'Spotify API'],
     },
     {
@@ -33,7 +36,7 @@ const Projects = () => {
         'Built to connect students and organizations globally, featuring a redesigned, user-friendly interface',
       github: 'https://github.com/Instilt-Educate/instilt-educate.github.io',
       link: 'https://edu.instilt.com',
-      image: './images/projects/instilt2.png',
+      image: './images/projects/instilt-educate.png',
       technologies: ['JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Google Analytics'],
     },
     {
@@ -49,6 +52,8 @@ const Projects = () => {
   return (
     <div>
       <Container>
+        <Setup></Setup>
+
         <Typography variant="h5" className="p-2 text-center" gutterBottom>
           Discover My Projects
         </Typography>

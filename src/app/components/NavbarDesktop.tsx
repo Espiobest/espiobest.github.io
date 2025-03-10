@@ -28,7 +28,7 @@ const DesktopNavbar = (props: { currentPath: string }) => {
             </Typography>
           </Link>
 
-          <Link href="mailto:ayushravicha@umass.edu" passHref>
+          <Link href="/contact" passHref>
             <Button
               variant="contained"
               color="primary"
