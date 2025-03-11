@@ -26,20 +26,22 @@ const Setup = () => {
       alpha: true,
       logarithmicDepthBuffer: true,
     });
+    const updateCanvasSize = () => {
+      const WIDTH = mount.current?.clientWidth || 550;
+      const HEIGHT = (WIDTH / 16) * 9;
 
-    const WIDTH = 550;
-    const HEIGHT = 300;
+      renderer.setSize(WIDTH, HEIGHT);
+      camera.aspect = WIDTH / HEIGHT;
+      camera.updateProjectionMatrix();
+    };
 
-    renderer.setSize(WIDTH, HEIGHT);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Softer shadows
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     renderer.setClearColor(0x000000, 0);
+    updateCanvasSize();
     mount.current.appendChild(renderer.domElement);
-
-    camera.aspect = WIDTH / HEIGHT;
-    camera.updateProjectionMatrix();
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 2);
     scene.add(ambientLight);
@@ -133,7 +135,10 @@ const Setup = () => {
 
     animate();
 
+    window.addEventListener('resize', updateCanvasSize);
+
     return () => {
+      window.removeEventListener('resize', updateCanvasSize);
       renderer.dispose();
       mount.current?.removeChild(renderer.domElement);
     };
@@ -143,6 +148,8 @@ const Setup = () => {
     <div
       ref={mount}
       style={{
+        width: '100%',
+        maxWidth: '550px',
         margin: 'auto',
         display: 'flex',
         justifyContent: 'center',
