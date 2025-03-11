@@ -1,6 +1,6 @@
 # Developer Portfolio
 
-This project is a personal portfolio built using **React**, **Next.js**, **Material UI**, and **TypeScript**. It showcases my web development projects, skills, and contact information in a modern, user-friendly format. Visit the site [here](https://espiobest.me).
+This project is a personal portfolio built using **React**, **Next.js**, **Material UI**, and **TypeScript**. I also used Blender to make the 3D Setup model. It showcases my projects, skills, and contact information in a modern, user-friendly format. Visit the site [here](https://espiobest.me).
 
 ## Tech Stack
 
