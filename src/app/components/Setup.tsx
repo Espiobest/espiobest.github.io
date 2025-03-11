@@ -6,10 +6,10 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 const Setup = () => {
   const mount = useRef<HTMLDivElement>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   useEffect(() => {
-    if (!mount.current) return;
-    if (mount.current.hasChildNodes()) return;
+    if (!mount.current || rendererRef.current) return;
 
     let spinSpeed = 0.3;
     const spinDecay = 0.99;
@@ -26,37 +26,39 @@ const Setup = () => {
       alpha: true,
       logarithmicDepthBuffer: true,
     });
-    const updateCanvasSize = () => {
-      const WIDTH = mount.current?.clientWidth || 550;
-      const HEIGHT = (WIDTH / 16) * 9;
+    rendererRef.current = renderer;
 
-      renderer.setSize(WIDTH, HEIGHT);
-      camera.aspect = WIDTH / HEIGHT;
+    const setRendererSize = () => {
+      const width = Math.min(550, window.innerWidth - 20);
+      const height = width * 0.55;
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
       camera.updateProjectionMatrix();
     };
+
+    setRendererSize();
+    window.addEventListener('resize', setRendererSize);
 
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
     renderer.setClearColor(0x000000, 0);
-    updateCanvasSize();
     mount.current.appendChild(renderer.domElement);
 
+    // add lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 2);
     scene.add(ambientLight);
 
-    // add light to the scene
     const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
     directionalLight.position.set(5, 5, 5);
     directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
+    directionalLight.shadow.mapSize.width = 512;
+    directionalLight.shadow.mapSize.height = 512;
     directionalLight.shadow.camera.near = 0.5;
     directionalLight.shadow.camera.far = 50;
     scene.add(directionalLight);
 
-    // add ground to receive shadows
+    // add ground to show shadows
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(10, 10),
       new THREE.ShadowMaterial({ opacity: 0.5 }),
@@ -74,26 +76,18 @@ const Setup = () => {
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
+
     let modelGroup: THREE.Group;
 
-    interface GLTF {
-      animations: THREE.AnimationClip[];
-      scene: THREE.Group;
-      scenes: THREE.Group[];
-      cameras: THREE.Camera[];
-      asset: object;
-    }
-
     loader.load(
-      'computerSetup.glb',
-      (gltf: GLTF) => {
+      'setup.glb',
+      (gltf) => {
         modelGroup = new THREE.Group();
         modelGroup.add(gltf.scene);
         scene.add(modelGroup);
 
         const box = new THREE.Box3().setFromObject(gltf.scene);
         const center = box.getCenter(new THREE.Vector3());
-
         gltf.scene.position.sub(center);
 
         const size = box.getSize(new THREE.Vector3());
@@ -112,10 +106,7 @@ const Setup = () => {
           }
         });
       },
-
-      (error) => {
-        console.error('An error occurred while loading the model:', error);
-      },
+      (error) => console.error('An error occurred while loading the model:', error),
     );
 
     const animate = () => {
@@ -123,10 +114,7 @@ const Setup = () => {
 
       if (modelGroup) {
         modelGroup.rotation.y += spinSpeed;
-
-        if (spinSpeed > 0.005) {
-          spinSpeed *= spinDecay;
-        }
+        if (spinSpeed > 0.005) spinSpeed *= spinDecay;
       }
 
       controls.update();
@@ -135,12 +123,9 @@ const Setup = () => {
 
     animate();
 
-    window.addEventListener('resize', updateCanvasSize);
-
     return () => {
-      window.removeEventListener('resize', updateCanvasSize);
-      renderer.dispose();
-      mount.current?.removeChild(renderer.domElement);
+      window.removeEventListener('resize', setRendererSize);
+      controls.dispose();
     };
   }, []);
 
@@ -148,8 +133,6 @@ const Setup = () => {
     <div
       ref={mount}
       style={{
-        width: '100%',
-        maxWidth: '550px',
         margin: 'auto',
         display: 'flex',
         justifyContent: 'center',
