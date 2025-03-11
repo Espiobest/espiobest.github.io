@@ -32,17 +32,16 @@ const Portfolio = () => {
         <br></br>
 
         <div>
-            <p className="sub-text">
-            I am seeking internships for Summer 2025!
-            </p>
+          <p className="sub-text">I am seeking internships for Summer 2025!</p>
         </div>
         <br></br>
 
         <div className="main-text">
           <Typography variant="body1">
             I am currently a junior at UMass Amherst majoring in Computer Science and Mathematics.
-            With extensive experience in fullstack web development, app development, and Machine Learning, I have a strong
-            background in building scalable, intuitive, and dynamic applications.
+            With extensive experience in full-stack web development, app development, and Machine
+            Learning, I have a strong background in building scalable, intuitive, and dynamic
+            applications.
           </Typography>
         </div>
 
@@ -66,7 +65,6 @@ const Portfolio = () => {
 
         <br></br>
 
-        <Typography variant="body1">Contact me at ayushravicha[at]umass.edu</Typography>
         <Button
           variant="contained"
           color="primary"

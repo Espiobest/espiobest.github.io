@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const TypewriterEffect = () => {
-  const phrases = [
-    "Building experiences",
-    "Creating solutions",
-    "Driven by excellence"
-  ];
+  const phrases = ['Building experiences', 'Creating solutions', 'Driven by excellence'];
 
   const [displayText, setDisplayText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -14,7 +10,7 @@ const TypewriterEffect = () => {
   useEffect(() => {
     const handleTyping = () => {
       const currentPhrase = phrases[phraseIndex];
-      
+
       if (!isDeleting) {
         if (displayText.length < currentPhrase.length) {
           setDisplayText(currentPhrase.substring(0, displayText.length + 1));
@@ -38,8 +34,9 @@ const TypewriterEffect = () => {
   }, [displayText, phraseIndex, isDeleting]);
 
   return (
-    <div className="text-2xl font-bold text-center">
-      <span style={{color: '#4B9EA3'}}>{displayText.split(" ")[0]} </span>{displayText.split(" ").slice(1).join(" ")}
+    <div className="text-center text-2xl font-bold">
+      <span style={{ color: '#4B9EA3' }}>{displayText.split(' ')[0]} </span>
+      {displayText.split(' ').slice(1).join(' ')}
       <span className="animate-pulse">|</span>
     </div>
   );

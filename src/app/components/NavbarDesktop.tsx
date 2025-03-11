@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Toolbar, Typography, IconButton, Button } from '@mui/material';
+import { Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
@@ -29,15 +29,11 @@ const DesktopNavbar = (props: { currentPath: string }) => {
           </Link>
 
           <Link href="/contact" passHref>
-            <Button
-              variant="contained"
-              color="primary"
-              className="px-6 capitalize"
-              style={{ borderRadius: '100px' }}
-            >
-              <Typography className="button-text capitalize">Contact Me</Typography>
-            </Button>
+            <Typography variant="h6" className={'section-link'} style={isActive('/contact')}>
+              Contact
+            </Typography>
           </Link>
+
           <IconButton
             className={'nav-link'}
             color="inherit"

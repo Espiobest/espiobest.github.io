@@ -1,6 +1,6 @@
 'use client';
 
-import { IconButton, Typography, Menu, MenuItem, Button } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -77,16 +77,10 @@ const MobileNavbar = (props: { currentPath: string }) => {
                 <MenuItem
                   onClick={popupState.close}
                   component={Link}
-                  href="mailto:ayushravicha@umass.edu"
+                  href="/contact"
+                  style={isActive('/contact')}
                 >
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className="px-6"
-                    style={{ borderRadius: '100px' }}
-                  >
-                    <Typography className="button-text capitalize">Contact Me</Typography>
-                  </Button>
+                  Contact
                 </MenuItem>
               </Menu>
             </>
