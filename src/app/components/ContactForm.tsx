@@ -69,7 +69,7 @@ const ContactForm = () => {
           <Box mb={3}>
             <TextField fullWidth label="Message" name="message" multiline rows={4} required />
           </Box>
-          <Button variant="contained" color="primary" type="submit" className="m-auto block">
+          <Button variant="contained" color="primary" type="submit" className="submit-btn">
             Submit
           </Button>
         </form>

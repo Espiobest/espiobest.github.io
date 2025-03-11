@@ -211,3 +211,8 @@ main {
     0 0 24px #2e96c4;
   font-size: 1.3rem;
 }
+
+.submit-btn {
+  display: block !important;
+  margin: auto !important;
+}
