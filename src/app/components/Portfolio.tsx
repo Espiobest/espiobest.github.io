@@ -9,7 +9,7 @@ const Portfolio = () => {
   return (
     <div>
       {/* Introduction Section */}
-      <Container style={{ marginTop: '2rem', textAlign: 'center' }}>
+      <Container style={{ marginTop: '0.2rem', textAlign: 'center' }}>
         <Picture></Picture>
 
         <Typography variant="h4" color="primary" gutterBottom>
@@ -32,16 +32,14 @@ const Portfolio = () => {
         <br></br>
 
         <div>
-          <p className="sub-text">I am seeking internships for Summer 2025!</p>
+          <p className="sub-text">I am seeking internships for Summer and Fall 2025!</p>
         </div>
         <br></br>
 
         <div className="main-text">
           <Typography variant="body1">
-            I am currently a junior at UMass Amherst majoring in Computer Science and Mathematics.
-            With extensive experience in full-stack web development, app development, and Machine
-            Learning, I have a strong background in building scalable, intuitive, and dynamic
-            applications.
+            I am a junior at UMass Amherst majoring in Computer Science and Mathematics, with
+            experience in full-stack development, app development, and machine learning.
           </Typography>
         </div>
 
@@ -49,7 +47,17 @@ const Portfolio = () => {
 
         <div className="main-text">
           <Typography variant="body1">
-            I currently work as the Head of Technical Operations at{' '}
+            I am currently a Research Assistant at UMass Amherst in the Data Science for Social Good
+            program, where I analyze food insecurity using national datasets and apply machine
+            learning and statistical models. I collaborate with faculty and students to generate
+            data-driven insights for policy recommendations.
+          </Typography>
+        </div>
+
+        <br></br>
+        <div className="main-text">
+          <Typography variant="body1">
+            Additionally, I am the Head of Technical Operations at{' '}
             <span className="org-text">
               <a href="https://edu.instilt.com" target="_blank">
                 Instilt Educate
@@ -57,9 +65,7 @@ const Portfolio = () => {
             </span>
             , where I lead a team of talented individuals in driving technological innovation and
             operational efficiency. My role focuses on optimizing workflows, improving system access
-            control, and automating processes to enhance the user experience. I’m passionate about
-            leveraging my leadership skills to foster collaboration and ensure the smooth onboarding
-            of new members.
+            control, and automating processes to enhance the user experience.
           </Typography>
         </div>
 

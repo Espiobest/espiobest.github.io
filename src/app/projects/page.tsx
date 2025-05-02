@@ -23,6 +23,14 @@ const Projects = () => {
         'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best use of Github" at HackUMass',
     },
     {
+      title: 'Travy',
+      description:
+        'A full-stack app that centralizes travel planning by aggregating flights, transit, and rideshare data.',
+      github: 'https://github.com/tsavadi/Travy',
+      image: './images/projects/travy-logo.png',
+      technologies: ['React', 'Express.js', 'Docker', 'PostgreSQL', 'Leaflet'],
+    },
+    {
       title: 'Spotify Stats',
       description: 'A comprehensive dashboard that visualizes Spotify listening history and habits',
       github: 'https://github.com/Espiobest/Spotify-Stats-Viewer',
@@ -58,10 +66,10 @@ const Projects = () => {
           Discover My Projects
         </Typography>
 
-        <div className="projects-grid grid grid-cols-1 place-items-center sm:grid-cols-2">
+        <div className="projects-grid flex flex-wrap justify-center gap-4">
           {projects.map((project, index) => (
-            <Card key={index} className="project-card">
-              <div style={{ position: 'relative' }}>
+            <Card key={index} className="project-card w-full sm:w-[48%]">
+              <div className="relative">
                 <Image
                   src={project.image}
                   alt={project.title}
