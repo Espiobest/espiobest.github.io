@@ -26,7 +26,7 @@ const Projects = () => {
       title: 'Travy',
       description:
         'A full-stack app that centralizes travel planning by aggregating flights, transit, and rideshare data.',
-      github: 'https://github.com/tsavadi/Travy',
+      github: 'https://github.com/tanushsavadi/Travy',
       image: './images/projects/travy-logo.png',
       technologies: ['React', 'Express.js', 'Docker', 'PostgreSQL', 'Leaflet'],
     },
