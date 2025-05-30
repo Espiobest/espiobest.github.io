@@ -31,6 +31,13 @@ const Projects = () => {
       technologies: ['React', 'Express.js', 'Docker', 'PostgreSQL', 'Leaflet'],
     },
     {
+      title: 'Poker Bot',
+      description:
+        "Built a Deep Q-Network (DQN) agent to play Heads-Up Limit Texas Hold'em using reinforcement learning; ranked 4th out of 23 in tournament evaluation",
+      image: './images/projects/poker.png',
+      technologies: ['PyTorch', 'NumPy', 'Tensorboard', 'Reinforcement Learning'],
+    },
+    {
       title: 'Spotify Stats',
       description: 'A comprehensive dashboard that visualizes Spotify listening history and habits',
       github: 'https://github.com/Espiobest/Spotify-Stats-Viewer',
@@ -113,9 +120,11 @@ const Projects = () => {
                   {project.technologies.join(', ')}
                 </Typography>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <IconButton href={project.github} target="_blank">
-                    <GitHubIcon className={'project-link'} sx={{ fontSize: 40 }} />
-                  </IconButton>
+                  {project.github && (
+                    <IconButton href={project.github} target="_blank">
+                      <GitHubIcon className={'project-link'} sx={{ fontSize: 40 }} />
+                    </IconButton>
+                  )}
                   {project.link && (
                     <IconButton href={project.link} target="_blank">
                       <ArrowOutwardIcon className={'project-link'} sx={{ fontSize: 40 }} />

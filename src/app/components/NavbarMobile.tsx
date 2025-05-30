@@ -69,6 +69,14 @@ const MobileNavbar = (props: { currentPath: string }) => {
                 <MenuItem
                   onClick={popupState.close}
                   component={Link}
+                  href="/experience"
+                  style={isActive('/experience')}
+                >
+                  Experience
+                </MenuItem>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
                   href="/projects"
                   style={isActive('/projects')}
                 >

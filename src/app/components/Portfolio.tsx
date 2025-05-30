@@ -1,6 +1,6 @@
 'use client';
 
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Typography, Button, Box } from '@mui/material';
 import StartIcon from '@mui/icons-material/Start';
 import TypewriterEffect from './TypewriterEffect';
 import Picture from './Picture';
@@ -32,7 +32,7 @@ const Portfolio = () => {
         <br></br>
 
         <div>
-          <p className="sub-text">I am seeking internships for Summer and Fall 2025!</p>
+          <p className="sub-text">I am seeking internships for Fall 2025!</p>
         </div>
         <br></br>
 
@@ -45,49 +45,85 @@ const Portfolio = () => {
 
         <br></br>
 
-        <div className="main-text">
-          <Typography variant="body1">
-            I am currently a Research Assistant at UMass Amherst in the Data Science for Social Good
-            program, where I analyze food insecurity using national datasets and apply machine
-            learning and statistical models. I collaborate with faculty and students to generate
-            data-driven insights for policy recommendations.
-          </Typography>
-        </div>
-
-        <br></br>
-        <div className="main-text">
-          <Typography variant="body1">
-            Additionally, I am the Head of Technical Operations at{' '}
-            <span className="org-text">
+        <div className="main-text mb-4">
+          <Typography variant="body1" style={{ color: 'white' }}>
+            Data Science Intern at{' '}
+            <span className="highlight-text">
+              <a href="https://www.mghpcc.org/" target="_blank">
+                MGHPCC
+              </a>
+            </span>{' '}
+            as part of the Data Science for the Common Good (
+            <span className="highlight-text">
+              <a href="https://ds.cs.umass.edu/programs/ds4cg/ds4cg-team" target="_blank">
+                DS4CG
+              </a>
+            </span>
+            ) program and Head of Technical Operations at{' '}
+            <span className="highlight-text">
               <a href="https://edu.instilt.com" target="_blank">
                 Instilt Educate
               </a>
             </span>
-            , where I lead a team of talented individuals in driving technological innovation and
-            operational efficiency. My role focuses on optimizing workflows, improving system access
-            control, and automating processes to enhance the user experience.
+            <br></br>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ marginTop: '1rem', borderRadius: '10px' }}
+              href="/experience"
+            >
+              Explore my experience &rarr;
+            </Button>
           </Typography>
         </div>
-
         <br></br>
+        <Box
+          component="div"
+          sx={{
+            display: 'inline-flex',
+            gap: 2,
+          }}
+        >
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            sx={{
+              borderRadius: 2,
+              borderColor: 'primary.main', // darker border
+              color: 'primary.main', // darker text
+              '&:hover': {
+                backgroundColor: 'primary.main',
+                color: 'common.white',
+                borderColor: 'primary.dark',
+              },
+            }}
+            href="/projects"
+            startIcon={<StartIcon />}
+          >
+            Discover My Projects
+          </Button>
 
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ marginTop: '1rem', borderRadius: '10px' }}
-          href="/projects"
-        >
-          Discover My Projects <StartIcon style={{ paddingLeft: '0.5rem' }} />
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ marginTop: '1rem', borderRadius: '10px', marginLeft: '1rem' }}
-          href="/documents/Resume.pdf"
-          target="_blank"
-        >
-          View My Resume
-        </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            sx={{
+              borderRadius: 2,
+              borderColor: 'primary.main',
+              color: 'primary.main',
+              '&:hover': {
+                backgroundColor: 'primary.main',
+                color: 'common.white',
+                borderColor: 'primary.dark',
+              },
+            }}
+            href="/documents/Resume.pdf"
+            target="_blank"
+          >
+            View My Resume
+          </Button>
+        </Box>
         <br></br>
       </Container>
     </div>

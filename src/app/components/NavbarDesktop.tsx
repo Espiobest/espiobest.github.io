@@ -22,6 +22,12 @@ const DesktopNavbar = (props: { currentPath: string }) => {
             </Typography>
           </Link>
 
+          <Link href="/experience" passHref>
+            <Typography variant="h6" className={'section-link'} style={isActive('/experience')}>
+              Experience
+            </Typography>
+          </Link>
+
           <Link href="/projects" passHref>
             <Typography variant="h6" className={'section-link'} style={isActive('/projects')}>
               Projects
