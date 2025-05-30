@@ -80,8 +80,11 @@ const Portfolio = () => {
         <Box
           component="div"
           sx={{
-            display: 'inline-flex',
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
             gap: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <Button
