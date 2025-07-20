@@ -20,7 +20,6 @@
     "@mui/material-nextjs": "^6.4.3",
     "mailgun.js": "^12.0.1",
     "material-ui-popup-state": "^5.3.3",
-    "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -40,6 +39,7 @@
     "eslint-plugin-react": "^7.37.4",
     "framer-motion": "^12.4.5",
     "gh-pages": "^6.3.0",
+    "next": "^15.2.2",
     "postcss": "^8",
     "prettier": "^3.5.1",
     "prettier-plugin-tailwindcss": "^0.6.11",

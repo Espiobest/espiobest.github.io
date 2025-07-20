@@ -47,7 +47,7 @@ const Portfolio = () => {
 
         <div className="main-text mb-4">
           <Typography variant="body1" style={{ color: 'white' }}>
-            Data Science Intern at{' '}
+            Intern at{' '}
             <span className="highlight-text">
               <a href="https://www.mghpcc.org/" target="_blank">
                 MGHPCC

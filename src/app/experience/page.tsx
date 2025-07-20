@@ -3,14 +3,14 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 const experiences = [
   {
-    title: 'Data Science Intern',
+    title: 'SWE Intern',
     org: 'MGHPCC (Unity HPC Cluster)',
     period: 'May 2025 - Present',
     stack: ['Python', 'SLURM', 'Pandas', 'Shell', 'HPC'],
     work: [
-      'Analyzing GPU workload efficiency and identifying underutilization of high-performance GPU nodes',
-      'Developing automated pipelines for workload analysis and resource optimization',
-      'Automating the analysis of 9+ months of SLURM records to detect underutilization patterns, enabling targeted user outreach and maximizing the impact of 1400+ GPU nodes for the research community',
+      'Analyzed 10.9M+ SLURM job records using clustering (DBSCAN) and time-series techniques to detect GPU underutilization on the Unity HPC cluster',
+      'Built automated pipelines with Python, pandas, and NumPy for workload pattern detection, anomaly flagging, and resource optimization',
+      'Automated analysis of 9+ months of telemetry data, saving 3,000+ GPU VRAM hours and guiding outreach to improve efficiency across 1,400+ high-performance GPU nodes',
     ],
     link: 'https://www.mghpcc.org/',
   },
