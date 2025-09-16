@@ -32,13 +32,13 @@ const Portfolio = () => {
         <br></br>
 
         <div>
-          <p className="sub-text">I am seeking internships for Fall 2025!</p>
+          <p className="sub-text">I am seeking New Grad opportunities for 2026!</p>
         </div>
         <br></br>
 
         <div className="main-text">
           <Typography variant="body1">
-            I am a junior at UMass Amherst majoring in Computer Science and Mathematics, with
+            I am a senior at UMass Amherst majoring in Computer Science and Mathematics, with
             experience in full-stack development, app development, and machine learning.
           </Typography>
         </div>
@@ -47,24 +47,31 @@ const Portfolio = () => {
 
         <div className="main-text mb-4">
           <Typography variant="body1" style={{ color: 'white' }}>
-            Intern at{' '}
+            Software Engineering Intern at{' '}
+            <span className="highlight-text">
+              <a href="https://ds.cs.umass.edu/" target="_blank">
+                CDS-AI
+              </a>
+            </span>{' '}
+            • Head of Technical Operations at{' '}
+            <span className="highlight-text">
+              <a href="https://edu.instilt.com" target="_blank">
+                Instilt Educate
+              </a>
+            </span>{' '}
+            • Former Intern at{' '}
             <span className="highlight-text">
               <a href="https://www.mghpcc.org/" target="_blank">
                 MGHPCC
               </a>
             </span>{' '}
-            as part of the Data Science for the Common Good (
+            and part of the {' '}
             <span className="highlight-text">
               <a href="https://ds.cs.umass.edu/programs/ds4cg/ds4cg-team" target="_blank">
                 DS4CG
               </a>
-            </span>
-            ) program and Head of Technical Operations at{' '}
-            <span className="highlight-text">
-              <a href="https://edu.instilt.com" target="_blank">
-                Instilt Educate
-              </a>
-            </span>
+            </span>{' '}
+            program
             <br></br>
             <Button
               variant="contained"
@@ -125,6 +132,25 @@ const Portfolio = () => {
             target="_blank"
           >
             View My Resume
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            sx={{
+              borderRadius: 2,
+              borderColor: 'primary.main',
+              color: 'primary.main',
+              '&:hover': {
+                backgroundColor: 'primary.main',
+                color: 'common.white',
+                borderColor: 'primary.dark',
+              },
+            }}
+            href="/contact"
+          >
+            Contact Me
           </Button>
         </Box>
         <br></br>

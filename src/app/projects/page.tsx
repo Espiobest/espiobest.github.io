@@ -20,7 +20,7 @@ const Projects = () => {
       image: './images/projects/routeable.png',
       technologies: ['React Native', 'PostgreSQL', 'PyTorch', 'NestJS'],
       awards:
-        'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best use of Github" at HackUMass',
+        'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best Use of Github" at HackUMass',
     },
     {
       title: 'Travy',

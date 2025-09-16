@@ -3,15 +3,28 @@ import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 const experiences = [
   {
-    title: 'SWE Intern',
+    title: 'Software Engineering Intern',
+    org: 'CDS-AI',
+    period: 'Sep 2025 - Present',
+    stack: ['React', 'TypeScript', 'GenAI', 'Python'],
+    work: [
+      'Developing React applications to support data science research workflows',
+      'Working on generative AI projects and building tools for research teams',
+    ],
+    link: 'https://ds.cs.umass.edu/',
+  },
+  {
+    title: 'Software Engineering Intern',
     org: 'MGHPCC (Unity HPC Cluster)',
-    period: 'May 2025 - Present',
+    period: 'May 2025 - Aug 2025',
     stack: ['Python', 'SLURM', 'Pandas', 'Shell', 'HPC'],
     work: [
       'Analyzed 10.9M+ SLURM job records using clustering (DBSCAN) and time-series techniques to detect GPU underutilization on the Unity HPC cluster',
       'Built automated pipelines with Python, pandas, and NumPy for workload pattern detection, anomaly flagging, and resource optimization',
       'Automated analysis of 9+ months of telemetry data, saving 3,000+ GPU VRAM hours and guiding outreach to improve efficiency across 1,400+ high-performance GPU nodes',
     ],
+    impact:
+      'Delivered significant cost savings through GPU optimization analysis, directly contributing to more efficient resource allocation across a major HPC cluster serving the research community.',
     link: 'https://www.mghpcc.org/',
   },
   {

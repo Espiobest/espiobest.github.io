@@ -79,35 +79,44 @@ const Setup = () => {
 
     let modelGroup: THREE.Group;
 
-    loader.load(
-      'setup.glb',
-      (gltf) => {
-        modelGroup = new THREE.Group();
-        modelGroup.add(gltf.scene);
-        scene.add(modelGroup);
+    const loadModel = (retryCount = 0) => {
+      loader.load(
+        'setup.glb',
+        (gltf) => {
+          modelGroup = new THREE.Group();
+          modelGroup.add(gltf.scene);
+          scene.add(modelGroup);
 
-        const box = new THREE.Box3().setFromObject(gltf.scene);
-        const center = box.getCenter(new THREE.Vector3());
-        gltf.scene.position.sub(center);
+          const box = new THREE.Box3().setFromObject(gltf.scene);
+          const center = box.getCenter(new THREE.Vector3());
+          gltf.scene.position.sub(center);
 
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1 / maxDim;
-        gltf.scene.scale.set(scale, scale, scale);
+          const size = box.getSize(new THREE.Vector3());
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 1 / maxDim;
+          gltf.scene.scale.set(scale, scale, scale);
 
-        const modelHeight = size.y * scale;
-        camera.position.set(0, modelHeight / 3, 1.5 / scale);
-        camera.lookAt(0, 0, 0);
+          const modelHeight = size.y * scale;
+          camera.position.set(0, modelHeight / 3, 1.5 / scale);
+          camera.lookAt(0, 0, 0);
 
-        gltf.scene.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
+          gltf.scene.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+            }
+          });
+        },
+        undefined,
+        () => {
+          if (retryCount < 3) {
+            setTimeout(() => loadModel(retryCount + 1), 1000);
           }
-        });
-      },
-      (error) => console.error('An error occurred while loading the model:', error),
-    );
+        },
+      );
+    };
+
+    loadModel();
 
     const animate = () => {
       requestAnimationFrame(animate);
