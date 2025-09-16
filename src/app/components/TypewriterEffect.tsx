@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 const TypewriterEffect = () => {
-  const phrases = ['Building experiences', 'Creating solutions', 'Driven by excellence'];
 
   const [displayText, setDisplayText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    const phrases = ['Building experiences', 'Creating solutions', 'Driven by excellence'];
+
     const handleTyping = () => {
       const currentPhrase = phrases[phraseIndex];
 
