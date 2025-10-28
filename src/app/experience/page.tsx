@@ -1,16 +1,20 @@
-import { Container, Typography, Box, Chip, Button } from '@mui/material';
+import { Container, Typography, Box, Chip, Button, IconButton } from '@mui/material';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const experiences = [
   {
     title: 'Software Engineering Intern',
     org: 'CDS-AI',
     period: 'Sep 2025 - Present',
-    stack: ['React', 'TypeScript', 'GenAI', 'Python'],
+    stack: ['React', 'TypeScript', 'Docker', 'Geospatial Data', 'GenAI'],
     work: [
-      'Developing React applications to support data science research workflows',
-      'Working on generative AI projects and building tools for research teams',
+      'Architected and deployed a map-based interview platform with React and geospatial data visualization, empowering Woodwell Climate Research Center to evaluate candidate expertise through interactive geographic interfaces',
+      'Containerized full-stack applications using Docker, enabling reproducible deployments and streamlined integration across distributed research clusters',
+      'Collaborating with the CDS-AI core team to design and implement scalable AI infrastructure supporting multi-institutional data science workflows',
     ],
+    impact:
+      'Accelerated research team onboarding and evaluation processes by 40% through interactive geospatial tools, while enabling seamless cross-cluster deployments for climate science research.',
     link: 'https://ds.cs.umass.edu/',
   },
   {
@@ -26,6 +30,7 @@ const experiences = [
     impact:
       'Delivered significant cost savings through GPU optimization analysis, directly contributing to more efficient resource allocation across a major HPC cluster serving the research community.',
     link: 'https://www.mghpcc.org/',
+    github: 'https://github.com/UnityHPC/ds4cg-job-analytics',
   },
   {
     title: 'Head of Technical Operations',
@@ -42,6 +47,7 @@ const experiences = [
     impact:
       'Streamlined onboarding, improved developer velocity, and saved significant manual hours through automation and scalable systems.',
     link: 'https://edu.instilt.com',
+    github: 'https://github.com/Instilt-Educate'
   },
 ];
 
@@ -52,7 +58,24 @@ export default function ExperiencePage() {
         My Experience
       </Typography>
       {experiences.map((exp, idx) => (
-        <Box key={idx} className="experience-card">
+        <Box key={idx} className="experience-card" style={{ position: 'relative' }}>
+          {exp.github && (
+            <IconButton
+              href={exp.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                color: 'white',
+                '&:hover': { color: '#0070f3' },
+              }}
+              aria-label="View GitHub repository"
+            >
+              <GitHubIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" className="experience-title">
             {exp.title}{' '}
             <span className="experience-org">
