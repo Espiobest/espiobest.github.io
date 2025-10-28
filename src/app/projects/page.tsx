@@ -22,6 +22,15 @@ const Projects = () => {
       awards:
         'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best Use of Github" at HackUMass',
     },
+     {
+      title: 'Poker Bot',
+      description:
+        "Built a Deep Q-Network (DQN) agent to play Heads-Up Limit Texas Hold'em using reinforcement learning; ranked 4th out of 23 in tournament evaluation",
+      image: './images/projects/poker.png',
+      link: 'https://poker-gui.vercel.app/',
+      github: 'https://github.com/Espiobest/poker-gui',
+      technologies: ['PyTorch', 'NumPy', 'Tensorboard', 'Reinforcement Learning'],
+    },
     {
       title: 'Travy',
       description:
@@ -30,13 +39,7 @@ const Projects = () => {
       image: './images/projects/travy-logo.png',
       technologies: ['React', 'Express.js', 'Docker', 'PostgreSQL', 'Leaflet'],
     },
-    {
-      title: 'Poker Bot',
-      description:
-        "Built a Deep Q-Network (DQN) agent to play Heads-Up Limit Texas Hold'em using reinforcement learning; ranked 4th out of 23 in tournament evaluation",
-      image: './images/projects/poker.png',
-      technologies: ['PyTorch', 'NumPy', 'Tensorboard', 'Reinforcement Learning'],
-    },
+
     {
       title: 'Spotify Stats',
       description: 'A comprehensive dashboard that visualizes Spotify listening history and habits',
