@@ -119,6 +119,13 @@ main {
   max-height: 500px;
   background-color: rgb(28 28 34) !important;
   box-shadow: none;
+  margin-top: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes tilt-shaking {
@@ -241,6 +248,13 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem;
   margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .experience-impact-label {
