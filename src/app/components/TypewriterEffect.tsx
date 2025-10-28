@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 const TypewriterEffect = () => {
-
   const [displayText, setDisplayText] = useState('');
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);

@@ -65,7 +65,7 @@ const Portfolio = () => {
                 MGHPCC
               </a>
             </span>{' '}
-            and part of the {' '}
+            and part of the{' '}
             <span className="highlight-text">
               <a href="https://ds.cs.umass.edu/programs/ds4cg/ds4cg-team" target="_blank">
                 DS4CG

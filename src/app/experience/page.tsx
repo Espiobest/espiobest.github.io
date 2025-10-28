@@ -47,7 +47,7 @@ const experiences = [
     impact:
       'Streamlined onboarding, improved developer velocity, and saved significant manual hours through automation and scalable systems.',
     link: 'https://edu.instilt.com',
-    github: 'https://github.com/Instilt-Educate'
+    github: 'https://github.com/Instilt-Educate',
   },
 ];
 
