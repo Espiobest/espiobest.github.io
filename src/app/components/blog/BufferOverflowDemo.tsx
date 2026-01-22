@@ -60,9 +60,9 @@ const BufferOverflowDemo: React.FC = () => {
       output += `│ ${input.slice(0, bufferSize)} │ myBuffer[${bufferSize}] ✓\n`;
       output += `└${'─'.repeat(bufferSize * 2)}┘\n`;
       output += `┌────┐\n`;
-      output += `│${overflowData.slice(0, 4).padEnd(4, '?')}│ mySecretValue ⚠️ OVERWRITTEN!\n`;
+      output += `│${overflowData.slice(0, 4).padEnd(4, '?')}│ mySecretValue OVERWRITTEN!\n`;
       output += `└────┘\n\n`;
-      output += `💥 The overflow corrupted adjacent memory!\n`;
+      output += `The overflow corrupted adjacent memory!\n`;
       output += `This is how attackers can hijack program execution.`;
     }
 

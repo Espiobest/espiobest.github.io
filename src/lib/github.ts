@@ -37,7 +37,14 @@ export const getGitHubStats = async (
     const events = await eventsResponse.json();
 
     // Find the most recent push event
-    const pushEvent = events.find((event: any) => event.type === 'PushEvent');
+    interface GitHubEvent {
+      type: string;
+      created_at: string;
+      repo?: {
+        name: string;
+      };
+    }
+    const pushEvent = events.find((event: GitHubEvent) => event.type === 'PushEvent');
     const lastCommitDate = pushEvent ? new Date(pushEvent.created_at) : new Date();
     const lastCommitRepoName = pushEvent?.repo?.name || '';
 

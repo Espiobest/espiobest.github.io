@@ -2,10 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
-import { serialize } from 'next-mdx-remote/serialize';
-import rehypeHighlight from 'rehype-highlight';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 export interface BlogPost {
   slug: string;
@@ -17,11 +13,6 @@ export interface BlogPost {
   coverImage?: string;
   readingTime: string;
   content?: string;
-}
-
-export interface BlogPostWithSource extends BlogPost {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mdxSource: any;
 }
 
 export interface TableOfContentsItem {
@@ -94,37 +85,6 @@ export function getAllTags(): string[] {
 export function getPostsByTag(tag: string): BlogPost[] {
   const posts = getAllPosts();
   return posts.filter((post) => post.tags.includes(tag));
-}
-
-// Serialize MDX content for rendering
-export async function serializePost(slug: string): Promise<BlogPostWithSource | null> {
-  const post = getPostBySlug(slug);
-  if (!post || !post.content) {
-    return null;
-  }
-
-  const mdxSource = await serialize(post.content, {
-    mdxOptions: {
-      rehypePlugins: [
-        rehypeHighlight,
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behavior: 'wrap',
-            properties: {
-              className: ['heading-anchor'],
-            },
-          },
-        ],
-      ],
-    },
-  });
-
-  return {
-    ...post,
-    mdxSource,
-  };
 }
 
 // Extract table of contents from MDX content

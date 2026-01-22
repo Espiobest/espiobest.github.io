@@ -1,4 +1,8 @@
 import type { NextConfig } from 'next';
+import createMDX from '@next/mdx';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -40,12 +44,6 @@ const nextConfig: NextConfig = {
   },
 
   webpack: (config, { isServer }) => {
-    // Allow MDX files to be imported
-    config.module.rules.push({
-      test: /\.mdx$/,
-      use: 'raw-loader',
-    });
-
     // Optimize bundle size
     if (!isServer) {
       config.optimization = {
@@ -78,4 +76,23 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: ['remark-frontmatter', 'remark-mdx-frontmatter'],
+    rehypePlugins: [
+      rehypeHighlight,
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: 'wrap',
+          properties: {
+            className: ['heading-anchor'],
+          },
+        },
+      ],
+    ],
+  },
+});
+
+export default withMDX(nextConfig);

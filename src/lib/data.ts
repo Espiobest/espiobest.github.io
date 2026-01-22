@@ -130,6 +130,6 @@ export const getBlogPosts = () => [
   {
     slug: 'rumba-ftp-exploit-cve-2016-5764',
     title: 'Rumba FTP Exploit (CVE-2016-5764)',
-    description: 'Deep dive into buffer overflow vulnerabilities',
+    description: ' Deep dive into a buffer overflow vulnerability in the Rumba FTP client.',
   },
 ];
