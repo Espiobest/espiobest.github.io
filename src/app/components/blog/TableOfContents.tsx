@@ -98,10 +98,7 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
 
   return (
     <Box className="toc-card">
-      <Typography
-        variant="h6"
-        style={{ marginBottom: '1rem', color: 'white', fontWeight: 600 }}
-      >
+      <Typography variant="h6" style={{ marginBottom: '1rem', color: 'white', fontWeight: 600 }}>
         Table of Contents
       </Typography>
       <nav>

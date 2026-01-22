@@ -7,7 +7,15 @@ const experiences = [
     title: 'Software Engineering Intern',
     org: 'CDS-AI',
     period: 'Sep 2025 - Present',
-    stack: ['React', 'TypeScript', 'Docker', 'PostgreSQL', 'S3', 'Computer Vision', 'Geospatial Data'],
+    stack: [
+      'React',
+      'TypeScript',
+      'Docker',
+      'PostgreSQL',
+      'S3',
+      'Computer Vision',
+      'Geospatial Data',
+    ],
     work: [
       'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
       'Implemented reliable synchronization of multi-organization datasets to NAS storage, handling heterogeneous formats with schema mapping, incremental updates, and fault-tolerant batch processing',

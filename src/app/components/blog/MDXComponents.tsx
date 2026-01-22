@@ -63,9 +63,7 @@ const MDXComponents = {
       {...props}
     />
   ),
-  li: (props: any) => (
-    <li style={{ marginBottom: '0.5rem', color: '#e5e7eb' }} {...props} />
-  ),
+  li: (props: any) => <li style={{ marginBottom: '0.5rem', color: '#e5e7eb' }} {...props} />,
   code: (props: any) => {
     // Inline code
     if (!props.className) {
@@ -97,7 +95,7 @@ const MDXComponents = {
             borderRadius: '0.5rem',
             margin: '1.5rem 0',
             maxWidth: '100%',
-            height: 'auto'
+            height: 'auto',
           }}
           alt={props.alt || ''}
         />
@@ -129,15 +127,9 @@ const MDXComponents = {
       {...props}
     />
   ),
-  strong: (props: any) => (
-    <strong style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />
-  ),
-  b: (props: any) => (
-    <b style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />
-  ),
-  em: (props: any) => (
-    <em style={{ color: '#e5e7eb' }} {...props} />
-  ),
+  strong: (props: any) => <strong style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />,
+  b: (props: any) => <b style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />,
+  em: (props: any) => <em style={{ color: '#e5e7eb' }} {...props} />,
   InteractiveDemo,
   InteractiveCodeRunner,
   BufferOverflowDemo,

@@ -45,14 +45,13 @@ const BufferOverflowDemo: React.FC = () => {
       // Simulate memory corruption
       // In a real overflow, the extra bytes would overwrite adjacent memory
       const overflowData = input.slice(bufferSize);
-      const corrupted = overflowData.split('')
-        .reduce((acc, char, idx) => {
-          if (idx < 4) {
-            // First 4 bytes corrupt the integer
-            acc += char.charCodeAt(0);
-          }
-          return acc;
-        }, 0);
+      const corrupted = overflowData.split('').reduce((acc, char, idx) => {
+        if (idx < 4) {
+          // First 4 bytes corrupt the integer
+          acc += char.charCodeAt(0);
+        }
+        return acc;
+      }, 0);
 
       output += `Buffer contents: "${input.slice(0, bufferSize)}${input.slice(bufferSize)}"\n`;
       output += `Secret value corrupted: ${secretValue} → ${corrupted}\n\n`;

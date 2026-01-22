@@ -1,8 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import hljs from 'highlight.js/lib/core';
+import c from 'highlight.js/lib/languages/c';
+import javascript from 'highlight.js/lib/languages/javascript';
+import python from 'highlight.js/lib/languages/python';
+
+// Register languages
+hljs.registerLanguage('c', c);
+hljs.registerLanguage('javascript', javascript);
+hljs.registerLanguage('python', python);
 
 interface InteractiveCodeRunnerProps {
   title?: string;
@@ -24,6 +33,13 @@ const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
   const [variables, setVariables] = useState(initialVariables);
   const [output, setOutput] = useState('');
   const [hasRun, setHasRun] = useState(false);
+  const codeRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (codeRef.current) {
+      hljs.highlightElement(codeRef.current);
+    }
+  }, [code]);
 
   const handleVariableChange = (key: string, value: string) => {
     setVariables((prev) => ({
@@ -54,10 +70,7 @@ const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
         marginBottom: '2rem',
       }}
     >
-      <Typography
-        variant="h6"
-        style={{ marginBottom: '1rem', color: '#60a5fa', fontWeight: 600 }}
-      >
+      <Typography variant="h6" style={{ marginBottom: '1rem', color: '#60a5fa', fontWeight: 600 }}>
         {title}
       </Typography>
 
@@ -82,10 +95,11 @@ const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
         }}
       >
         <code
+          ref={codeRef}
+          className={`language-${language}`}
           style={{
             fontFamily: 'var(--font-geist-mono)',
             fontSize: '0.9rem',
-            color: '#e5e7eb',
           }}
         >
           {code}
@@ -95,10 +109,7 @@ const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
       {/* Variable Controls */}
       {Object.keys(initialVariables).length > 0 && (
         <Box style={{ marginBottom: '1rem' }}>
-          <Typography
-            variant="subtitle2"
-            style={{ marginBottom: '0.5rem', color: '#60a5fa' }}
-          >
+          <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#60a5fa' }}>
             Modify Variables:
           </Typography>
           <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
@@ -152,10 +163,7 @@ const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
       {/* Output Display */}
       {hasRun && (
         <Box>
-          <Typography
-            variant="subtitle2"
-            style={{ marginBottom: '0.5rem', color: '#60a5fa' }}
-          >
+          <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#60a5fa' }}>
             Output:
           </Typography>
           <Box

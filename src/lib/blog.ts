@@ -38,9 +38,7 @@ export function getAllPostSlugs(): string[] {
     return [];
   }
   const files = fs.readdirSync(BLOG_CONTENT_PATH);
-  return files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => file.replace(/\.mdx$/, ''));
+  return files.filter((file) => file.endsWith('.mdx')).map((file) => file.replace(/\.mdx$/, ''));
 }
 
 // Get blog post data by slug
@@ -77,7 +75,7 @@ export function getAllPosts(): BlogPost[] {
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
     .filter((post): post is BlogPost => post !== null)
-    .sort((a, b) => (new Date(b.date).getTime() - new Date(a.date).getTime()));
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return posts;
 }
@@ -167,6 +165,6 @@ export function searchPosts(query: string): BlogPost[] {
       post.title.toLowerCase().includes(lowerQuery) ||
       post.description.toLowerCase().includes(lowerQuery) ||
       post.content?.toLowerCase().includes(lowerQuery) ||
-      post.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))
+      post.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
   );
 }

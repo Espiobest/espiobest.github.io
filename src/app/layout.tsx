@@ -16,8 +16,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Ayush Portfolio & Blog',
-  description: 'Portfolio website showcasing projects, experience, and technical blog posts by Ayush Ravi Chandran, CS & Math student at UMass Amherst.',
-  keywords: ['Ayush Ravi Chandran', 'UMass Amherst', 'Software Engineering', 'Web Development', 'Security', 'Blog', 'Portfolio'],
+  description:
+    'Portfolio website showcasing projects, experience, and technical blog posts by Ayush Ravi Chandran, CS & Math student at UMass Amherst.',
+  keywords: [
+    'Ayush Ravi Chandran',
+    'UMass Amherst',
+    'Software Engineering',
+    'Web Development',
+    'Security',
+    'Blog',
+    'Portfolio',
+  ],
   authors: [{ name: 'Ayush Ravi Chandran' }],
   creator: 'Ayush Ravi Chandran',
 };

@@ -15,7 +15,7 @@ interface BlogPostLayoutProps {
   tocItems: TableOfContentsItem[];
   children: React.ReactNode;
 }
-
+// TODO: Align hero with blog content and fix code runner
 const BlogPostLayout: React.FC<BlogPostLayoutProps> = ({ post, tocItems, children }) => {
   return (
     <Container
@@ -68,7 +68,15 @@ const BlogPostLayout: React.FC<BlogPostLayoutProps> = ({ post, tocItems, childre
           {post.title}
         </Typography>
 
-        <Box style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+        <Box
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '1rem',
+            flexWrap: 'wrap',
+          }}
+        >
           <Typography variant="body1" style={{ color: '#bdbdbd' }}>
             {format(new Date(post.date), 'MMMM dd, yyyy')}
           </Typography>

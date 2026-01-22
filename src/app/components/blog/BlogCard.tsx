@@ -16,11 +16,16 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
       <Card className="blog-card">
         <CardContent>
-          <Typography variant="h5" style={{ color: 'white', fontWeight: 600, marginBottom: '0.5rem' }}>
+          <Typography
+            variant="h5"
+            style={{ color: 'white', fontWeight: 600, marginBottom: '0.5rem' }}
+          >
             {post.title}
           </Typography>
 
-          <Box style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}>
+          <Box
+            style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}
+          >
             <Typography variant="body2" style={{ color: '#bdbdbd' }}>
               {format(new Date(post.date), 'MMM dd, yyyy')}
             </Typography>

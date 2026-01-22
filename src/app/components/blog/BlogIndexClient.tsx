@@ -31,7 +31,7 @@ const BlogIndexClient: React.FC<BlogIndexClientProps> = ({ initialPosts, initial
           post.title.toLowerCase().includes(lowerQuery) ||
           post.description.toLowerCase().includes(lowerQuery) ||
           post.content?.toLowerCase().includes(lowerQuery) ||
-          post.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))
+          post.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
       );
     }
 

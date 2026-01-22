@@ -22,7 +22,7 @@ const Projects = () => {
       awards:
         'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best Use of Github" at HackUMass',
     },
-     {
+    {
       title: 'Poker Bot',
       description:
         "Built a Deep Q-Network (DQN) agent to play Heads-Up Limit Texas Hold'em using reinforcement learning; ranked 4th out of 23 in tournament evaluation",
