@@ -282,9 +282,9 @@ main {
 
 /* Blog-specific styles */
 .blog-card {
-  background: rgba(17, 24, 39, 0.8);
+  background: rgba(17, 24, 39, 0.8) !important;
   border-radius: 0.75rem;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.3) !important;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
