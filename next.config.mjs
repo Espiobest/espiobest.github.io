@@ -1,12 +1,13 @@
-import type { NextConfig } from 'next';
 import createMDX from '@next/mdx';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   /**
    * Enable static exports.
    *
@@ -43,42 +44,41 @@ const nextConfig: NextConfig = {
     removeConsole: isProd ? { exclude: ['error', 'warn'] } : false,
   },
 
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Optimize bundle size
-    if (!isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: false,
-            vendors: false,
-            // Vendor chunk for MUI
-            mui: {
-              name: 'mui',
-              test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
-              priority: 40,
-              reuseExistingChunk: true,
-            },
-            // Commons chunk for shared code
-            commons: {
-              name: 'commons',
-              minChunks: 2,
-              priority: 20,
-              reuseExistingChunk: true,
-            },
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          // Vendor chunk for MUI
+          mui: {
+            name: 'mui',
+            test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
+            priority: 40,
+            reuseExistingChunk: true,
+          },
+          // Commons chunk for shared code
+          commons: {
+            name: 'commons',
+            minChunks: 2,
+            priority: 20,
+            reuseExistingChunk: true,
           },
         },
-      };
-    }
+      },
+    };
 
     return config;
   },
 };
 
 const withMDX = createMDX({
+  extension: /\.mdx?$/,
   options: {
-    remarkPlugins: ['remark-frontmatter', 'remark-mdx-frontmatter'],
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
     rehypePlugins: [
       rehypeHighlight,
       rehypeSlug,
