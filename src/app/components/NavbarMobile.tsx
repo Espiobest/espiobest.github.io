@@ -9,10 +9,14 @@ import Link from 'next/link';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
 const MobileNavbar = (props: { currentPath: string }) => {
-  const isActive = (path: string) =>
-    props.currentPath === path
+  const isActive = (path: string) => {
+    const isBlogActive = path === '/blog' && props.currentPath.startsWith('/blog');
+    const isExactMatch = props.currentPath === path;
+
+    return isBlogActive || isExactMatch
       ? { justifyContent: 'center', fontWeight: 'bold', backgroundColor: '#3b4352' }
       : { justifyContent: 'center' };
+  };
 
   return (
     <div
@@ -81,6 +85,14 @@ const MobileNavbar = (props: { currentPath: string }) => {
                   style={isActive('/projects')}
                 >
                   Projects
+                </MenuItem>
+                <MenuItem
+                  onClick={popupState.close}
+                  component={Link}
+                  href="/blog"
+                  style={isActive('/blog')}
+                >
+                  Blog
                 </MenuItem>
                 <MenuItem
                   onClick={popupState.close}

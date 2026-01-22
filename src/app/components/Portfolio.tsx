@@ -148,6 +148,26 @@ const Portfolio = () => {
                 borderColor: 'primary.dark',
               },
             }}
+            href="/blog"
+            startIcon={<StartIcon />}
+          >
+            Read My Blog
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="primary"
+            size="medium"
+            sx={{
+              borderRadius: 2,
+              borderColor: 'primary.main',
+              color: 'primary.main',
+              '&:hover': {
+                backgroundColor: 'primary.main',
+                color: 'common.white',
+                borderColor: 'primary.dark',
+              },
+            }}
             href="/contact"
           >
             Contact Me

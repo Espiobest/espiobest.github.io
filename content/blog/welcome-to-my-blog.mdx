@@ -1,0 +1,56 @@
+---
+title: "Welcome to My Blog"
+date: "2026-01-22"
+description: "An introduction to my technical blog where I'll share exploits, security research, and development insights."
+tags: ["Introduction", "Web Development"]
+author: "Ayush Ravi Chandran"
+---
+
+## Welcome
+
+Welcome to my technical blog! This is where I'll be sharing detailed writeups on security exploits, web development insights, and various technical projects I'm working on.
+
+## What to Expect
+
+In this blog, you'll find:
+
+- **Security Research**: Detailed exploit writeups and vulnerability analyses
+- **Web Development**: Tutorials and insights on modern web technologies
+- **Project Showcases**: Deep dives into my personal and academic projects
+- **Technical Guides**: Step-by-step tutorials on various topics
+
+## Code Examples
+
+Here's a quick example of syntax highlighting in action:
+
+```typescript
+interface BlogPost {
+  title: string;
+  date: string;
+  description: string;
+  tags: string[];
+}
+
+function getBlogPosts(): BlogPost[] {
+  return posts.sort((a, b) =>
+    new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+}
+```
+
+And some Python:
+
+```python
+def exploit_vulnerability(target_url):
+    payload = "admin' OR '1'='1"
+    response = requests.post(target_url, data={'username': payload})
+    return response.json()
+```
+
+## Stay Tuned
+
+More detailed posts coming soon! Check back for exploit writeups, project deep-dives, and technical tutorials.
+
+## Get in Touch
+
+Have questions or suggestions? Feel free to [reach out](/contact)!

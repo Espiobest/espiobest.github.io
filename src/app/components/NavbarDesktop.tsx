@@ -5,10 +5,15 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const DesktopNavbar = (props: { currentPath: string }) => {
-  const isActive = (path: string) =>
-    props.currentPath === path
+  const isActive = (path: string) => {
+    const isBlogActive = path === '/blog' && props.currentPath.startsWith('/blog');
+    const isExactMatch = props.currentPath === path;
+
+    return isBlogActive || isExactMatch
       ? { fontWeight: 'bold', textDecoration: 'underline', color: '#0070f3' }
       : {};
+  };
+
   return (
     <div>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -31,6 +36,12 @@ const DesktopNavbar = (props: { currentPath: string }) => {
           <Link href="/projects" passHref>
             <Typography variant="h6" className={'section-link'} style={isActive('/projects')}>
               Projects
+            </Typography>
+          </Link>
+
+          <Link href="/blog" passHref>
+            <Typography variant="h6" className={'section-link'} style={isActive('/blog')}>
+              Blog
             </Typography>
           </Link>
 

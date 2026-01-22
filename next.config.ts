@@ -26,6 +26,21 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+
+  /**
+   * Add MDX support
+   */
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+
+  webpack: (config) => {
+    // Allow MDX files to be imported
+    config.module.rules.push({
+      test: /\.mdx$/,
+      use: 'raw-loader',
+    });
+
+    return config;
+  },
 };
 
 export default nextConfig;
