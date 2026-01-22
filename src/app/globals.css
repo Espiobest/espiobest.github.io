@@ -17,9 +17,7 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family:
-    'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol';
+  font-family: var(--font-jetbrains-mono), monospace;
   animation: fadeInAnimation ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
