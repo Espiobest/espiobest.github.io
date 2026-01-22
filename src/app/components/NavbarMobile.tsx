@@ -4,11 +4,16 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import React from 'react';
+import TerminalIcon from '@mui/icons-material/Terminal';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
+import Terminal from './Terminal';
+
 const MobileNavbar = (props: { currentPath: string }) => {
+  const [terminalOpen, setTerminalOpen] = useState(false);
+
   const isActive = (path: string) => {
     const isBlogActive = path === '/blog' && props.currentPath.startsWith('/blog');
     const isExactMatch = props.currentPath === path;
@@ -36,6 +41,14 @@ const MobileNavbar = (props: { currentPath: string }) => {
         </IconButton>
         <IconButton color="inherit" href="https://www.linkedin.com/in/ayush-ravichandran/">
           <LinkedInIcon sx={{ marginRight: '0.5rem', fontSize: 30 }} />
+        </IconButton>
+        <IconButton
+          className={'nav-link'}
+          color="inherit"
+          onClick={() => setTerminalOpen(true)}
+          title="Open Terminal"
+        >
+          <TerminalIcon sx={{ fontSize: 40 }} />
         </IconButton>
         <PopupState variant="popover" popupId="mobile-menu-popup">
           {(popupState) => (
@@ -106,6 +119,7 @@ const MobileNavbar = (props: { currentPath: string }) => {
             </>
           )}
         </PopupState>
+        <Terminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
       </div>
     </div>
   );

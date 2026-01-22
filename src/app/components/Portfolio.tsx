@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Typography, Button, Box } from '@mui/material';
-import StartIcon from '@mui/icons-material/Start';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import TypewriterEffect from './TypewriterEffect';
 import Picture from './Picture';
 
@@ -79,7 +79,8 @@ const Portfolio = () => {
               style={{ marginTop: '1rem', borderRadius: '10px' }}
               href="/experience"
             >
-              Explore my experience &rarr;
+              Explore my experience{' '}
+              <KeyboardReturnIcon style={{ transform: 'scaleX(-1)', paddingRight: '0.5rem' }} />
             </Button>
           </Typography>
         </div>
@@ -100,26 +101,6 @@ const Portfolio = () => {
             size="medium"
             sx={{
               borderRadius: 2,
-              borderColor: 'primary.main', // darker border
-              color: 'primary.main', // darker text
-              '&:hover': {
-                backgroundColor: 'primary.main',
-                color: 'common.white',
-                borderColor: 'primary.dark',
-              },
-            }}
-            href="/projects"
-            startIcon={<StartIcon />}
-          >
-            Discover My Projects
-          </Button>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            size="medium"
-            sx={{
-              borderRadius: 2,
               borderColor: 'primary.main',
               color: 'primary.main',
               '&:hover': {
@@ -132,45 +113,6 @@ const Portfolio = () => {
             target="_blank"
           >
             View My Resume
-          </Button>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            size="medium"
-            sx={{
-              borderRadius: 2,
-              borderColor: 'primary.main',
-              color: 'primary.main',
-              '&:hover': {
-                backgroundColor: 'primary.main',
-                color: 'common.white',
-                borderColor: 'primary.dark',
-              },
-            }}
-            href="/blog"
-            startIcon={<StartIcon />}
-          >
-            Read My Blog
-          </Button>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            size="medium"
-            sx={{
-              borderRadius: 2,
-              borderColor: 'primary.main',
-              color: 'primary.main',
-              '&:hover': {
-                backgroundColor: 'primary.main',
-                color: 'common.white',
-                borderColor: 'primary.dark',
-              },
-            }}
-            href="/contact"
-          >
-            Contact Me
           </Button>
         </Box>
         <br></br>

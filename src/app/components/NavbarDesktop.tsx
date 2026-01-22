@@ -1,10 +1,17 @@
 import React from 'react';
+import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { Toolbar, Typography, IconButton } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TerminalIcon from '@mui/icons-material/Terminal';
+
+const Terminal = dynamic(() => import('./Terminal'), { ssr: false });
 
 const DesktopNavbar = (props: { currentPath: string }) => {
+  const [terminalOpen, setTerminalOpen] = useState(false);
+
   const isActive = (path: string) => {
     const isBlogActive = path === '/blog' && props.currentPath.startsWith('/blog');
     const isExactMatch = props.currentPath === path;
@@ -67,8 +74,18 @@ const DesktopNavbar = (props: { currentPath: string }) => {
           >
             <LinkedInIcon sx={{ fontSize: 40 }} />
           </IconButton>
+          <IconButton
+            className={'nav-link'}
+            color="inherit"
+            onClick={() => setTerminalOpen(true)}
+            title="Open Terminal"
+          >
+            <TerminalIcon sx={{ fontSize: 40 }} />
+          </IconButton>
         </div>
       </Toolbar>
+
+      <Terminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </div>
   );
 };

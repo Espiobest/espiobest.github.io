@@ -1,71 +1,18 @@
 'use client';
 
 import Image from 'next/image';
-import { Container, Typography, Card, CardContent } from '@mui/material';
+import { Container, Typography, Card, CardContent, Box, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'; // Crown/Award icon
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import Setup from '../components/Setup';
 import Tooltip from '@mui/material/Tooltip';
+import { getProjects } from '@/lib/data';
 
 const Projects = () => {
-  const projects = [
-    {
-      title: 'RouteAble',
-      description:
-        'A map-based application that uses crowd-sourced data to help disabled people determine accessible areas',
-      github: 'https://github.com/RouteAble/',
-      link: 'https://docs.google.com/presentation/d/145E9zU8xtpnWF9hRp2KIpmkV4GY5TStbv_fuzdng2to/edit#slide=id.g4dfce81f19_0_45',
-      image: './images/projects/routeable.png',
-      technologies: ['React Native', 'PostgreSQL', 'PyTorch', 'NestJS'],
-      awards:
-        'Won the "Most Impactful Award" & $2,000 at UChicago Tech Showcase \'24 and "Best Use of Github" at HackUMass',
-    },
-    {
-      title: 'Poker Bot',
-      description:
-        "Built a Deep Q-Network (DQN) agent to play Heads-Up Limit Texas Hold'em using reinforcement learning; ranked 4th out of 23 in tournament evaluation",
-      image: './images/projects/poker.png',
-      link: 'https://poker-gui.vercel.app/',
-      github: 'https://github.com/Espiobest/poker-gui',
-      technologies: ['PyTorch', 'NumPy', 'Tensorboard', 'Reinforcement Learning'],
-    },
-    {
-      title: 'Travy',
-      description:
-        'A full-stack app that centralizes travel planning by aggregating flights, transit, and rideshare data.',
-      github: 'https://github.com/tanushsavadi/Travy',
-      image: './images/projects/travy-logo.png',
-      technologies: ['React', 'Express.js', 'Docker', 'PostgreSQL', 'Leaflet'],
-    },
-
-    {
-      title: 'Spotify Stats',
-      description: 'A comprehensive dashboard that visualizes Spotify listening history and habits',
-      github: 'https://github.com/Espiobest/Spotify-Stats-Viewer',
-      link: 'https://stats-viewer.vercel.app/',
-      image: './images/projects/spotify-stats.png',
-      technologies: ['Next.js', 'React', 'TypeScript', 'Vercel', 'Spotify API'],
-    },
-    {
-      title: 'Instilt Educate Website',
-      description:
-        'Built to connect students and organizations globally, featuring a redesigned, user-friendly interface',
-      github: 'https://github.com/Instilt-Educate/instilt-educate.github.io',
-      link: 'https://edu.instilt.com',
-      image: './images/projects/instilt-educate.png',
-      technologies: ['JavaScript', 'HTML', 'CSS', 'Bootstrap', 'Google Analytics'],
-    },
-    {
-      title: 'Discord Bot',
-      description:
-        'A moderation bot for a Discord community of 30,000+, enhancing community safety and engagement',
-      github: 'https://github.com/Espiobest/Discord-Bot/',
-      image: './images/projects/discord-mark-blue.png',
-      technologies: ['Python', 'PostgreSQL', 'Discord.py', 'Heroku'],
-    },
-  ];
+  const projects = getProjects();
 
   return (
     <div>
@@ -139,6 +86,25 @@ const Projects = () => {
           ))}
         </div>
       </Container>
+      <Box className="text-center">
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '1rem', borderRadius: '10px' }}
+          href="/experience"
+        >
+          <KeyboardReturnIcon style={{ paddingRight: '0.5rem' }} /> Back to Experiences
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: '1rem', marginLeft: '1rem', borderRadius: '10px' }}
+          href="/blog"
+        >
+          Read my blog{' '}
+          <KeyboardReturnIcon style={{ transform: 'scaleX(-1)', paddingRight: '0.5rem' }} />
+        </Button>
+      </Box>
     </div>
   );
 };
