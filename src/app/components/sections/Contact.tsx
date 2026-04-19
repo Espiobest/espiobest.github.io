@@ -29,7 +29,7 @@ export default function Contact() {
 
     emailjs.send('service_tgyqckj', 'template_cqxleva', template, 'WCSPkyN9UqtcCZauc').then(
       () => {
-        setStatus({ message: 'Sent. I\'ll get back to you soon.', isError: false });
+        setStatus({ message: "Sent. I'll get back to you soon.", isError: false });
         setIsLoading(false);
         localStorage.setItem('lastContactSubmit', Date.now().toString());
         formRef.current?.reset();
@@ -42,27 +42,27 @@ export default function Contact() {
   };
 
   const inputClass =
-    'w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg px-4 py-3 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--border-hover)] transition-colors';
+    'w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg px-4 py-3 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--border-hover)] transition-colors resize-none';
 
   return (
     <section id="contact" className="section border-t border-[var(--border)]">
-      <div className="container mx-auto max-w-[900px] px-6">
+      <div className="mx-auto max-w-[900px] px-6">
         <p className="section-title">contact</p>
 
-        <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 items-start">
+        <div className="grid md:grid-cols-[1fr_1.4fr] gap-10 md:gap-16 items-start">
           {/* Left */}
           <div>
             <h2 className="text-2xl font-light text-[var(--text)] mb-4">Let&apos;s connect.</h2>
-            <p className="text-sm text-[#777] leading-relaxed mb-8">
+            <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-8">
               Whether it&apos;s a job opportunity, collaboration, or just a question — I&apos;m open to it.
             </p>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {[
                 { label: 'GitHub', href: 'https://github.com/Espiobest', display: 'Espiobest' },
                 { label: 'LinkedIn', href: 'https://linkedin.com/in/ayush-ravichandran', display: 'ayush-ravichandran' },
               ].map((link) => (
-                <div key={link.label} className="flex items-center gap-3">
-                  <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest w-16">{link.label}</span>
+                <div key={link.label} className="flex items-center gap-4">
+                  <span className="text-xs text-[var(--text-muted)] uppercase tracking-widest w-16 shrink-0">{link.label}</span>
                   <a
                     href={link.href}
                     target="_blank"
@@ -77,11 +77,11 @@ export default function Contact() {
           </div>
 
           {/* Form */}
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-3">
             <input className={inputClass} type="text" name="name" placeholder="Name" required />
             <input className={inputClass} type="email" name="email" placeholder="Email" required />
             <textarea className={inputClass} name="message" placeholder="Message" rows={5} required />
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4 pt-1">
               <button
                 type="submit"
                 disabled={isLoading}
@@ -90,7 +90,7 @@ export default function Contact() {
                 {isLoading ? 'Sending...' : 'Send message'}
               </button>
               {status && (
-                <p className={`text-xs ${status.isError ? 'text-red-400' : 'text-[#86efac]'}`}>
+                <p className={`text-sm ${status.isError ? 'text-red-400' : 'text-[#86efac]'}`}>
                   {status.message}
                 </p>
               )}
@@ -98,8 +98,8 @@ export default function Contact() {
           </form>
         </div>
 
-        {/* Footer line */}
-        <div className="mt-20 pt-8 border-t border-[var(--border)] flex items-center justify-between text-xs text-[var(--text-muted)]">
+        {/* Footer */}
+        <div className="mt-20 pt-8 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
           <span>Ayush Ravi Chandran</span>
           <span>Built with Next.js + Tailwind</span>
         </div>

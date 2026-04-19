@@ -10,27 +10,22 @@ export default function Experience() {
 
         <div className="space-y-14">
           {experiences.map((exp, idx) => (
-            <div key={exp.org} className="grid md:grid-cols-[160px_1fr] gap-3 md:gap-10">
-              {/* Left: period + index */}
+            <div key={exp.org} className="grid md:grid-cols-[150px_1fr] gap-2 md:gap-10">
+              {/* Period */}
               <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-1 md:pt-0.5">
-                <span className="text-[var(--text-subtle)] mono text-[0.65rem] select-none">
+                <span className="text-[var(--text-subtle)] mono text-xs select-none hidden md:block">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <p className="text-xs text-[var(--text-muted)] mono leading-relaxed">
-                  {exp.period}
-                </p>
+                <p className="text-xs text-[var(--text-muted)] mono leading-relaxed">{exp.period}</p>
               </div>
 
-              {/* Right: content with left-border timeline feel */}
-              <div className="pl-5 md:pl-6 border-l border-[var(--border)] relative">
-                {/* Timeline dot */}
-                <span className="absolute -left-[3px] top-1.5 w-1.5 h-1.5 rounded-full bg-[var(--text-subtle)]" />
+              {/* Content */}
+              <div className="pl-4 md:pl-6 border-l border-[var(--border)] relative">
+                <span className="absolute -left-[3px] top-2 w-1.5 h-1.5 rounded-full bg-[var(--border-hover)]" />
 
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <div>
-                    <h3 className="text-[var(--text)] font-medium text-sm leading-snug">
-                      {exp.title}
-                    </h3>
+                    <h3 className="text-[var(--text)] font-medium leading-snug">{exp.title}</h3>
                     <a
                       href={exp.link}
                       target="_blank"
@@ -52,11 +47,11 @@ export default function Experience() {
                   )}
                 </div>
 
-                <p className="text-sm text-[#888] mb-4 leading-relaxed">{exp.impact}</p>
+                <p className="text-sm text-[var(--text-secondary)] mb-4 leading-relaxed">{exp.impact}</p>
 
                 <ul className="space-y-2 mb-4">
                   {exp.work.map((item, i) => (
-                    <li key={i} className="flex gap-2.5 text-[0.8rem] text-[#666] leading-relaxed">
+                    <li key={i} className="flex gap-2.5 text-sm text-[var(--text-muted)] leading-relaxed">
                       <span className="text-[var(--text-subtle)] mt-[3px] shrink-0">—</span>
                       <span>{item}</span>
                     </li>

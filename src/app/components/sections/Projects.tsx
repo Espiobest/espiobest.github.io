@@ -10,14 +10,19 @@ export default function Projects() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {projects.map((project) => (
-            <div key={project.name} className="project-card group relative flex flex-col gap-3 p-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-all duration-300">
+            <div
+              key={project.name}
+              className="group relative flex flex-col gap-3 p-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-all duration-300"
+            >
               {/* Hover glow */}
-              <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ boxShadow: 'inset 0 0 0 1px rgba(232,197,71,0.15), 0 0 24px -8px rgba(232,197,71,0.08)' }} />
+              <div
+                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                style={{ boxShadow: 'inset 0 0 0 1px rgba(232,197,71,0.15), 0 0 24px -8px rgba(232,197,71,0.08)' }}
+              />
 
               {/* Header */}
               <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200">
+                <h3 className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200 leading-snug">
                   {project.name}
                 </h3>
                 <div className="flex gap-2.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -44,7 +49,7 @@ export default function Projects() {
               )}
 
               {/* Description */}
-              <p className="text-[0.78rem] text-[#666] leading-relaxed flex-1">{project.description}</p>
+              <p className="text-sm text-[var(--text-muted)] leading-relaxed flex-1">{project.description}</p>
 
               {/* Tech */}
               <div className="flex flex-wrap gap-1">

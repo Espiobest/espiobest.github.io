@@ -6,12 +6,12 @@ export default function Writing() {
 
   return (
     <section id="writing" className="section">
-      <div className="container mx-auto max-w-[900px] px-6">
-        <div className="flex items-baseline justify-between mb-12">
+      <div className="mx-auto max-w-[900px] px-6">
+        <div className="flex items-baseline justify-between mb-10">
           <p className="section-title mb-0">writing</p>
           <Link
             href="/blog"
-            className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
           >
             all posts →
           </Link>
@@ -25,19 +25,17 @@ export default function Writing() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="flex items-baseline justify-between py-4 gap-4 group"
+                className="flex items-start sm:items-baseline justify-between py-5 gap-4 group"
               >
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm text-[var(--text)] group-hover:text-[var(--accent)] transition-colors truncate">
+                  <h3 className="text-base text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-[#666] mt-0.5 truncate">{post.description}</p>
+                  <p className="text-sm text-[var(--text-muted)] mt-1 line-clamp-1">{post.description}</p>
                 </div>
-                <div className="flex items-center gap-4 shrink-0">
-                  <span className="text-xs text-[var(--text-muted)] mono">{post.readingTime}</span>
-                  <span className="text-xs text-[var(--text-subtle)] group-hover:text-[var(--text-muted)] transition-colors">
-                    →
-                  </span>
+                <div className="flex items-center gap-4 shrink-0 pt-0.5">
+                  <span className="text-xs text-[var(--text-muted)] mono hidden sm:block">{post.readingTime}</span>
+                  <span className="text-sm text-[var(--text-subtle)] group-hover:text-[var(--text-muted)] transition-colors">→</span>
                 </div>
               </Link>
             ))}

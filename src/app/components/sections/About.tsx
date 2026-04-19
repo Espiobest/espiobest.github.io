@@ -10,9 +10,9 @@ export default function About() {
       <div className="mx-auto max-w-[900px] px-6">
         <p className="section-title">about</p>
 
-        <div className="grid md:grid-cols-[1fr_260px] gap-12 md:gap-16 items-start">
+        <div className="grid md:grid-cols-[1fr_240px] gap-10 md:gap-16 items-start">
           {/* Text */}
-          <div className="space-y-4 text-[#999] leading-[1.85] text-sm">
+          <div className="space-y-4 text-[var(--text-secondary)] leading-[1.85]">
             <p>
               I&apos;m a senior at UMass Amherst studying Computer Science and Mathematics. I build
               things that range from data pipelines serving researchers to poker-playing neural
@@ -37,7 +37,7 @@ export default function About() {
             </p>
 
             {/* Fact grid */}
-            <div className="pt-3 grid grid-cols-2 gap-x-8 gap-y-4">
+            <div className="pt-2 grid grid-cols-2 gap-x-8 gap-y-5">
               {[
                 ['Based in', 'Massachusetts, USA'],
                 ['School', 'UMass Amherst'],
@@ -45,15 +45,15 @@ export default function About() {
                 ['Open to', 'New Grad 2026 roles'],
               ].map(([k, v]) => (
                 <div key={k}>
-                  <p className="text-[0.65rem] text-[var(--text-muted)] uppercase tracking-[0.1em] mb-0.5">{k}</p>
-                  <p className="text-sm text-[var(--text-secondary)]">{v}</p>
+                  <p className="text-[0.68rem] text-[var(--text-muted)] uppercase tracking-[0.1em] mb-1">{k}</p>
+                  <p className="text-sm text-[var(--text)]">{v}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* 3D model */}
-          <div className="flex flex-col items-center gap-3">
+          {/* 3D model — hidden on small mobile, shown md+ */}
+          <div className="hidden sm:flex flex-col items-center gap-3">
             <div
               className="w-full aspect-square rounded-xl overflow-hidden border border-[var(--border)]"
               style={{ background: 'transparent' }}

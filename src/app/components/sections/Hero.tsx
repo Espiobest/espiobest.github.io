@@ -12,27 +12,27 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-14">
+    <section className="relative min-h-screen flex flex-col justify-center pt-16">
       <div className="mx-auto max-w-[900px] px-6 w-full">
         {/* Name */}
         <motion.div className="mb-8" {...fadeUp(0)}>
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-light text-[var(--text)] leading-[1.05] mb-3"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[var(--text)] leading-[1.06] mb-4"
             style={{ letterSpacing: '-0.025em' }}
           >
             Ayush Ravi Chandran
           </h1>
-          <p className="text-sm text-[var(--text-muted)] tracking-wide">
+          <p className="text-base text-[var(--text-muted)] tracking-wide">
             आयुष रवि चंद्रन &nbsp;&middot;&nbsp; ஆயுஷ் ரவி சந்திரன்
           </p>
         </motion.div>
 
         {/* Status */}
-        <motion.div className="mb-10 space-y-1.5" {...fadeUp(0.12)}>
-          <p className="text-sm text-[var(--text-secondary)]">
+        <motion.div className="mb-10 space-y-2" {...fadeUp(0.12)}>
+          <p className="text-base text-[var(--text-secondary)]">
             CS & Mathematics @ UMass Amherst &nbsp;&middot;&nbsp; New Grad 2026
           </p>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-base text-[var(--text-secondary)]">
             Currently: SWE Intern{' '}
             <a
               href="https://ds.cs.umass.edu/"
@@ -51,7 +51,7 @@ export default function Hero() {
             href="/documents/Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm px-4 py-2 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all duration-200"
+            className="text-sm px-5 py-2.5 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all duration-200"
           >
             Resume ↗
           </a>
@@ -86,7 +86,7 @@ export default function Hero() {
         }}
         aria-label="Scroll down"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
           <line x1="12" y1="5" x2="12" y2="19" />
           <polyline points="19 12 12 19 5 12" />
         </svg>
