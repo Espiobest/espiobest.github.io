@@ -6,50 +6,46 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
 const Setup = () => {
   const mount = useRef<HTMLDivElement>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   useEffect(() => {
-    if (!mount.current || rendererRef.current) return;
+    const container = mount.current;
+    if (!container) return;
+
+    // Clear any leftover canvas from a previous mount (React strict mode)
+    container.innerHTML = '';
 
     let spinSpeed = 0.003;
     const spinDecay = 0.985;
     let userInteracting = false;
-    let paused = false;
+    let animId: number;
 
     const scene = new THREE.Scene();
     scene.background = null;
 
-    const w = mount.current.clientWidth || 240;
-    const h = mount.current.clientHeight || 240;
+    const w = container.clientWidth || 240;
+    const h = container.clientHeight || 240;
 
     const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      logarithmicDepthBuffer: true,
-    });
-    rendererRef.current = renderer;
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, logarithmicDepthBuffer: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(w, h);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setClearColor(0x000000, 0);
-    mount.current.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
 
     const resize = () => {
-      if (!mount.current) return;
-      const nw = mount.current.clientWidth;
-      const nh = mount.current.clientHeight;
+      const nw = container.clientWidth;
+      const nh = container.clientHeight;
       if (nw && nh) {
         renderer.setSize(nw, nh);
         camera.aspect = nw / nh;
         camera.updateProjectionMatrix();
       }
     };
-
     const ro = new ResizeObserver(resize);
-    ro.observe(mount.current);
+    ro.observe(container);
 
     // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 2));
@@ -73,14 +69,8 @@ const Setup = () => {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    // Stop auto-spin when user drags
-    controls.addEventListener('start', () => {
-      userInteracting = true;
-      spinSpeed = 0;
-    });
-    controls.addEventListener('end', () => {
-      userInteracting = false;
-    });
+    controls.addEventListener('start', () => { userInteracting = true; spinSpeed = 0; });
+    controls.addEventListener('end', () => { userInteracting = false; });
 
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
@@ -107,8 +97,7 @@ const Setup = () => {
           const scale = 1 / maxDim;
           gltf.scene.scale.set(scale, scale, scale);
 
-          const modelHeight = size.y * scale;
-          camera.position.set(0, modelHeight / 3, 1.5);
+          camera.position.set(0, (size.y * scale) / 3, 1.5);
           camera.lookAt(0, 0, 0);
 
           gltf.scene.traverse((child) => {
@@ -119,24 +108,16 @@ const Setup = () => {
           });
         },
         undefined,
-        () => {
-          if (retryCount < 3) setTimeout(() => loadModel(retryCount + 1), 1000);
-        },
+        () => { if (retryCount < 3) setTimeout(() => loadModel(retryCount + 1), 1000); },
       );
     };
 
     loadModel();
 
-    const visObs = new IntersectionObserver(
-      ([entry]) => { paused = !entry.isIntersecting; },
-      { rootMargin: '100px' },
-    );
-    visObs.observe(mount.current);
-
-    let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      if (paused) return;
+      // Skip rendering when tab is hidden to save resources
+      if (document.hidden) return;
       if (modelGroup && !userInteracting && spinSpeed > 0) {
         modelGroup.rotation.y += spinSpeed;
         spinSpeed *= spinDecay;
@@ -148,19 +129,16 @@ const Setup = () => {
 
     return () => {
       cancelAnimationFrame(animId);
-      visObs.disconnect();
       ro.disconnect();
       controls.dispose();
       renderer.dispose();
-      rendererRef.current = null;
+      // Remove canvas so next mount starts clean
+      container.innerHTML = '';
     };
   }, []);
 
   return (
-    <div
-      ref={mount}
-      style={{ width: '100%', height: '100%', background: 'transparent' }}
-    />
+    <div ref={mount} style={{ width: '100%', height: '100%', background: 'transparent' }} />
   );
 };
 
