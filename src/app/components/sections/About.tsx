@@ -1,24 +1,10 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
 
 const Setup = dynamic(() => import('../Setup'), { ssr: false });
 
 export default function About() {
-  const modelContainerRef = useRef<HTMLDivElement>(null);
-  const [modelVisible, setModelVisible] = useState(false);
-
-  useEffect(() => {
-    const el = modelContainerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setModelVisible(entry.isIntersecting),
-      { rootMargin: '200px' }, // start loading slightly before it enters view
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section id="about" className="section">
@@ -70,11 +56,10 @@ export default function About() {
           {/* 3D model — hidden on small mobile, shown sm+ */}
           <div className="hidden sm:flex flex-col items-center gap-3">
             <div
-              ref={modelContainerRef}
               className="w-full rounded-xl overflow-hidden border border-[var(--border)]"
               style={{ background: 'transparent', height: '240px' }}
             >
-              {modelVisible && <Setup />}
+              <Setup />
             </div>
             <p className="text-[0.65rem] text-[var(--text-muted)] tracking-wide uppercase">
               my desk · drag to rotate

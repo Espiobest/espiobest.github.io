@@ -14,6 +14,7 @@ const Setup = () => {
     let spinSpeed = 0.003;
     const spinDecay = 0.985;
     let userInteracting = false;
+    let paused = false;
 
     const scene = new THREE.Scene();
     scene.background = null;
@@ -126,9 +127,16 @@ const Setup = () => {
 
     loadModel();
 
+    const visObs = new IntersectionObserver(
+      ([entry]) => { paused = !entry.isIntersecting; },
+      { rootMargin: '100px' },
+    );
+    visObs.observe(mount.current);
+
     let animId: number;
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      if (paused) return;
       if (modelGroup && !userInteracting && spinSpeed > 0) {
         modelGroup.rotation.y += spinSpeed;
         spinSpeed *= spinDecay;
@@ -140,6 +148,7 @@ const Setup = () => {
 
     return () => {
       cancelAnimationFrame(animId);
+      visObs.disconnect();
       ro.disconnect();
       controls.dispose();
       renderer.dispose();
