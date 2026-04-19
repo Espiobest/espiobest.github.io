@@ -11,7 +11,6 @@ const Setup = () => {
     const container = mount.current;
     if (!container) return;
 
-    // Clear any leftover canvas from a previous mount (React strict mode)
     container.innerHTML = '';
 
     let spinSpeed = 0.003;
@@ -25,13 +24,17 @@ const Setup = () => {
     const w = container.clientWidth || 240;
     const h = container.clientHeight || 240;
 
-    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 100);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, logarithmicDepthBuffer: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: 'low-power',
+    });
+    // Cap pixel ratio at 1.5 — avoids 4× buffer on retina with no visible benefit at 240px
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(w, h);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // No shadow maps — saves ~8MB of GPU memory per light
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
@@ -47,24 +50,11 @@ const Setup = () => {
     const ro = new ResizeObserver(resize);
     ro.observe(container);
 
-    // Lighting
-    scene.add(new THREE.AmbientLight(0xffffff, 2));
-    const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+    // Lighting — hemisphere + directional, no shadows
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 2));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
     dirLight.position.set(5, 5, 5);
-    dirLight.castShadow = true;
-    dirLight.shadow.mapSize.width = 512;
-    dirLight.shadow.mapSize.height = 512;
     scene.add(dirLight);
-
-    // Shadow ground
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(10, 10),
-      new THREE.ShadowMaterial({ opacity: 0.5 }),
-    );
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.65;
-    ground.receiveShadow = true;
-    scene.add(ground);
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -75,48 +65,33 @@ const Setup = () => {
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
-    dracoLoader.setDecoderConfig({ type: 'js' });
     loader.setDRACOLoader(dracoLoader);
 
     let modelGroup: THREE.Group;
 
-    const loadModel = (retryCount = 0) => {
-      loader.load(
-        'setup.glb',
-        (gltf) => {
-          modelGroup = new THREE.Group();
-          modelGroup.add(gltf.scene);
-          scene.add(modelGroup);
+    loader.load(
+      'setup.glb',
+      (gltf) => {
+        modelGroup = new THREE.Group();
+        modelGroup.add(gltf.scene);
+        scene.add(modelGroup);
 
-          const box = new THREE.Box3().setFromObject(gltf.scene);
-          const center = box.getCenter(new THREE.Vector3());
-          gltf.scene.position.sub(center);
+        const box = new THREE.Box3().setFromObject(gltf.scene);
+        const center = box.getCenter(new THREE.Vector3());
+        gltf.scene.position.sub(center);
 
-          const size = box.getSize(new THREE.Vector3());
-          const maxDim = Math.max(size.x, size.y, size.z);
-          const scale = 1 / maxDim;
-          gltf.scene.scale.set(scale, scale, scale);
+        const size = box.getSize(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        gltf.scene.scale.set(scale, scale, scale);
 
-          camera.position.set(0, (size.y * scale) / 3, 1.5);
-          camera.lookAt(0, 0, 0);
-
-          gltf.scene.traverse((child) => {
-            if (child instanceof THREE.Mesh) {
-              child.castShadow = true;
-              child.receiveShadow = true;
-            }
-          });
-        },
-        undefined,
-        () => { if (retryCount < 3) setTimeout(() => loadModel(retryCount + 1), 1000); },
-      );
-    };
-
-    loadModel();
+        camera.position.set(0, (size.y * scale) / 3, 1.5);
+        camera.lookAt(0, 0, 0);
+      },
+    );
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
-      // Skip rendering when tab is hidden to save resources
       if (document.hidden) return;
       if (modelGroup && !userInteracting && spinSpeed > 0) {
         modelGroup.rotation.y += spinSpeed;
@@ -132,7 +107,6 @@ const Setup = () => {
       ro.disconnect();
       controls.dispose();
       renderer.dispose();
-      // Remove canvas so next mount starts clean
       container.innerHTML = '';
     };
   }, []);
