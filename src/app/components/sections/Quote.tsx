@@ -5,14 +5,16 @@ interface QuoteProps {
 
 export default function Quote({ text, author }: QuoteProps) {
   return (
-    <div className="py-16 border-y border-[var(--border)]">
-      <div className="container mx-auto max-w-[900px] px-6">
-        <blockquote className="text-center">
-          <p className="text-lg md:text-xl font-light text-[var(--text-secondary)] leading-relaxed italic max-w-2xl mx-auto">
-            &ldquo;{text}&rdquo;
+    <div className="py-14 border-y border-[var(--border)]">
+      <div className="mx-auto max-w-[900px] px-6">
+        <blockquote className="max-w-xl">
+          {/* Decorative mark */}
+          <span className="block text-3xl text-[var(--accent)] leading-none mb-4 select-none opacity-60">&ldquo;</span>
+          <p className="text-base md:text-lg font-light text-[var(--text-secondary)] leading-relaxed italic">
+            {text}
           </p>
-          <footer className="mt-4 text-xs text-[var(--text-muted)] uppercase tracking-widest">
-            — {author}
+          <footer className="mt-5 text-[0.7rem] text-[var(--text-muted)] uppercase tracking-[0.12em]">
+            {author}
           </footer>
         </blockquote>
       </div>

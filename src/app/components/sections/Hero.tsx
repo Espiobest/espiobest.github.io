@@ -1,49 +1,61 @@
 'use client';
 
-export default function Hero() {
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
+import { motion } from 'framer-motion';
 
+const ease = [0.21, 0.47, 0.32, 0.98] as const;
+
+const fadeUp = (delay: number) => ({
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, delay, ease },
+});
+
+export default function Hero() {
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-14">
-      <div className="container mx-auto max-w-[900px] px-6">
-        {/* Name block */}
-        <div className="mb-8">
+    <section className="relative min-h-screen flex flex-col justify-center pt-14 overflow-hidden">
+      {/* Ambient glow */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 60% at 10% -5%, rgba(232,197,71,0.04) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 90% 110%, rgba(147,197,253,0.03) 0%, transparent 60%)',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-[900px] px-6 w-full">
+        {/* Name */}
+        <motion.div className="mb-8" {...fadeUp(0)}>
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-light tracking-tight text-[var(--text)] leading-none mb-3"
-            style={{ letterSpacing: '-0.02em' }}
+            className="text-5xl sm:text-6xl md:text-7xl font-light text-[var(--text)] leading-[1.05] mb-3"
+            style={{ letterSpacing: '-0.025em' }}
           >
             Ayush Ravi Chandran
           </h1>
-          <p
-            className="text-base text-[var(--text-muted)]"
-            style={{ fontFeatureSettings: '"kern"' }}
-          >
-            आयुष रवि चंद्रन &nbsp;·&nbsp; ஆயுஷ் ரவி சந்திரன்
+          <p className="text-sm text-[var(--text-muted)] tracking-wide">
+            आयुष रवि चंद्रन &nbsp;&middot;&nbsp; ஆயுஷ் ரவி சந்திரன்
           </p>
-        </div>
+        </motion.div>
 
         {/* Status */}
-        <div className="mb-10 space-y-1">
-          <p className="text-[var(--text-secondary)] text-sm">
-            CS & Mathematics @ UMass Amherst &nbsp;·&nbsp; New Grad 2026
+        <motion.div className="mb-10 space-y-1.5" {...fadeUp(0.12)}>
+          <p className="text-sm text-[var(--text-secondary)]">
+            CS & Mathematics @ UMass Amherst &nbsp;&middot;&nbsp; New Grad 2026
           </p>
-          <p className="text-[var(--text-secondary)] text-sm">
+          <p className="text-sm text-[var(--text-secondary)]">
             Currently: SWE Intern{' '}
             <a
               href="https://ds.cs.umass.edu/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--text)] hover:text-[var(--accent)] transition-colors underline underline-offset-2"
+              className="text-[var(--text)] hover:text-[var(--accent)] transition-colors underline underline-offset-2 decoration-[var(--border-hover)]"
             >
               @CDS-AI
             </a>
           </p>
-        </div>
+        </motion.div>
 
         {/* Links */}
-        <div className="flex items-center gap-6 flex-wrap">
+        <motion.div className="flex items-center gap-5 flex-wrap" {...fadeUp(0.22)}>
           <a
             href="/documents/Resume.pdf"
             target="_blank"
@@ -68,20 +80,26 @@ export default function Hero() {
           >
             LinkedIn
           </a>
-        </div>
-
-        {/* Scroll cue */}
-        <button
-          onClick={() => scrollTo('work')}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--text-subtle)] hover:text-[var(--text-muted)] transition-colors"
-          aria-label="Scroll down"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <polyline points="19 12 12 19 5 12" />
-          </svg>
-        </button>
+        </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.button
+        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, y: [0, 6, 0] }}
+        transition={{
+          opacity: { delay: 0.6, duration: 0.4 },
+          y: { delay: 0.8, duration: 2, repeat: Infinity, ease: 'easeInOut' },
+        }}
+        aria-label="Scroll down"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <polyline points="19 12 12 19 5 12" />
+        </svg>
+      </motion.button>
     </section>
   );
 }

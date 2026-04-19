@@ -5,24 +5,32 @@ export default function Experience() {
 
   return (
     <section id="work" className="section">
-      <div className="container mx-auto max-w-[900px] px-6">
+      <div className="mx-auto max-w-[900px] px-6">
         <p className="section-title">work</p>
 
-        <div className="space-y-12">
-          {experiences.map((exp) => (
-            <div key={exp.org} className="grid md:grid-cols-[140px_1fr] gap-4 md:gap-8">
-              {/* Left: period */}
-              <div className="md:pt-0.5">
+        <div className="space-y-14">
+          {experiences.map((exp, idx) => (
+            <div key={exp.org} className="grid md:grid-cols-[160px_1fr] gap-3 md:gap-10">
+              {/* Left: period + index */}
+              <div className="flex md:flex-col items-center md:items-start gap-3 md:gap-1 md:pt-0.5">
+                <span className="text-[var(--text-subtle)] mono text-[0.65rem] select-none">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
                 <p className="text-xs text-[var(--text-muted)] mono leading-relaxed">
                   {exp.period}
                 </p>
               </div>
 
-              {/* Right: content */}
-              <div>
+              {/* Right: content with left-border timeline feel */}
+              <div className="pl-5 md:pl-6 border-l border-[var(--border)] relative">
+                {/* Timeline dot */}
+                <span className="absolute -left-[3px] top-1.5 w-1.5 h-1.5 rounded-full bg-[var(--text-subtle)]" />
+
                 <div className="flex items-start justify-between gap-4 mb-2">
                   <div>
-                    <h3 className="text-[var(--text)] font-medium text-sm">{exp.title}</h3>
+                    <h3 className="text-[var(--text)] font-medium text-sm leading-snug">
+                      {exp.title}
+                    </h3>
                     <a
                       href={exp.link}
                       target="_blank"
@@ -37,27 +45,24 @@ export default function Experience() {
                       href={exp.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors shrink-0"
+                      className="text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors shrink-0 mono"
                     >
-                      GitHub ↗
+                      repo ↗
                     </a>
                   )}
                 </div>
 
-                {/* Impact one-liner */}
-                <p className="text-sm text-[#999] mb-3 leading-relaxed">{exp.impact}</p>
+                <p className="text-sm text-[#888] mb-4 leading-relaxed">{exp.impact}</p>
 
-                {/* Bullet points */}
-                <ul className="space-y-1.5 mb-4">
+                <ul className="space-y-2 mb-4">
                   {exp.work.map((item, i) => (
-                    <li key={i} className="flex gap-2 text-sm text-[#777]">
-                      <span className="text-[var(--text-subtle)] mt-1 shrink-0">–</span>
+                    <li key={i} className="flex gap-2.5 text-[0.8rem] text-[#666] leading-relaxed">
+                      <span className="text-[var(--text-subtle)] mt-[3px] shrink-0">—</span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
 
-                {/* Stack */}
                 <div className="flex flex-wrap gap-1.5">
                   {exp.stack.map((tech) => (
                     <span key={tech} className="tag">{tech}</span>
