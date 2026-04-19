@@ -394,16 +394,28 @@ a {
   color: #c8c8c8;
 }
 
-/* ─── Fade-in animation ──────────────────────────── */
+/* ─── Fade-in animations ─────────────────────────── */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero stagger: applied immediately on mount */
+.hero-fade {
+  opacity: 0;
+  animation: fadeUp 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98) forwards;
+}
+
+/* Scroll-triggered: added by JS when element enters viewport */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+              transform 0.55s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .fade-up {

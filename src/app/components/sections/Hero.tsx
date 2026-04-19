@@ -1,21 +1,9 @@
-'use client';
-
-import { motion } from 'framer-motion';
-
-const ease = [0.21, 0.47, 0.32, 0.98] as const;
-
-const fadeUp = (delay: number) => ({
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.55, delay, ease },
-});
-
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-16">
       <div className="mx-auto max-w-[900px] px-6 w-full">
         {/* Name */}
-        <motion.div className="mb-8" {...fadeUp(0)}>
+        <div className="mb-8 hero-fade" style={{ animationDelay: '0ms' }}>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[var(--text)] leading-[1.06] mb-4"
             style={{ letterSpacing: '-0.025em' }}
@@ -25,10 +13,10 @@ export default function Hero() {
           <p className="text-base text-[var(--text-muted)] tracking-wide">
             आयुष रवि चंद्रन &nbsp;&middot;&nbsp; ஆயுஷ் ரவி சந்திரன்
           </p>
-        </motion.div>
+        </div>
 
         {/* Status */}
-        <motion.div className="mb-10 space-y-2" {...fadeUp(0.12)}>
+        <div className="mb-10 space-y-2 hero-fade" style={{ animationDelay: '120ms' }}>
           <p className="text-base text-[var(--text-secondary)]">
             CS & Mathematics @ UMass Amherst &nbsp;&middot;&nbsp; New Grad 2026
           </p>
@@ -43,10 +31,10 @@ export default function Hero() {
               @CDS-AI
             </a>
           </p>
-        </motion.div>
+        </div>
 
         {/* Links */}
-        <motion.div className="flex items-center gap-3 flex-wrap" {...fadeUp(0.22)}>
+        <div className="flex items-center gap-3 flex-wrap hero-fade" style={{ animationDelay: '220ms' }}>
           <a
             href="/documents/Resume.pdf"
             target="_blank"
@@ -71,26 +59,21 @@ export default function Hero() {
           >
             LinkedIn
           </a>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.button
+      <button
         onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 6, 0] }}
-        transition={{
-          opacity: { delay: 0.6, duration: 0.4 },
-          y: { delay: 0.8, duration: 2, repeat: Infinity, ease: 'easeInOut' },
-        }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors hero-fade"
+        style={{ animationDelay: '600ms' }}
         aria-label="Scroll down"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
           <line x1="12" y1="5" x2="12" y2="19" />
           <polyline points="19 12 12 19 5 12" />
         </svg>
-      </motion.button>
+      </button>
     </section>
   );
 }
