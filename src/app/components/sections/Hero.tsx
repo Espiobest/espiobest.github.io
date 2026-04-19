@@ -46,12 +46,12 @@ export default function Hero() {
         </motion.div>
 
         {/* Links */}
-        <motion.div className="flex items-center gap-5 flex-wrap" {...fadeUp(0.22)}>
+        <motion.div className="flex items-center gap-3 flex-wrap" {...fadeUp(0.22)}>
           <a
             href="/documents/Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm px-5 py-2.5 rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all duration-200"
+            className="text-sm px-5 py-2.5 rounded-lg bg-[var(--accent)] text-[#111] font-medium hover:opacity-90 transition-opacity duration-200"
           >
             Resume ↗
           </a>
@@ -59,7 +59,7 @@ export default function Hero() {
             href="https://github.com/Espiobest"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+            className="text-sm px-5 py-2.5 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all duration-200"
           >
             GitHub
           </a>
@@ -67,7 +67,7 @@ export default function Hero() {
             href="https://linkedin.com/in/ayush-ravichandran"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+            className="text-sm px-5 py-2.5 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all duration-200"
           >
             LinkedIn
           </a>
