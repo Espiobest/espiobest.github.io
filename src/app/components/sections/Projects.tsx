@@ -1,7 +1,27 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { getProjects } from '@/lib/data';
+
+type Project = ReturnType<typeof getProjects>[number];
 
 export default function Projects() {
   const projects = getProjects();
+  const [selected, setSelected] = useState<Project | null>(null);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!selected) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelected(null); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selected]);
+
+  // Lock body scroll when modal open
+  useEffect(() => {
+    document.body.style.overflow = selected ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [selected]);
 
   return (
     <section id="projects" className="section">
@@ -10,9 +30,10 @@ export default function Projects() {
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {projects.map((project) => (
-            <div
+            <button
               key={project.name}
-              className="group relative flex flex-col gap-3 p-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-all duration-300"
+              onClick={() => setSelected(project)}
+              className="group relative flex flex-col gap-3 p-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] transition-all duration-300 text-left cursor-pointer w-full"
             >
               {/* Hover glow */}
               <div
@@ -25,25 +46,12 @@ export default function Projects() {
                 <h3 className="text-sm font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200 leading-snug">
                   {project.name}
                 </h3>
-                <div className="flex gap-2.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  {project.github && (
-                    <a href={project.github} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors" aria-label="GitHub">
-                      <GitHubIcon />
-                    </a>
-                  )}
-                  {project.link && (
-                    <a href={project.link} target="_blank" rel="noopener noreferrer"
-                      className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors" aria-label="Live">
-                      <ExternalIcon />
-                    </a>
-                  )}
-                </div>
+                <span className="text-xs text-[var(--text-subtle)] group-hover:text-[var(--text-muted)] transition-colors shrink-0 mt-0.5">↗</span>
               </div>
 
-              {/* Award */}
+              {/* Award — first part only, no overflow */}
               {project.awards && (
-                <span className="tag tag-accent self-start" style={{ fontSize: '0.62rem' }}>
+                <span className="tag tag-accent self-start max-w-full truncate" style={{ fontSize: '0.62rem' }}>
                   ★ {project.awards.split('·')[0].trim()}
                 </span>
               )}
@@ -57,27 +65,98 @@ export default function Projects() {
                   <span key={tech} className="tag">{tech}</span>
                 ))}
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {selected && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelected(null)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+
+          {/* Panel */}
+          <div
+            className="relative z-10 w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Image */}
+            {selected.image && (
+              <div className="w-full h-44 bg-[var(--surface-2)] flex items-center justify-center overflow-hidden px-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={selected.image}
+                  alt={selected.name}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+            )}
+
+            <div className="p-6 space-y-4">
+              {/* Title + close */}
+              <div className="flex items-start justify-between gap-4">
+                <h2 className="text-lg font-medium text-[var(--text)]">{selected.name}</h2>
+                <button
+                  onClick={() => setSelected(null)}
+                  className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors shrink-0"
+                  aria-label="Close"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Awards */}
+              {selected.awards && (
+                <div className="space-y-1">
+                  {selected.awards.split('·').map((a) => (
+                    <p key={a} className="text-xs text-[var(--accent)]">★ {a.trim()}</p>
+                  ))}
+                </div>
+              )}
+
+              {/* Description */}
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{selected.description}</p>
+
+              {/* Tech */}
+              <div className="flex flex-wrap gap-1.5">
+                {selected.technologies.map((tech) => (
+                  <span key={tech} className="tag">{tech}</span>
+                ))}
+              </div>
+
+              {/* Links */}
+              <div className="flex gap-3 pt-1">
+                {selected.github && (
+                  <a
+                    href={selected.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm px-4 py-2 rounded-lg border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text)] hover:border-[var(--border-hover)] transition-all"
+                  >
+                    GitHub ↗
+                  </a>
+                )}
+                {selected.link && (
+                  <a
+                    href={selected.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm px-4 py-2 rounded-lg bg-[var(--accent)] text-[#111] font-medium hover:opacity-90 transition-opacity"
+                  >
+                    View live ↗
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
-  );
-}
-
-function GitHubIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12" />
-    </svg>
-  );
-}
-
-function ExternalIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-    </svg>
   );
 }
