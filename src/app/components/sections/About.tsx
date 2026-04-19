@@ -1,10 +1,21 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useEffect, useRef, useState } from 'react';
 
-const Setup = dynamic(() => import('../Setup'), { ssr: false });
+// Chunk is only downloaded when <Setup /> actually renders
+const Setup = dynamic(() => import('../Setup'), { ssr: false, loading: () => null });
 
 export default function About() {
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    // Trigger on first scroll — guarantees Three.js never loads on initial page paint
+    const onScroll = () => { setShouldLoad(true); };
+    window.addEventListener('scroll', onScroll, { passive: true, once: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <section id="about" className="section">
@@ -53,13 +64,13 @@ export default function About() {
             </div>
           </div>
 
-          {/* 3D model — hidden on small mobile, shown sm+ */}
-          <div className="hidden sm:flex flex-col items-center gap-3">
+          {/* 3D model — hidden on mobile, deferred on desktop */}
+          <div ref={sentinelRef} className="hidden sm:flex flex-col items-center gap-3">
             <div
               className="w-full rounded-xl overflow-hidden border border-[var(--border)]"
               style={{ background: 'transparent', height: '240px' }}
             >
-              <Setup />
+              {shouldLoad && <Setup />}
             </div>
             <p className="text-[0.65rem] text-[var(--text-muted)] tracking-wide uppercase">
               my desk · drag to rotate

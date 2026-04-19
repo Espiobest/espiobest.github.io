@@ -4,8 +4,8 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center pt-16">
       <div className="mx-auto max-w-[900px] px-6 w-full">
-        {/* Name */}
-        <div className="mb-8 hero-fade" style={{ animationDelay: '0ms' }}>
+        {/* Name — no animation so h1 paints immediately (LCP element) */}
+        <div className="mb-8">
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-[var(--text)] leading-[1.06] mb-4"
             style={{ letterSpacing: '-0.025em' }}
