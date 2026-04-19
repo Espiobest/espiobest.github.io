@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from './Navbar';
+import Background from './Background';
 
 const Terminal = dynamic(() => import('./Terminal'), { ssr: false });
 
@@ -22,8 +23,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      <Navbar onTerminalOpen={() => setTerminalOpen(true)} />
-      <main>{children}</main>
+      {/* Fixed background — grain + orbs */}
+      <Background />
+
+      {/* All content sits above background layers */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Navbar onTerminalOpen={() => setTerminalOpen(true)} />
+        <main>{children}</main>
+      </div>
+
       <Terminal isOpen={terminalOpen} onClose={() => setTerminalOpen(false)} />
     </>
   );

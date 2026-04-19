@@ -12,17 +12,8 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-14 overflow-hidden">
-      {/* Ambient glow */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 10% -5%, rgba(232,197,71,0.04) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 90% 110%, rgba(147,197,253,0.03) 0%, transparent 60%)',
-        }}
-      />
-
-      <div className="relative mx-auto max-w-[900px] px-6 w-full">
+    <section className="relative min-h-screen flex flex-col justify-center pt-14">
+      <div className="mx-auto max-w-[900px] px-6 w-full">
         {/* Name */}
         <motion.div className="mb-8" {...fadeUp(0)}>
           <h1
