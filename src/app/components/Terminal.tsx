@@ -105,7 +105,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
             return `<span style="color:#a78bfa;font-weight:600">${e.org}</span>\n${'─'.repeat(40)}\n<span style="color:var(--accent)">Role:</span> ${e.title}\n<span style="color:var(--accent)">Period:</span> ${e.period}\n<span style="color:var(--accent)">Stack:</span> ${e.stack.join(', ')}`;
           }
           if (currentDir === '/home/ayush/portfolio') {
-            if (fileArg === 'README.md') {
+            if (fileArg.toLowerCase() === 'readme.md') {
               return `<span style="color:#a78bfa;font-weight:600">README.md</span>\n${'─'.repeat(40)}\n# Ayush's Portfolio\n\nWelcome to my interactive terminal.\nUse <span style="color:#93c5fd">ls</span> to browse, <span style="color:#93c5fd">cd</span> to navigate, <span style="color:#93c5fd">help</span> for commands.`;
             }
             if (fileArg === 'resume.pdf') {
