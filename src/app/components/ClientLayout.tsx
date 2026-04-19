@@ -27,7 +27,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <Background />
 
       {/* All content sits above background layers */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
+      <div style={{ position: 'relative', zIndex: 3 }}>
         <Navbar onTerminalOpen={() => setTerminalOpen(true)} />
         <main>{children}</main>
       </div>
