@@ -55,8 +55,8 @@ export default function About() {
           {/* 3D model — hidden on small mobile, shown md+ */}
           <div className="hidden sm:flex flex-col items-center gap-3">
             <div
-              className="w-full aspect-square rounded-xl overflow-hidden border border-[var(--border)]"
-              style={{ background: 'transparent' }}
+              className="w-full rounded-xl overflow-hidden border border-[var(--border)]"
+              style={{ background: 'transparent', height: '240px' }}
             >
               <Setup />
             </div>

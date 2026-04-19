@@ -11,15 +11,17 @@ const Setup = () => {
   useEffect(() => {
     if (!mount.current || rendererRef.current) return;
 
-    let spinSpeed = 0.3;
-    const spinDecay = 0.99;
+    let spinSpeed = 0.003;
+    const spinDecay = 0.985;
+    let userInteracting = false;
 
     const scene = new THREE.Scene();
     scene.background = null;
 
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
-    camera.position.z = 0.5;
-    camera.position.y = -0.5;
+    const w = mount.current.clientWidth || 240;
+    const h = mount.current.clientHeight || 240;
+
+    const camera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -27,38 +29,37 @@ const Setup = () => {
       logarithmicDepthBuffer: true,
     });
     rendererRef.current = renderer;
-
-    const setRendererSize = () => {
-      const width = Math.min(550, window.innerWidth - 20);
-      const height = width * 0.55;
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    };
-
-    setRendererSize();
-    window.addEventListener('resize', setRendererSize);
-
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(w, h);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setClearColor(0x000000, 0);
     mount.current.appendChild(renderer.domElement);
 
-    // add lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2);
-    scene.add(ambientLight);
+    const resize = () => {
+      if (!mount.current) return;
+      const nw = mount.current.clientWidth;
+      const nh = mount.current.clientHeight;
+      if (nw && nh) {
+        renderer.setSize(nw, nh);
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+      }
+    };
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
-    directionalLight.position.set(5, 5, 5);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 512;
-    directionalLight.shadow.mapSize.height = 512;
-    directionalLight.shadow.camera.near = 0.5;
-    directionalLight.shadow.camera.far = 50;
-    scene.add(directionalLight);
+    const ro = new ResizeObserver(resize);
+    ro.observe(mount.current);
 
-    // add ground to show shadows
+    // Lighting
+    scene.add(new THREE.AmbientLight(0xffffff, 2));
+    const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+    dirLight.position.set(5, 5, 5);
+    dirLight.castShadow = true;
+    dirLight.shadow.mapSize.width = 512;
+    dirLight.shadow.mapSize.height = 512;
+    scene.add(dirLight);
+
+    // Shadow ground
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(10, 10),
       new THREE.ShadowMaterial({ opacity: 0.5 }),
@@ -68,14 +69,23 @@ const Setup = () => {
     ground.receiveShadow = true;
     scene.add(ground);
 
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    // Stop auto-spin when user drags
+    controls.addEventListener('start', () => {
+      userInteracting = true;
+      spinSpeed = 0;
+    });
+    controls.addEventListener('end', () => {
+      userInteracting = false;
+    });
+
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
     dracoLoader.setDecoderConfig({ type: 'js' });
     loader.setDRACOLoader(dracoLoader);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
 
     let modelGroup: THREE.Group;
 
@@ -97,7 +107,7 @@ const Setup = () => {
           gltf.scene.scale.set(scale, scale, scale);
 
           const modelHeight = size.y * scale;
-          camera.position.set(0, modelHeight / 3, 1.5 / scale);
+          camera.position.set(0, modelHeight / 3, 1.5);
           camera.lookAt(0, 0, 0);
 
           gltf.scene.traverse((child) => {
@@ -109,45 +119,38 @@ const Setup = () => {
         },
         undefined,
         () => {
-          if (retryCount < 3) {
-            setTimeout(() => loadModel(retryCount + 1), 1000);
-          }
+          if (retryCount < 3) setTimeout(() => loadModel(retryCount + 1), 1000);
         },
       );
     };
 
     loadModel();
 
+    let animId: number;
     const animate = () => {
-      requestAnimationFrame(animate);
-
-      if (modelGroup) {
+      animId = requestAnimationFrame(animate);
+      if (modelGroup && !userInteracting && spinSpeed > 0) {
         modelGroup.rotation.y += spinSpeed;
-        if (spinSpeed > 0.005) spinSpeed *= spinDecay;
+        spinSpeed *= spinDecay;
       }
-
       controls.update();
       renderer.render(scene, camera);
     };
-
     animate();
 
     return () => {
-      window.removeEventListener('resize', setRendererSize);
+      cancelAnimationFrame(animId);
+      ro.disconnect();
       controls.dispose();
+      renderer.dispose();
+      rendererRef.current = null;
     };
   }, []);
 
   return (
     <div
       ref={mount}
-      style={{
-        margin: 'auto',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: 'transparent',
-      }}
+      style={{ width: '100%', height: '100%', background: 'transparent' }}
     />
   );
 };
