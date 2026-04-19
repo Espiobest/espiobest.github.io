@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { TextField, Box, Chip } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
 
 interface BlogSearchProps {
   allTags: string[];
@@ -11,72 +9,61 @@ interface BlogSearchProps {
   selectedTag: string | null;
 }
 
-const BlogSearch: React.FC<BlogSearchProps> = ({
-  allTags,
-  onSearchChange,
-  onTagFilter,
-  selectedTag,
-}) => {
-  const [searchQuery, setSearchQuery] = useState('');
+export default function BlogSearch({ allTags, onSearchChange, onTagFilter, selectedTag }: BlogSearchProps) {
+  const [query, setQuery] = useState('');
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-    onSearchChange(query);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    onSearchChange(e.target.value);
   };
 
   return (
-    <Box style={{ marginBottom: '2rem' }}>
-      <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="Search blog posts..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-        InputProps={{
-          startAdornment: <SearchIcon style={{ marginRight: '0.5rem', color: '#bdbdbd' }} />,
-          style: {
-            color: 'white',
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            borderRadius: '0.5rem',
-          },
-        }}
-        sx={{
-          '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-              borderColor: 'rgba(255, 255, 255, 0.2)',
-            },
-            '&:hover fieldset': {
-              borderColor: 'rgba(255, 255, 255, 0.3)',
-            },
-            '&.Mui-focused fieldset': {
-              borderColor: '#0070f3',
-            },
-          },
-        }}
-      />
+    <div className="mb-8 space-y-4">
+      <div className="relative">
+        <svg
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]"
+          width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+        <input
+          type="text"
+          value={query}
+          onChange={handleChange}
+          placeholder="Search posts..."
+          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--border-hover)] transition-colors mono"
+        />
+      </div>
 
       {allTags.length > 0 && (
-        <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '1rem' }}>
-          <Chip
-            label="All"
+        <div className="flex flex-wrap gap-2">
+          <button
             onClick={() => onTagFilter(null)}
-            className="blog-tag"
-            variant={selectedTag === null ? 'filled' : 'outlined'}
-          />
+            className={`tag cursor-pointer transition-colors ${
+              selectedTag === null
+                ? 'bg-[var(--accent-dim)] border-[rgba(232,197,71,0.25)] text-[var(--accent)]'
+                : 'hover:border-[var(--border-hover)]'
+            }`}
+          >
+            All
+          </button>
           {allTags.map((tag) => (
-            <Chip
+            <button
               key={tag}
-              label={tag}
               onClick={() => onTagFilter(tag)}
-              className="blog-tag"
-              variant={selectedTag === tag ? 'filled' : 'outlined'}
-            />
+              className={`tag cursor-pointer transition-colors ${
+                selectedTag === tag
+                  ? 'bg-[var(--accent-dim)] border-[rgba(232,197,71,0.25)] text-[var(--accent)]'
+                  : 'hover:border-[var(--border-hover)]'
+              }`}
+            >
+              {tag}
+            </button>
           ))}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
-};
-
-export default BlogSearch;
+}

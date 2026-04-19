@@ -1,27 +1,23 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Typography, Box, Collapse } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useEffect, useState } from 'react';
 import { TableOfContentsItem } from '@/lib/blog';
-
-interface TableOfContentsProps {
-  items: TableOfContentsItem[];
-}
 
 interface TOCSection {
   h2: TableOfContentsItem;
   h3s: TableOfContentsItem[];
 }
 
-const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
-  const [activeId, setActiveId] = useState<string>('');
-  const [manuallyExpanded, setManuallyExpanded] = useState<Set<string>>(new Set());
+interface TableOfContentsProps {
+  items: TableOfContentsItem[];
+}
 
-  // Group H3s under their parent H2s
+export default function TableOfContents({ items }: TableOfContentsProps) {
+  const [activeId, setActiveId] = useState('');
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+
   const sections: TOCSection[] = [];
   let currentSection: TOCSection | null = null;
-
   items.forEach((item) => {
     if (item.level === 2) {
       currentSection = { h2: item, h3s: [] };
@@ -32,140 +28,92 @@ const TableOfContents: React.FC<TableOfContentsProps> = ({ items }) => {
   });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const headingElements = items
-        .map((item) => document.getElementById(item.id))
+    const onScroll = () => {
+      const els = items
+        .map((i) => document.getElementById(i.id))
         .filter((el): el is HTMLElement => el !== null);
 
-      let currentActiveId = '';
-      const scrollPosition = window.scrollY + 100;
-
-      for (let i = headingElements.length - 1; i >= 0; i--) {
-        const element = headingElements[i];
-        if (element.offsetTop <= scrollPosition) {
-          currentActiveId = element.id;
-          break;
-        }
+      let active = '';
+      const pos = window.scrollY + 120;
+      for (let i = els.length - 1; i >= 0; i--) {
+        if (els[i].offsetTop <= pos) { active = els[i].id; break; }
       }
-
-      if (!currentActiveId && headingElements.length > 0) {
-        currentActiveId = headingElements[0].id;
-      }
-
-      setActiveId(currentActiveId);
+      if (!active && els.length) active = els[0].id;
+      setActiveId(active);
     };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [items]);
 
-  const handleClick = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+  const scrollTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
-  const toggleSection = (h2Id: string) => {
-    setManuallyExpanded((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(h2Id)) {
-        newSet.delete(h2Id);
-      } else {
-        newSet.add(h2Id);
-      }
-      return newSet;
+  const toggle = (id: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) { next.delete(id); } else { next.add(id); }
+      return next;
     });
-  };
 
-  // Determine if a section should be expanded
-  const isSectionExpanded = (section: TOCSection) => {
-    // Expanded if manually toggled
-    if (manuallyExpanded.has(section.h2.id)) {
-      return true;
-    }
-    // Auto-expand if the active item is the H2 or any of its H3s
-    if (activeId === section.h2.id) {
-      return true;
-    }
-    return section.h3s.some((h3) => h3.id === activeId);
-  };
+  const isExpanded = (s: TOCSection) =>
+    expanded.has(s.h2.id) || activeId === s.h2.id || s.h3s.some((h) => h.id === activeId);
 
-  if (items.length === 0) {
-    return null;
-  }
+  if (!items.length) return null;
 
   return (
-    <Box className="toc-card">
-      <Typography variant="h6" style={{ marginBottom: '1rem', color: 'white', fontWeight: 600 }}>
-        Table of Contents
-      </Typography>
-      <nav>
+    <div className="toc-card">
+      <p className="text-xs uppercase tracking-widest text-[var(--text-muted)] mb-4 font-medium">
+        On this page
+      </p>
+      <nav className="space-y-0.5">
         {sections.map((section) => {
-          const isExpanded = isSectionExpanded(section);
-          const hasH3s = section.h3s.length > 0;
-
+          const open = isExpanded(section);
           return (
-            <Box key={section.h2.id}>
-              {/* H2 Link */}
-              <Box style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+            <div key={section.h2.id}>
+              <div className="flex items-center gap-1">
                 <a
                   href={`#${section.h2.id}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleClick(section.h2.id);
-                  }}
-                  className={`toc-link ${activeId === section.h2.id ? 'active' : ''}`}
-                  style={{ flex: 1 }}
+                  onClick={(e) => { e.preventDefault(); scrollTo(section.h2.id); }}
+                  className={`toc-link flex-1 ${activeId === section.h2.id ? 'active' : ''}`}
                 >
                   {section.h2.title}
                 </a>
-                {hasH3s && (
-                  <Box
-                    onClick={() => toggleSection(section.h2.id)}
-                    sx={{
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: '0.25rem',
-                      marginLeft: '0.25rem',
-                      transition: 'transform 0.2s',
-                      transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                      '&:hover': {
-                        opacity: 0.7,
-                      },
-                    }}
+                {section.h3s.length > 0 && (
+                  <button
+                    onClick={() => toggle(section.h2.id)}
+                    className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors p-0.5"
+                    aria-label="Toggle subsections"
                   >
-                    <ExpandMoreIcon style={{ fontSize: '1.25rem', color: '#9ca3af' }} />
-                  </Box>
+                    <svg
+                      width="12" height="12" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                      style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                    >
+                      <polyline points="6 9 12 15 18 9" />
+                    </svg>
+                  </button>
                 )}
-              </Box>
+              </div>
 
-              {/* H3 Links - Collapsible */}
-              {hasH3s && (
-                <Collapse in={isExpanded} timeout="auto">
+              {section.h3s.length > 0 && open && (
+                <div className="mt-0.5 space-y-0.5">
                   {section.h3s.map((h3) => (
                     <a
                       key={h3.id}
                       href={`#${h3.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleClick(h3.id);
-                      }}
+                      onClick={(e) => { e.preventDefault(); scrollTo(h3.id); }}
                       className={`toc-link toc-link-h3 ${activeId === h3.id ? 'active' : ''}`}
                     >
                       {h3.title}
                     </a>
                   ))}
-                </Collapse>
+                </div>
               )}
-            </Box>
+            </div>
           );
         })}
       </nav>
-    </Box>
+    </div>
   );
-};
-
-export default TableOfContents;
+}

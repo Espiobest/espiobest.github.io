@@ -1,8 +1,4 @@
-'use client';
-
-import React from 'react';
 import Image from 'next/image';
-import { Typography, Box } from '@mui/material';
 import CodeBlock from './CodeBlock';
 import InteractiveDemo from './InteractiveDemo';
 import InteractiveCodeRunner from './InteractiveCodeRunner';
@@ -10,126 +6,59 @@ import BufferOverflowDemo from './BufferOverflowDemo';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const MDXComponents = {
-  h1: (props: any) => (
-    <Typography
-      variant="h3"
-      component="h1"
-      style={{ marginTop: '2rem', marginBottom: '1rem', color: '#60a5fa', fontWeight: 600 }}
-      {...props}
-    />
-  ),
-  h2: (props: any) => (
-    <Typography
-      variant="h4"
-      component="h2"
-      style={{ marginTop: '1.5rem', marginBottom: '0.75rem', color: '#60a5fa', fontWeight: 600 }}
-      {...props}
-    />
-  ),
-  h3: (props: any) => (
-    <Typography
-      variant="h5"
-      component="h3"
-      style={{ marginTop: '1.25rem', marginBottom: '0.5rem', color: '#60a5fa', fontWeight: 600 }}
-      {...props}
-    />
-  ),
-  p: (props: any) => (
-    <Typography
-      variant="body1"
-      style={{ marginBottom: '1rem', color: '#e5e7eb', lineHeight: 1.8 }}
-      {...props}
-    />
-  ),
+  h1: (props: any) => <h1 className="text-2xl font-semibold text-[var(--text)] mt-10 mb-4" {...props} />,
+  h2: (props: any) => <h2 className="text-xl font-semibold text-[var(--text)] mt-8 mb-3 pb-2 border-b border-[var(--border)]" {...props} />,
+  h3: (props: any) => <h3 className="text-base font-semibold text-[var(--text)] mt-6 mb-2" {...props} />,
+  p: (props: any) => <p className="text-[#c8c8c8] mb-5 leading-[1.8]" {...props} />,
   a: (props: any) => (
     <a
-      style={{ color: '#0070f3', textDecoration: 'underline' }}
-      {...props}
+      className="text-[var(--accent)] underline underline-offset-2 decoration-[rgba(232,197,71,0.4)] hover:decoration-[var(--accent)] transition-colors"
       target={props.href?.startsWith('http') ? '_blank' : undefined}
       rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-    />
-  ),
-  ul: (props: any) => (
-    <Box
-      component="ul"
-      style={{ marginLeft: '1.5rem', marginBottom: '1rem', color: '#e5e7eb' }}
       {...props}
     />
   ),
-  ol: (props: any) => (
-    <Box
-      component="ol"
-      style={{ marginLeft: '1.5rem', marginBottom: '1rem', color: '#e5e7eb' }}
-      {...props}
-    />
+  ul: (props: any) => <ul className="list-disc pl-5 mb-5 space-y-1.5 text-[#c8c8c8]" {...props} />,
+  ol: (props: any) => <ol className="list-decimal pl-5 mb-5 space-y-1.5 text-[#c8c8c8]" {...props} />,
+  li: (props: any) => <li className="leading-relaxed" {...props} />,
+  strong: (props: any) => <strong className="text-[var(--text)] font-semibold" {...props} />,
+  b: (props: any) => <b className="text-[var(--text)] font-semibold" {...props} />,
+  em: (props: any) => <em className="text-[#bbb]" {...props} />,
+  blockquote: (props: any) => (
+    <blockquote className="border-l-2 border-[var(--accent)] bg-[var(--accent-dim)] pl-4 pr-3 py-2 my-5 rounded-r-lg italic text-[#bbb]" {...props} />
   ),
-  li: (props: any) => <li style={{ marginBottom: '0.5rem', color: '#e5e7eb' }} {...props} />,
+  hr: (props: any) => <hr className="border-[var(--border)] my-8" {...props} />,
   code: (props: any) => {
-    // Inline code
     if (!props.className) {
       return (
-        <code
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            padding: '0.2em 0.4em',
-            borderRadius: '0.25rem',
-            fontFamily: 'var(--font-geist-mono)',
-            fontSize: '0.9em',
-            color: '#60a5fa',
-          }}
-          {...props}
-        />
+        <code className="mono bg-[var(--surface-2)] border border-[var(--border)] px-1.5 py-0.5 rounded text-[0.82em] text-[var(--text)]" {...props} />
       );
     }
-    // Block code (handled by CodeBlock component)
     return <CodeBlock {...props} />;
   },
   pre: (props: any) => <div className="code-block-wrapper">{props.children}</div>,
   img: (props: any) => {
-    // Use regular img tag for GIFs to preserve animation
     if (props.src?.endsWith('.gif')) {
       return (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           {...props}
-          style={{
-            borderRadius: '0.5rem',
-            margin: '1.5rem 0',
-            maxWidth: '100%',
-            height: 'auto',
-          }}
-          alt={props.alt || ''}
+          className="rounded-lg my-6 max-w-full h-auto"
+          alt={props.alt ?? ''}
         />
       );
     }
-    // Use Next.js Image for other formats
     return (
       <Image
         {...props}
         width={800}
         height={450}
-        style={{ borderRadius: '0.5rem', margin: '1.5rem 0' }}
-        alt={props.alt || ''}
+        className="rounded-lg my-6"
+        alt={props.alt ?? ''}
         unoptimized
       />
     );
   },
-  blockquote: (props: any) => (
-    <Box
-      component="blockquote"
-      style={{
-        borderLeft: '4px solid #0070f3',
-        paddingLeft: '1rem',
-        marginLeft: 0,
-        marginBottom: '1rem',
-        fontStyle: 'italic',
-        color: '#bdbdbd',
-      }}
-      {...props}
-    />
-  ),
-  strong: (props: any) => <strong style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />,
-  b: (props: any) => <b style={{ color: '#f3f4f6', fontWeight: 700 }} {...props} />,
-  em: (props: any) => <em style={{ color: '#e5e7eb' }} {...props} />,
   InteractiveDemo,
   InteractiveCodeRunner,
   BufferOverflowDemo,

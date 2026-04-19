@@ -1,14 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { useState, useEffect, useRef } from 'react';
 import hljs from 'highlight.js/lib/core';
 import c from 'highlight.js/lib/languages/c';
 import javascript from 'highlight.js/lib/languages/javascript';
 import python from 'highlight.js/lib/languages/python';
 
-// Register languages
 hljs.registerLanguage('c', c);
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('python', python);
@@ -22,175 +19,84 @@ interface InteractiveCodeRunnerProps {
   explanation?: string;
 }
 
-const InteractiveCodeRunner: React.FC<InteractiveCodeRunnerProps> = ({
+export default function InteractiveCodeRunner({
   title = 'Interactive Code Demo',
   code,
   language = 'c',
   initialVariables = {},
   executeCode,
   explanation,
-}) => {
+}: InteractiveCodeRunnerProps) {
   const [variables, setVariables] = useState(initialVariables);
   const [output, setOutput] = useState('');
   const [hasRun, setHasRun] = useState(false);
   const codeRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (codeRef.current) {
-      hljs.highlightElement(codeRef.current);
-    }
+    if (codeRef.current) hljs.highlightElement(codeRef.current);
   }, [code]);
-
-  const handleVariableChange = (key: string, value: string) => {
-    setVariables((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
 
   const handleRun = () => {
     try {
-      const result = executeCode(variables);
-      setOutput(result);
-      setHasRun(true);
-    } catch (error) {
-      setOutput(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
-      setHasRun(true);
+      setOutput(executeCode(variables));
+    } catch (err) {
+      setOutput(`Error: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
+    setHasRun(true);
   };
 
+  const inputClass =
+    'bg-[var(--surface)] border border-[var(--border)] rounded-lg px-3 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--border-hover)] transition-colors mono min-w-[160px]';
+
   return (
-    <Box
-      style={{
-        background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        borderRadius: '0.75rem',
-        padding: '1.5rem',
-        marginTop: '2rem',
-        marginBottom: '2rem',
-      }}
-    >
-      <Typography variant="h6" style={{ marginBottom: '1rem', color: '#60a5fa', fontWeight: 600 }}>
-        {title}
-      </Typography>
+    <div className="border border-[var(--border)] rounded-xl p-5 my-6 bg-[var(--surface)]">
+      <h4 className="text-sm font-semibold text-[#93c5fd] mb-2">{title}</h4>
+      {explanation && <p className="text-xs text-[#888] italic mb-4">{explanation}</p>}
 
-      {explanation && (
-        <Typography
-          variant="body2"
-          style={{ marginBottom: '1rem', color: '#bdbdbd', fontStyle: 'italic' }}
-        >
-          {explanation}
-        </Typography>
-      )}
+      {/* Code */}
+      <pre className="hljs rounded-lg mb-4 text-sm overflow-x-auto">
+        <code ref={codeRef} className={`language-${language}`}>{code}</code>
+      </pre>
 
-      {/* Code Display */}
-      <Box
-        component="pre"
-        style={{
-          backgroundColor: 'rgb(28, 28, 34)',
-          padding: '1rem',
-          borderRadius: '0.5rem',
-          overflow: 'auto',
-          marginBottom: '1rem',
-        }}
-      >
-        <code
-          ref={codeRef}
-          className={`language-${language}`}
-          style={{
-            fontFamily: 'var(--font-geist-mono)',
-            fontSize: '0.9rem',
-          }}
-        >
-          {code}
-        </code>
-      </Box>
-
-      {/* Variable Controls */}
+      {/* Variables */}
       {Object.keys(initialVariables).length > 0 && (
-        <Box style={{ marginBottom: '1rem' }}>
-          <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#60a5fa' }}>
-            Modify Variables:
-          </Typography>
-          <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-            {Object.entries(initialVariables).map(([key, defaultValue]) => (
-              <TextField
-                key={key}
-                label={key}
-                variant="outlined"
-                size="small"
-                defaultValue={defaultValue}
-                onChange={(e) => handleVariableChange(key, e.target.value)}
-                style={{ minWidth: '200px' }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    color: '#e5e7eb',
-                    '& fieldset': {
-                      borderColor: 'rgba(255, 255, 255, 0.3)',
-                    },
-                    '&:hover fieldset': {
-                      borderColor: 'rgba(255, 255, 255, 0.5)',
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#0070f3',
-                    },
-                  },
-                  '& .MuiInputLabel-root': {
-                    color: '#bdbdbd',
-                  },
-                }}
-              />
+        <div className="mb-4">
+          <p className="text-xs text-[var(--text-muted)] uppercase tracking-widest mb-2">Modify variables</p>
+          <div className="flex flex-wrap gap-3">
+            {Object.entries(initialVariables).map(([key, defaultVal]) => (
+              <div key={key}>
+                <label className="block text-xs text-[var(--text-muted)] mb-1 mono">{key}</label>
+                <input
+                  className={inputClass}
+                  defaultValue={defaultVal}
+                  onChange={(e) => setVariables((prev) => ({ ...prev, [key]: e.target.value }))}
+                />
+              </div>
             ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
       )}
 
-      {/* Run Button */}
-      <Button
-        variant="contained"
-        startIcon={<PlayArrowIcon />}
+      {/* Run */}
+      <button
         onClick={handleRun}
-        style={{
-          backgroundColor: '#0070f3',
-          color: 'white',
-          textTransform: 'none',
-          marginBottom: '1rem',
-        }}
+        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--surface-2)] border border-[var(--border)] text-sm text-[var(--text)] hover:border-[var(--border-hover)] transition-all mb-4"
       >
-        Run Code
-      </Button>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run
+      </button>
 
-      {/* Output Display */}
+      {/* Output */}
       {hasRun && (
-        <Box>
-          <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#60a5fa' }}>
-            Output:
-          </Typography>
-          <Box
-            component="pre"
-            style={{
-              backgroundColor: 'rgb(28, 28, 34)',
-              padding: '1rem',
-              borderRadius: '0.5rem',
-              overflow: 'auto',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            <code
-              style={{
-                fontFamily: 'var(--font-geist-mono)',
-                fontSize: '0.9rem',
-                color: output.startsWith('Error') ? '#ff6b6b' : '#4ade80',
-                whiteSpace: 'pre-wrap',
-              }}
-            >
+        <div>
+          <p className="text-xs text-[var(--text-muted)] uppercase tracking-widest mb-2">Output</p>
+          <pre className="hljs rounded-lg text-sm overflow-x-auto">
+            <code className={output.startsWith('Error') ? 'text-red-400' : 'text-[#86efac]'}>
               {output}
             </code>
-          </Box>
-        </Box>
+          </pre>
+        </div>
       )}
-    </Box>
+    </div>
   );
-};
-
-export default InteractiveCodeRunner;
+}
