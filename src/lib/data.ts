@@ -1,19 +1,3 @@
-// ─────────────────────────────────────────────────────────────────
-//  SITE DATA
-//  Edit this file to update your projects, experience, research, etc.
-//  Everything is plain objects — no special syntax needed.
-// ─────────────────────────────────────────────────────────────────
-
-// ── Projects ──────────────────────────────────────────────────────
-// Fields:
-//   name          — display name
-//   shortDescription — one-liner shown in terminal
-//   description   — shown on the card
-//   technologies  — array of tech strings
-//   github        — GitHub URL (required)
-//   link          — live demo / docs URL (optional, remove line if none)
-//   awards        — award text (optional, remove line if none)
-
 export const getProjects = () => [
   {
     name: 'RouteAble',
@@ -81,38 +65,26 @@ export const getProjects = () => [
   },
 ];
 
-// ── Work Experience ────────────────────────────────────────────────
-// Fields:
-//   title   — job title
-//   org     — company/org name
-//   period  — date range string
-//   stack   — array of tech used
-//   work    — array of bullet point strings
-//   impact  — one-sentence summary of impact
-//   link    — company URL
-//   github  — project repo (optional, remove line if none)
-
 export const getExperiences = () => [
   {
     title: 'Software Engineering Intern',
     org: 'CDS-AI',
-    period: 'Sep 2025 – Present',
-    stack: ['React', 'TypeScript', 'Docker', 'PostgreSQL', 'S3', 'Computer Vision', 'Geospatial Data'],
+    period: 'Sep 2025 - Present',
+    stack: ['React', 'FastAPI', 'Flutter', 'PostgreSQL', 'S3', 'Docker', 'Geospatial Data'],
     work: [
-      'Built backend data pipelines (PostgreSQL, S3) to ingest and standardize multi-organization salt marsh data for a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
-      'Implemented reliable synchronization of datasets to NAS storage with schema mapping, incremental updates, and fault-tolerant batch processing',
-      'Developed a multi-tenant web portal with role-based access control managing 1,000+ weekly field records',
-      'Prototyped a computer vision pipeline to digitize handwritten field forms, reducing manual transcription',
-      'Built containerized React tools with interactive geospatial visualizations for Woodwell Climate Research Center',
+      'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
+      'Implemented fault-tolerant NAS synchronization across heterogeneous formats with schema mapping and incremental batch processing',
+      'Developed a multi-tenant web portal (React, FastAPI) with role-based access control and containerized deployment, managing 1,000+ weekly field records',
+      'Built a Flutter mobile app for field data collection replacing third-party tooling — GPS capture, RTK location matching, multi-plot surveys, and a QC pipeline for pre-ingestion validation',
     ],
     impact:
-      'Enabled efficient management of salt marsh data across Massachusetts, supporting critical environmental research through scalable data infrastructure.',
+      'Replaced third-party tooling and manual workflows with a full-stack data platform serving 100+ researchers across Massachusetts DEP-funded salt marsh research.',
     link: 'https://ds.cs.umass.edu/',
   },
   {
     title: 'Software Engineering Intern',
     org: 'MGHPCC (Unity HPC Cluster)',
-    period: 'May 2025 – Aug 2025',
+    period: 'May 2025 - Aug 2025',
     stack: ['Python', 'SLURM', 'SQL', 'Linux', 'CI/CD', 'GitHub Actions', 'DBSCAN', 'HPC'],
     work: [
       'Engineered low-latency telemetry pipelines in a Linux HPC environment to process 12+ months of cluster activity',
@@ -128,7 +100,7 @@ export const getExperiences = () => [
   {
     title: 'Head of Technical Operations',
     org: 'Instilt Educate',
-    period: 'Jun 2021 – May 2025',
+    period: 'Jun 2021 - May 2025',
     stack: ['JavaScript', 'Node.js', 'Automation', 'Cloud', 'Leadership'],
     work: [
       'Led a team of 10+ engineers across weekly sprint meetings',
@@ -143,14 +115,6 @@ export const getExperiences = () => [
   },
 ];
 
-// ── Research & Academic Work ───────────────────────────────────────
-// Fields:
-//   type        — label shown on badge, e.g. "Poster", "Paper", "Report"
-//   title       — full title of the work
-//   venue       — where it was presented / course / program
-//   date        — e.g. "Summer 2025" or "Spring 2025"
-//   description — 1–2 sentence description
-//   link        — PDF or external link (optional — set to undefined if none)
 
 export const getResearch = () => [
   {
@@ -180,10 +144,6 @@ export const getResearch = () => [
   },
 ];
 
-// ── Blog Posts ─────────────────────────────────────────────────────
-// Note: blog posts are driven by MDX files in src/content/blog/
-// This list is only used for the terminal `blog` command preview.
-// Add new entries here when you publish a new post.
 
 export const getBlogPosts = () => [
   {
