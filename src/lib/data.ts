@@ -70,12 +70,13 @@ export const getExperiences = () => [
     title: 'Software Engineering Intern',
     org: 'CDS-AI',
     period: 'Sep 2025 - Present',
-    stack: ['React', 'FastAPI', 'Flutter', 'PostgreSQL', 'S3', 'Docker', 'Geospatial Data'],
+    stack: ['React', 'TypeScript', 'FastAPI', 'Flutter', 'PostgreSQL', 'S3', 'Docker', 'Geospatial Data'],
     work: [
       'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
       'Implemented fault-tolerant NAS synchronization across heterogeneous formats with schema mapping and incremental batch processing',
       'Developed a multi-tenant web portal (React, FastAPI) with role-based access control and containerized deployment, managing 1,000+ weekly field records',
       'Built a Flutter mobile app for field data collection replacing third-party tooling — GPS capture, RTK location matching, multi-plot surveys, and a QC pipeline for pre-ingestion validation',
+      'Built containerized React tools with interactive geospatial visualizations for Woodwell Climate Research Center',
     ],
     impact:
       'Replaced third-party tooling and manual workflows with a full-stack data platform serving 100+ researchers across Massachusetts DEP-funded salt marsh research.',
