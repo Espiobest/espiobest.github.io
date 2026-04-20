@@ -126,10 +126,10 @@ a {
 /* ─── Accent underline on section titles ─────────── */
 .section-title {
   font-size: 0.7rem;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-bottom: 3rem;
 }
 
