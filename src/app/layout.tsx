@@ -1,42 +1,29 @@
 import type { Metadata } from 'next';
+import { GeistSans } from 'geist/font/sans';
 import { JetBrains_Mono } from 'next/font/google';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import ClientLayout from './components/ClientLayout';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-jetbrains-mono',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Ayush Portfolio & Blog',
+  title: 'Ayush Ravi Chandran',
   description:
-    'Portfolio website showcasing projects, experience, and technical blog posts by Ayush Ravi Chandran, CS & Math student at UMass Amherst.',
-  keywords: [
-    'Ayush Ravi Chandran',
-    'UMass Amherst',
-    'Software Engineering',
-    'Web Development',
-    'Security',
-    'Blog',
-    'Portfolio',
-  ],
+    'CS & Math student at UMass Amherst. Building software, doing research, writing occasionally.',
+  keywords: ['Ayush Ravi Chandran', 'UMass Amherst', 'Software Engineering', 'Portfolio'],
   authors: [{ name: 'Ayush Ravi Chandran' }],
   creator: 'Ayush Ravi Chandran',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${jetbrainsMono.variable} antialiased`}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+    <html lang="en" className={`${GeistSans.variable} ${jetbrainsMono.variable}`}>
+      <body className="antialiased">
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

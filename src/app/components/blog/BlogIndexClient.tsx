@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { Container, Typography, Box, Grid } from '@mui/material';
+import { useState, useMemo } from 'react';
 import BlogCard from './BlogCard';
 import BlogSearch from './BlogSearch';
 import { BlogPost } from '@/lib/blog';
@@ -11,57 +10,35 @@ interface BlogIndexClientProps {
   initialTags: string[];
 }
 
-const BlogIndexClient: React.FC<BlogIndexClientProps> = ({ initialPosts, initialTags }) => {
+export default function BlogIndexClient({ initialPosts, initialTags }: BlogIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   const filteredPosts = useMemo(() => {
     let posts = initialPosts;
-
-    // Filter by tag
-    if (selectedTag) {
-      posts = posts.filter((post) => post.tags.includes(selectedTag));
-    }
-
-    // Filter by search query
+    if (selectedTag) posts = posts.filter((p) => p.tags.includes(selectedTag));
     if (searchQuery.trim()) {
-      const lowerQuery = searchQuery.toLowerCase();
+      const q = searchQuery.toLowerCase();
       posts = posts.filter(
-        (post) =>
-          post.title.toLowerCase().includes(lowerQuery) ||
-          post.description.toLowerCase().includes(lowerQuery) ||
-          post.content?.toLowerCase().includes(lowerQuery) ||
-          post.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)),
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.content?.toLowerCase().includes(q) ||
+          p.tags.some((t) => t.toLowerCase().includes(q)),
       );
     }
-
     return posts;
   }, [searchQuery, selectedTag, initialPosts]);
 
   return (
-    <Container maxWidth="lg" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
-      <Typography
-        variant="h3"
-        style={{
-          color: 'white',
-          fontWeight: 700,
-          marginBottom: '1rem',
-          textAlign: 'center',
-        }}
-      >
-        Blog
-      </Typography>
-
-      <Typography
-        variant="h6"
-        style={{
-          color: '#bdbdbd',
-          marginBottom: '2rem',
-          textAlign: 'center',
-        }}
-      >
-        A place for me to yap about stuff.
-      </Typography>
+    <div className="max-w-[900px] mx-auto px-6 py-16">
+      <div className="mb-12">
+        <p className="section-title">writing</p>
+        <h1 className="text-3xl font-light text-[var(--text)]">Blog</h1>
+        <p className="text-sm text-[var(--text-muted)] mt-2">
+          A place to write about things I&apos;ve dug into.
+        </p>
+      </div>
 
       <BlogSearch
         allTags={initialTags}
@@ -71,22 +48,14 @@ const BlogIndexClient: React.FC<BlogIndexClientProps> = ({ initialPosts, initial
       />
 
       {filteredPosts.length === 0 ? (
-        <Box style={{ textAlign: 'center', marginTop: '4rem' }}>
-          <Typography variant="h6" style={{ color: '#bdbdbd' }}>
-            No posts found matching your criteria
-          </Typography>
-        </Box>
+        <p className="text-sm text-[var(--text-muted)]">No posts match your search.</p>
       ) : (
-        <Grid container spacing={3}>
+        <div className="space-y-4">
           {filteredPosts.map((post) => (
-            <Grid item xs={12} key={post.slug}>
-              <BlogCard post={post} />
-            </Grid>
+            <BlogCard key={post.slug} post={post} />
           ))}
-        </Grid>
+        </div>
       )}
-    </Container>
+    </div>
   );
-};
-
-export default BlogIndexClient;
+}

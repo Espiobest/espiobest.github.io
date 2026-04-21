@@ -1,55 +1,35 @@
-'use client';
-
-import React from 'react';
 import Link from 'next/link';
-import { Card, CardContent, Typography, Chip, Box } from '@mui/material';
 import { format } from 'date-fns';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { BlogPost } from '@/lib/blog';
 
 interface BlogCardProps {
   post: BlogPost;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+export default function BlogCard({ post }: BlogCardProps) {
   return (
-    <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
-      <Card className="blog-card">
-        <CardContent>
-          <Typography
-            variant="h5"
-            style={{ color: 'white', fontWeight: 600, marginBottom: '0.5rem' }}
-          >
-            {post.title}
-          </Typography>
+    <Link href={`/blog/${post.slug}`} className="block blog-card group">
+      <h2 className="text-base font-medium text-[var(--text)] group-hover:text-[var(--accent)] transition-colors mb-2">
+        {post.title}
+      </h2>
 
-          <Box
-            style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem' }}
-          >
-            <Typography variant="body2" style={{ color: '#bdbdbd' }}>
-              {format(new Date(post.date), 'MMM dd, yyyy')}
-            </Typography>
-            <Box style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <AccessTimeIcon style={{ fontSize: '1rem', color: '#bdbdbd' }} />
-              <Typography variant="body2" className="reading-time">
-                {post.readingTime}
-              </Typography>
-            </Box>
-          </Box>
+      <div className="flex items-center gap-4 mb-3">
+        <span className="text-xs text-[var(--text-muted)] mono">
+          {format(new Date(post.date), 'MMM dd, yyyy')}
+        </span>
+        <span className="text-xs text-[var(--text-muted)] mono">{post.readingTime}</span>
+        {post.author && (
+          <span className="text-xs text-[var(--text-muted)]">by {post.author}</span>
+        )}
+      </div>
 
-          <Typography variant="body2" style={{ color: '#e5e7eb', marginBottom: '1rem' }}>
-            {post.description}
-          </Typography>
+      <p className="text-sm text-[#777] leading-relaxed mb-4">{post.description}</p>
 
-          <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-            {post.tags.map((tag) => (
-              <Chip key={tag} label={tag} size="small" className="blog-tag" />
-            ))}
-          </Box>
-        </CardContent>
-      </Card>
+      <div className="flex flex-wrap gap-1.5">
+        {post.tags.map((tag) => (
+          <span key={tag} className="tag">{tag}</span>
+        ))}
+      </div>
     </Link>
   );
-};
-
-export default BlogCard;
+}

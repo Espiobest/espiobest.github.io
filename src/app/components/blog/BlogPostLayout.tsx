@@ -1,11 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Container, Typography, Box, Chip, Button } from '@mui/material';
-import { format } from 'date-fns';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Link from 'next/link';
+import { format } from 'date-fns';
 import { BlogPost, TableOfContentsItem } from '@/lib/blog';
 import TableOfContents from './TableOfContents';
 import ScrollToTop from './ScrollToTop';
@@ -15,160 +11,66 @@ interface BlogPostLayoutProps {
   tocItems: TableOfContentsItem[];
   children: React.ReactNode;
 }
-// TODO: Align hero with blog content and fix code runner
-const BlogPostLayout: React.FC<BlogPostLayoutProps> = ({ post, tocItems, children }) => {
+
+export default function BlogPostLayout({ post, tocItems, children }: BlogPostLayoutProps) {
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        paddingTop: '2rem',
-        paddingBottom: '4rem',
-        '@media (max-width: 768px)': {
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
-        },
-      }}
-    >
-      <Link href="/blog" passHref>
-        <Button
-          variant="outlined"
-          color="primary"
-          startIcon={<ArrowBackIcon />}
-          style={{ marginBottom: '2rem', borderRadius: '0.5rem' }}
-        >
-          Back to Blog
-        </Button>
+    <div className="max-w-[1100px] mx-auto px-6 pt-24 pb-20">
+      {/* Back link */}
+      <Link
+        href="/blog"
+        className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text)] transition-colors mb-10"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Back to blog
       </Link>
 
-      <Box
-        className="blog-post-hero"
-        sx={{
-          width: '70%',
-          maxWidth: '900px',
-          margin: '0 auto 2rem auto',
-          '@media (max-width: 1024px)': {
-            width: '100%',
-          },
-          '@media (max-width: 768px)': {
-            margin: '0 0 2rem 0',
-          },
-        }}
-      >
-        <Typography
-          variant="h3"
-          sx={{
-            color: 'white',
-            fontWeight: 700,
-            marginBottom: '1rem',
-            '@media (max-width: 768px)': {
-              fontSize: '1.75rem',
-            },
-          }}
-        >
+      {/* Hero */}
+      <div className="max-w-[700px] mx-auto mb-12">
+        <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text)] leading-tight mb-4">
           {post.title}
-        </Typography>
+        </h1>
 
-        <Box
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '1rem',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Typography variant="body1" style={{ color: '#bdbdbd' }}>
-            {format(new Date(post.date), 'MMMM dd, yyyy')}
-          </Typography>
-          <Box style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-            <AccessTimeIcon style={{ fontSize: '1.25rem', color: '#bdbdbd' }} />
-            <Typography variant="body1" className="reading-time">
-              {post.readingTime}
-            </Typography>
-          </Box>
-          {post.author && (
-            <Typography variant="body1" style={{ color: '#bdbdbd' }}>
-              by {post.author}
-            </Typography>
-          )}
-        </Box>
+        <div className="flex flex-wrap items-center gap-4 mb-4 text-xs text-[var(--text-muted)] mono">
+          <span>{format(new Date(post.date), 'MMMM dd, yyyy')}</span>
+          <span>{post.readingTime}</span>
+          {post.author && <span>by {post.author}</span>}
+        </div>
 
-        <Typography
-          variant="h6"
-          sx={{
-            color: '#e5e7eb',
-            marginBottom: '1rem',
-            '@media (max-width: 768px)': {
-              fontSize: '1rem',
-            },
-          }}
-        >
-          {post.description}
-        </Typography>
+        <p className="text-sm text-[#888] leading-relaxed mb-5">{post.description}</p>
 
-        <Box style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <div className="flex flex-wrap gap-1.5">
           {post.tags.map((tag) => (
-            <Chip key={tag} label={tag} className="blog-tag" />
+            <span key={tag} className="tag">{tag}</span>
           ))}
-        </Box>
-      </Box>
+        </div>
+      </div>
 
-      <Box style={{ display: 'flex', gap: '2rem', position: 'relative', justifyContent: 'center' }}>
-        <Box
-          className="blog-post-content prose prose-lg"
-          sx={{
-            width: '70%',
-            maxWidth: '900px',
-            margin: '0 auto',
-            '@media (max-width: 1024px)': {
-              width: '100%',
-            },
-            '@media (max-width: 768px)': {
-              margin: 0,
-            },
-          }}
-        >
+      {/* Body + TOC */}
+      <div className="flex gap-10 justify-center relative">
+        {/* Content */}
+        <div className="prose-dark w-full max-w-[700px]">
           {children}
-        </Box>
+        </div>
 
+        {/* TOC (desktop only) */}
         {tocItems.length > 0 && (
-          <Box
-            style={{
-              width: '280px',
-              flexShrink: 0,
-              position: 'sticky',
-              top: '2rem',
-              alignSelf: 'flex-start',
-            }}
-            sx={{
-              display: 'none',
-              '@media (min-width: 1024px)': {
-                display: 'block',
-              },
-            }}
-          >
+          <aside className="hidden lg:block w-[240px] shrink-0">
             <TableOfContents items={tocItems} />
-          </Box>
+          </aside>
         )}
-      </Box>
+      </div>
 
+      {/* TOC (mobile, below content) */}
       {tocItems.length > 0 && (
-        <Box
-          sx={{
-            display: 'block',
-            marginTop: '2rem',
-            '@media (min-width: 1024px)': {
-              display: 'none',
-            },
-          }}
-        >
+        <div className="lg:hidden mt-10 max-w-[700px] mx-auto">
           <TableOfContents items={tocItems} />
-        </Box>
+        </div>
       )}
 
       <ScrollToTop />
-    </Container>
+    </div>
   );
-};
-
-export default BlogPostLayout;
+}

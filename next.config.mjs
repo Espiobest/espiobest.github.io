@@ -44,35 +44,6 @@ const nextConfig = {
     removeConsole: isProd ? { exclude: ['error', 'warn'] } : false,
   },
 
-  webpack: (config) => {
-    // Optimize bundle size
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          default: false,
-          vendors: false,
-          // Vendor chunk for MUI
-          mui: {
-            name: 'mui',
-            test: /[\\/]node_modules[\\/](@mui|@emotion)[\\/]/,
-            priority: 40,
-            reuseExistingChunk: true,
-          },
-          // Commons chunk for shared code
-          commons: {
-            name: 'commons',
-            minChunks: 2,
-            priority: 20,
-            reuseExistingChunk: true,
-          },
-        },
-      },
-    };
-
-    return config;
-  },
 };
 
 const withMDX = createMDX({

@@ -1,5 +1,17 @@
 export const getUptime = (dob: Date) => {
   const now = new Date();
-  const diff = new Date(now.getTime() - dob.getTime());
-  return `${diff.getUTCFullYear() - 1970} years, ${diff.getUTCMonth()} months, ${diff.getUTCDate() - 3} days`;
+  let years = now.getFullYear() - dob.getFullYear();
+  let months = now.getMonth() - dob.getMonth();
+  let days = now.getDate() - dob.getDate();
+
+  if (days < 0) {
+    months -= 1;
+    days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+  }
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  return `${years} years, ${months} month${months !== 1 ? 's' : ''}, ${days} day${days !== 1 ? 's' : ''}`;
 };

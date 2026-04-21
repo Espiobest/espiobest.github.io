@@ -1,58 +1,33 @@
 'use client';
 
-import React from 'react';
-import { Box, Typography } from '@mui/material';
-
 interface InteractiveDemoProps {
   title?: string;
-  src?: string; // For iframe embeds
-  children?: React.ReactNode; // For inline React components
+  src?: string;
+  children?: React.ReactNode;
   height?: string;
 }
 
-const InteractiveDemo: React.FC<InteractiveDemoProps> = ({
+export default function InteractiveDemo({
   title,
   src,
   children,
   height = '500px',
-}) => {
+}: InteractiveDemoProps) {
   return (
-    <Box
-      style={{
-        background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
-        borderRadius: '0.75rem',
-        padding: '1.5rem',
-        marginTop: '2rem',
-        marginBottom: '2rem',
-      }}
-    >
+    <div className="border border-[var(--border)] rounded-xl p-5 my-6 bg-[var(--surface)]">
       {title && (
-        <Typography
-          variant="h6"
-          style={{ marginBottom: '1rem', color: '#0070f3', fontWeight: 600 }}
-        >
-          {title}
-        </Typography>
+        <h4 className="text-sm font-semibold text-[#93c5fd] mb-4">{title}</h4>
       )}
       {src ? (
         <iframe
           src={src}
-          style={{
-            width: '100%',
-            height,
-            border: 'none',
-            borderRadius: '0.5rem',
-            backgroundColor: 'rgb(28 28 34)',
-          }}
-          title={title || 'Interactive Demo'}
+          style={{ width: '100%', height, border: 'none', borderRadius: '0.5rem' }}
+          title={title ?? 'Interactive Demo'}
           sandbox="allow-scripts allow-same-origin"
         />
       ) : (
         children
       )}
-    </Box>
+    </div>
   );
-};
-
-export default InteractiveDemo;
+}

@@ -1,9 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback, KeyboardEvent, memo } from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import MinimizeIcon from '@mui/icons-material/Minimize';
 import { getUptime } from '@/lib/utils';
 import { getGitHubStats, type GitHubStats } from '@/lib/github';
 import { getProjects, getExperiences, getBlogPosts } from '@/lib/data';
@@ -40,190 +37,124 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
 
       switch (baseCommand) {
         case 'help':
-          return `<span style="color: #4ade80; font-weight: 600;">Available commands:</span>
-  <span style="color: #60a5fa;">help</span>              - Show this help message
-  <span style="color: #60a5fa;">about</span>             - Learn about me
-  <span style="color: #60a5fa;">projects</span>          - List all projects
-  <span style="color: #60a5fa;">skills</span>            - List technical skills
-  <span style="color: #60a5fa;">blog</span>              - Show recent blog posts
-  <span style="color: #60a5fa;">contact</span>           - Get contact information
-  <span style="color: #60a5fa;">resume</span>            - Download resume
-  <span style="color: #60a5fa;">clear</span>             - Clear terminal
-  <span style="color: #60a5fa;">exit</span>              - Close terminal
-  <span style="color: #60a5fa;">pwd</span>               - Print working directory
-  <span style="color: #60a5fa;">ls</span>                - List directory contents
-  <span style="color: #60a5fa;">cd</span> &lt;dir&gt;          - Change directory
-  <span style="color: #60a5fa;">cat</span> &lt;file&gt;        - Display file contents
-
-<span style="color: #4ade80; font-weight: 600;">Easter eggs:</span>
-  <span style="color: #60a5fa;">sudo</span> &lt;command&gt;    - Try it and see
-  <span style="color: #60a5fa;">rm -rf /</span>          - Don't do this at home
-  <span style="color: #60a5fa;">whoami</span>            - Who are you?`;
+          return `<span style="color:#86efac;font-weight:600">Available commands:</span>
+  <span style="color:#93c5fd">help</span>           — Show this message
+  <span style="color:#93c5fd">about</span>          — Learn about me
+  <span style="color:#93c5fd">projects</span>       — List all projects
+  <span style="color:#93c5fd">skills</span>         — Technical skills
+  <span style="color:#93c5fd">blog</span>           — Recent blog posts
+  <span style="color:#93c5fd">contact</span>        — Contact info
+  <span style="color:#93c5fd">resume</span>         — Download resume
+  <span style="color:#93c5fd">neofetch</span>       — System info
+  <span style="color:#93c5fd">clear</span>          — Clear terminal
+  <span style="color:#93c5fd">exit</span>           — Close terminal
+  <span style="color:#93c5fd">ls / cd / cat</span>  — File navigation`;
 
         case 'pwd':
           return currentDir;
 
         case 'ls':
           if (currentDir === '/home/ayush/portfolio') {
-            return `<span style="color: #60a5fa;">projects/</span>
-<span style="color: #60a5fa;">blog/</span>
-<span style="color: #60a5fa;">experience/</span>
-resume.pdf
-README.md`;
+            return `<span style="color:#93c5fd">projects/</span>  <span style="color:#93c5fd">blog/</span>  <span style="color:#93c5fd">experience/</span>  resume.pdf  README.md`;
           } else if (currentDir === '/home/ayush/portfolio/projects') {
             const projects = getProjects();
-            return `<span style="color: #4ade80; font-weight: 600;">Projects:</span>
-${projects.map((p, i) => `  ${i + 1}. <span style="color: #a78bfa;">${p.name}</span> - ${p.shortDescription}`).join('\n')}
-
-<span style="color: #fbbf24;">Tip:</span> Use <span style="color: #60a5fa;">cat ${1}</span> to view details`;
+            return `<span style="color:#86efac;font-weight:600">Projects:</span>\n${projects.map((p, i) => `  ${i + 1}. <span style="color:#a78bfa">${p.name}</span> — ${p.shortDescription}`).join('\n')}`;
           } else if (currentDir === '/home/ayush/portfolio/blog') {
             const blogs = getBlogPosts();
-            return `<span style="color: #4ade80; font-weight: 600;">Blog Posts:</span>
-${blogs.map((b, i) => `  ${i + 1}. <span style="color: #a78bfa;">${b.title}</span>`).join('\n')}
-
-<span style="color: #fbbf24;">Tip:</span> Use <span style="color: #60a5fa;">cat ${1}</span> to read post`;
+            return `<span style="color:#86efac;font-weight:600">Posts:</span>\n${blogs.map((b, i) => `  ${i + 1}. <span style="color:#a78bfa">${b.title}</span>`).join('\n')}`;
           } else if (currentDir === '/home/ayush/portfolio/experience') {
             const experiences = getExperiences();
-            return `<span style="color: #4ade80; font-weight: 600;">Experience:</span>
-${experiences.map((e, i) => `  ${i + 1}. <span style="color: #a78bfa;">${e.org}</span> - ${e.title}`).join('\n')}
-
-<span style="color: #fbbf24;">Tip:</span> Use <span style="color: #60a5fa;">cat ${1}</span> to view details`;
+            return `<span style="color:#86efac;font-weight:600">Experience:</span>\n${experiences.map((e, i) => `  ${i + 1}. <span style="color:#a78bfa">${e.org}</span> — ${e.title}`).join('\n')}`;
           }
           return '';
 
-        case 'cd':
-          if (args.length < 2) {
-            return '<span style="color: #ef4444;">cd: missing operand</span>';
-          }
-          const targetDir = args[1];
-
-          if (targetDir === '..') {
-            if (currentDir !== '/home/ayush/portfolio') {
-              setCurrentDir('/home/ayush/portfolio');
-              return '';
-            }
-            return '<span style="color: #fbbf24;">Already at root directory</span>';
-          } else if (targetDir === '~' || targetDir === '/home/ayush/portfolio') {
+        case 'cd': {
+          const target = args[1];
+          if (!target) return '<span style="color:#f87171">cd: missing operand</span>';
+          if (target === '..' || target === '~') {
             setCurrentDir('/home/ayush/portfolio');
             return '';
-          } else if (currentDir === '/home/ayush/portfolio') {
-            const validDirs = ['projects', 'blog', 'experience'];
-            if (validDirs.includes(targetDir)) {
-              setCurrentDir(`/home/ayush/portfolio/${targetDir}`);
+          }
+          if (currentDir === '/home/ayush/portfolio') {
+            if (['projects', 'blog', 'experience'].includes(target)) {
+              setCurrentDir(`/home/ayush/portfolio/${target}`);
               return '';
             }
-            return `<span style="color: #ef4444;">cd: ${targetDir}: No such file or directory</span>`;
-          } else {
-            return `<span style="color: #ef4444;">cd: ${targetDir}: No such file or directory</span>`;
           }
+          return `<span style="color:#f87171">cd: ${target}: No such file or directory</span>`;
+        }
 
-        case 'cat':
-          if (args.length < 2) {
-            return '<span style="color: #ef4444;">cat: missing operand</span>';
-          }
-          const fileIndex = parseInt(args[1]) - 1;
+        case 'cat': {
+          const fileArg = args[1];
+          if (!fileArg) return '<span style="color:#f87171">cat: missing operand</span>';
+          const fileIndex = parseInt(fileArg) - 1;
 
           if (currentDir === '/home/ayush/portfolio/projects') {
-            const projects = getProjects();
-            const project = projects[fileIndex];
-            if (!project) {
-              return '<span style="color: #ef4444;">cat: invalid file number</span>';
-            }
-            return `<span style="color: #a78bfa; font-weight: 600;">${project.name}</span>
-----------------------------------------
-${project.description}
-
-<span style="color: #fbbf24;">Technologies:</span> ${project.technologies.join(', ')}
-<span style="color: #fbbf24;">GitHub:</span> ${project.github}`;
-          } else if (currentDir === '/home/ayush/portfolio/blog') {
-            const blogs = getBlogPosts();
-            const blog = blogs[fileIndex];
-            if (!blog) {
-              return '<span style="color: #ef4444;">cat: invalid file number</span>';
-            }
-            return `<span style="color: #a78bfa; font-weight: 600;">${blog.title}</span>
-----------------------------------------
-${blog.description}
-
-<span style="color: #fbbf24;">Read more:</span> Visit /blog/${blog.slug}`;
-          } else if (currentDir === '/home/ayush/portfolio/experience') {
-            const experiences = getExperiences();
-            const exp = experiences[fileIndex];
-            if (!exp) {
-              return '<span style="color: #ef4444;">cat: invalid file number</span>';
-            }
-            return `<span style="color: #a78bfa; font-weight: 600;">${exp.org}</span>
-----------------------------------------
-<span style="color: #fbbf24;">Role:</span> ${exp.title}
-<span style="color: #fbbf24;">Period:</span> ${exp.period}
-<span style="color: #fbbf24;">Stack:</span> ${exp.stack.join(', ')}`;
-          } else if (currentDir === '/home/ayush/portfolio') {
-            const fileName = args[1]?.toLowerCase();
-            if (fileName === 'readme.md' || fileName === 'readme') {
-              return `<span style="color: #a78bfa; font-weight: 600;">README.md</span>
-----------------------------------------
-# Ayush's Portfolio
-
-Welcome to my interactive terminal portfolio!
-
-Use <span style="color: #60a5fa;">ls</span> to list directories, <span style="color: #60a5fa;">cd</span> to navigate, and explore my projects, blog, and experience.
-
-Try <span style="color: #60a5fa;">help</span> for a list of available commands.`;
-            } else if (fileName === 'resume.pdf' || fileName === 'resume') {
-              window.open('/documents/Resume.pdf', '_blank');
-              return '<span style="color: #4ade80;">Opening resume in new tab...</span>';
-            }
-            return `<span style="color: #ef4444;">cat: ${args[1]}: No such file</span>`;
+            const p = getProjects()[fileIndex];
+            if (!p) return '<span style="color:#f87171">cat: invalid file number</span>';
+            return `<span style="color:#a78bfa;font-weight:600">${p.name}</span>\n${'─'.repeat(40)}\n${p.description}\n\n<span style="color:var(--accent)">Stack:</span> ${p.technologies.join(', ')}\n<span style="color:var(--accent)">GitHub:</span> ${p.github}`;
           }
-          return '<span style="color: #ef4444;">cat: No files in current directory</span>';
+          if (currentDir === '/home/ayush/portfolio/blog') {
+            const b = getBlogPosts()[fileIndex];
+            if (!b) return '<span style="color:#f87171">cat: invalid file number</span>';
+            return `<span style="color:#a78bfa;font-weight:600">${b.title}</span>\n${'─'.repeat(40)}\n${b.description}\n\n<span style="color:var(--accent)">Read at:</span> /blog/${b.slug}`;
+          }
+          if (currentDir === '/home/ayush/portfolio/experience') {
+            const e = getExperiences()[fileIndex];
+            if (!e) return '<span style="color:#f87171">cat: invalid file number</span>';
+            return `<span style="color:#a78bfa;font-weight:600">${e.org}</span>\n${'─'.repeat(40)}\n<span style="color:var(--accent)">Role:</span> ${e.title}\n<span style="color:var(--accent)">Period:</span> ${e.period}\n<span style="color:var(--accent)">Stack:</span> ${e.stack.join(', ')}`;
+          }
+          if (currentDir === '/home/ayush/portfolio') {
+            if (fileArg.toLowerCase() === 'readme.md') {
+              return `<span style="color:#a78bfa;font-weight:600">README.md</span>\n${'─'.repeat(40)}\n# Ayush's Portfolio\n\nWelcome to my interactive terminal.\nUse <span style="color:#93c5fd">ls</span> to browse, <span style="color:#93c5fd">cd</span> to navigate, <span style="color:#93c5fd">help</span> for commands.`;
+            }
+            if (fileArg === 'resume.pdf') {
+              window.open('/documents/Resume.pdf', '_blank');
+              return '<span style="color:#86efac">Opening resume...</span>';
+            }
+          }
+          return `<span style="color:#f87171">cat: ${fileArg}: No such file</span>`;
+        }
 
         case 'about':
-          return `<span style="color: #a78bfa; font-weight: 700; font-size: 1.1em;">Ayush Ravi Chandran</span>
-----------------------------------------
-<span style="color: #60a5fa;">CS & Math</span> student at <span style="color: #60a5fa;">UMass Amherst</span>
-Passionate about software engineering, security, and building cool stuff.
+          return `<span style="color:#a78bfa;font-weight:700">Ayush Ravi Chandran</span>
+${'─'.repeat(40)}
+<span style="color:#93c5fd">CS & Math</span> @ UMass Amherst
+Building software, doing research, writing occasionally.
 
-Currently exploring <span style="color: #fbbf24;">systems programming</span>, <span style="color: #fbbf24;">web security</span>, and <span style="color: #fbbf24;">low-level exploits</span>.
-Check out my blog for deep dives into technical topics!`;
+Interested in <span style="color:var(--accent)">systems</span>, <span style="color:var(--accent)">ML</span>, <span style="color:var(--accent)">databases</span>, and <span style="color:var(--accent)">security</span>.`;
 
-        case 'projects':
-          const projectsList = getProjects();
-          return `<span style="color: #4ade80; font-weight: 600;">Featured Projects:</span>
-----------------------------------------
-${projectsList.map((p) => `<span style="color: #34d399;">→</span> <span style="color: #a78bfa;">${p.name}</span> - ${p.shortDescription}`).join('\n')}
-
-Visit the <span style="color: #60a5fa;">/projects</span> page for detailed information and links.`;
+        case 'projects': {
+          const list = getProjects();
+          return `<span style="color:#86efac;font-weight:600">Projects:</span>\n${'─'.repeat(40)}\n${list.map((p) => `<span style="color:#86efac">→</span> <span style="color:#a78bfa">${p.name}</span> — ${p.shortDescription}`).join('\n')}`;
+        }
 
         case 'skills':
-          return `<span style="color: #4ade80; font-weight: 600;">Technical Skills:</span>
-----------------------------------------
-<span style="color: #fbbf24;">Languages:</span> JavaScript/TypeScript, Python, C, Go, Rust
-<span style="color: #fbbf24;">Frontend:</span>  React, Next.js, Material-UI, TailwindCSS
-<span style="color: #fbbf24;">Backend:</span>   Node.js, Express, PostgreSQL, MongoDB
-<span style="color: #fbbf24;">Security:</span>  Binary exploitation, Web security, CTFs
-<span style="color: #fbbf24;">Tools:</span>     Git, Docker, Linux, VS Code, GDB`;
+          return `<span style="color:#86efac;font-weight:600">Skills:</span>
+${'─'.repeat(40)}
+<span style="color:var(--accent)">Languages:</span>  TypeScript, Python, C, Go, Rust
+<span style="color:var(--accent)">Frontend:</span>   React, Next.js, Tailwind
+<span style="color:var(--accent)">Backend:</span>    Node.js, PostgreSQL, Docker
+<span style="color:var(--accent)">ML/Data:</span>    PyTorch, NumPy, SLURM, HPC
+<span style="color:var(--accent)">Security:</span>   Binary exploitation, CTFs`;
 
         case 'blog':
-          return `<span style="color: #4ade80; font-weight: 600;">Recent Blog Posts:</span>
-----------------------------------------
-<span style="color: #34d399;">→</span> <span style="color: #a78bfa;">Rumba FTP Exploit (CVE-2016-5764)</span>
-  Deep dive into a buffer overflow vulnerability in the Rumba FTP client.
+          return `<span style="color:#86efac;font-weight:600">Writing:</span>
+${'─'.repeat(40)}
+<span style="color:#86efac">→</span> <span style="color:#a78bfa">Rumba FTP Exploit (CVE-2016-5764)</span>
+  Buffer overflow deep dive
 
-Visit <span style="color: #60a5fa;">/blog</span> to read all posts and interactive demos!`;
+Visit <span style="color:#93c5fd">/#writing</span> or <span style="color:#93c5fd">/blog</span>`;
 
         case 'contact':
-          return `<span style="color: #4ade80; font-weight: 600;">Contact Information:</span>
-----------------------------------------
-<span style="color: #fbbf24;">GitHub:</span>   github.com/espiobest
-<span style="color: #fbbf24;">LinkedIn:</span> linkedin.com/in/ayush-ravichandran
-<span style="color: #fbbf24;">Email:</span>    Check the contact page
-
-Feel free to reach out for collaborations or opportunities!`;
+          return `<span style="color:#86efac;font-weight:600">Contact:</span>
+${'─'.repeat(40)}
+<span style="color:var(--accent)">GitHub:</span>   github.com/espiobest
+<span style="color:var(--accent)">LinkedIn:</span> linkedin.com/in/ayush-ravichandran`;
 
         case 'resume':
-          return `<span style="color: #4ade80; font-weight: 600;">Click <a href="/documents/Resume.pdf" target="_blank" class="underline red hover:text-green-500">here</a> to download my resume.</span>
-
-You can also find the resume link on the homepage.`;
+          window.open('/documents/Resume.pdf', '_blank');
+          return '<span style="color:#86efac">Opening resume in new tab...</span>';
 
         case 'clear':
           setHistory([]);
@@ -234,167 +165,104 @@ You can also find the resume link on the homepage.`;
           return '';
 
         case 'whoami':
-          return `ayush@portfolio:~$ whoami
-You are a curious visitor exploring my portfolio.
-Welcome! Type <span style="color: #60a5fa;">'help'</span> to see what you can do here.`;
+          return 'ayush — curious builder, occasional writer.';
 
         case 'sudo':
-          if (args.length === 1) {
-            return `<span style="color: #ef4444;">sudo: a command must be specified</span>
-Try <span style="color: #60a5fa;">'sudo help'</span> or just <span style="color: #60a5fa;">'help'</span> for available commands.`;
-          }
-          return `<span style="color: #fbbf24;">[sudo] password for ayush:</span>
-<span style="color: #ef4444;">Sorry, you don't have permission to run sudo commands on my portfolio.</span>
-Nice try though! 😄`;
+          return `<span style="color:var(--accent)">[sudo] password for ayush:</span>\n<span style="color:#f87171">Permission denied. Nice try.</span>`;
 
         case 'rm':
           if (args.includes('-rf') && args.includes('/')) {
-            return `<span style="color: #ef4444;">rm: it is dangerous to operate recursively on '/'</span>
-<span style="color: #ef4444;">rm: use --no-preserve-root to override this failsafe</span>
-
-<span style="color: #4ade80;">Just kidding! This is a frontend terminal, nothing actually gets deleted.</span>
-Your system is safe. 😅`;
+            return `<span style="color:#f87171">rm: dangerous operation blocked.</span>\n<span style="color:#86efac">Just kidding — this is a frontend terminal. Nothing actually deletes.</span>`;
           }
-          return `<span style="color: #ef4444;">rm: cannot remove '${args.slice(1).join(' ')}': Permission denied</span>`;
-
-        case 'cd':
-          return `Changed directory to <span style="color: #60a5fa;">${args[1] || '~'}</span>
-(Not really, this is a simulated terminal)`;
-
-        case 'pwd':
-          return '<span style="color: #60a5fa;">/home/ayush/portfolio</span>';
-
-        case 'cat':
-          if (args[1] === 'about.txt') {
-            return executeCommand('about');
-          }
-          if (args[1] === 'contact.txt') {
-            return executeCommand('contact');
-          }
-          return `<span style="color: #ef4444;">cat: ${args[1] || ''}: No such file or directory</span>`;
+          return `<span style="color:#f87171">rm: ${args.slice(1).join(' ')}: Permission denied</span>`;
 
         case 'echo':
           return args.slice(1).join(' ');
 
         case 'date':
-          return `<span style="color: #a78bfa;">${new Date().toString()}</span>`;
+          return `<span style="color:#a78bfa">${new Date().toString()}</span>`;
 
         case 'history':
-          return commandHistory.map((cmd, i) => `  ${i + 1}  ${cmd}`).join('\n');
+          return commandHistory.map((c, i) => `  ${i + 1}  ${c}`).join('\n');
 
-        case 'neofetch':
+        case 'neofetch': {
           const dob = new Date('2004-05-19');
           const stats = githubStats;
-          const githubStatsLine = stats
-            ? `<span style="color: #9ca3af;">• ${stats.publicRepos} repos • ${stats.followers} followers</span>`
-            : `<span style="color: #9ca3af;">Loading stats...</span>`;
-          const lastCommitLine = stats
-            ? `<span style="color: #34d399;">Last commit:</span> <span style="color: #9ca3af;">${stats.lastCommit}${stats.lastCommitRepo ? ` to <span style="color: #a78bfa;">${stats.lastCommitRepo}</span>` : ''}</span>`
+          const statsLine = stats
+            ? `<span style="color:#6b7280">${stats.publicRepos} repos · ${stats.followers} followers</span>`
+            : `<span style="color:#6b7280">loading stats...</span>`;
+          const commitLine = stats
+            ? `<span style="color:#86efac">Last commit:</span> <span style="color:#6b7280">${stats.lastCommit}${stats.lastCommitRepo ? ` to <span style="color:#a78bfa">${stats.lastCommitRepo}</span>` : ''}</span>`
             : '';
-
-          // Check if mobile
           const isMobile = window.innerWidth < 768;
 
-          if (isMobile) {
-            return `<span style="color: #60a5fa;">       _,met$$$$$gg.
-    ,g$$$$$$$$$$$$$$$P.
-  ,g$$P"     """Y$$.".
- ,$$P'              \`$$$.
-',$$P       ,ggs.     \`$$b:
-\`d$$'     ,$P"'   .    $$$
- $$P      d$'     ,    $$P
- $$:      $$.   -    ,d$$'
- $$;      Y$b._   _,d$P'
- Y$$.    \`.\`"Y$$$P"'
- \`$$b      "-.__
-  \`Y$$
-   \`Y$$.
-</span>
-<span style="color: #fbbf24;">ayush</span>@<span style="color: #fbbf24;">portfolio</span>
----------------------
-<span style="color: #fbbf24;">Name:</span> Ayush Ravi Chandran
-<span style="color: #fbbf24;">Uptime:</span> ${getUptime(dob)}
-<span style="color: #fbbf24;">Education:</span> UMass Amherst
-<span style="color: #fbbf24;">Majors:</span> CS & Math
-<span style="color: #fbbf24;">Interests:</span> AI, Optimization, Databases, Security, Systems
-<span style="color: #fbbf24;">Languages:</span> TypeScript, Python, C, Go, Rust
-<span style="color: #fbbf24;">Tools:</span> Git, Docker, Linux, VS Code
+          const info = `<span style="color:var(--accent)">ayush</span>@<span style="color:var(--accent)">portfolio</span>
+${'─'.repeat(22)}
+<span style="color:var(--accent)">Name:</span>      Ayush Ravi Chandran
+<span style="color:var(--accent)">Uptime:</span>    ${getUptime(dob)}
+<span style="color:var(--accent)">School:</span>    UMass Amherst
+<span style="color:var(--accent)">Majors:</span>    CS & Math
+<span style="color:var(--accent)">Interests:</span> AI · Systems · Databases · Security
+<span style="color:var(--accent)">Languages:</span> TypeScript, Python, C, Go, Rust
+<span style="color:var(--accent)">GitHub:</span>    <a href="https://github.com/Espiobest" target="_blank" style="color:#a78bfa;text-decoration:underline">github.com/espiobest</a>
+${statsLine}
+${commitLine}`;
 
-<svg width="14" height="14" viewBox="0 0 24 24" fill="#e5e7eb" style="display: inline; vertical-align: middle; margin-right: 4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> <span style="color: #a78bfa;"><a href="https://github.com/Espiobest" class="hover:underline" target="_blank">github.com/espiobest</a></span>
-${githubStatsLine}
-${lastCommitLine}
-<span style="color: #34d399;">●</span> Type <span style="color: #60a5fa;">'projects'</span> or <span style="color: #60a5fa;">'help'</span>`;
-          }
+          if (isMobile) return info;
 
-          return `<span style="color: #60a5fa;">       _,met$$$$$gg.          </span><span style="color: #fbbf24;">ayush</span>@<span style="color: #fbbf24;">portfolio</span>
-<span style="color: #60a5fa;">    ,g$$$$$$$$$$$$$$$P.       </span>---------------------
-<span style="color: #60a5fa;">  ,g$$P"     """Y$$.".        </span><span style="color: #fbbf24;">Name:</span> Ayush Ravi Chandran
-<span style="color: #60a5fa;"> ,$$P'              \`$$$.     </span><span style="color: #fbbf24;">Uptime:</span> ${getUptime(dob)}
-<span style="color: #60a5fa;">',$$P       ,ggs.     \`$$b:   </span><span style="color: #fbbf24;">Education:</span> UMass Amherst
-<span style="color: #60a5fa;">\`d$$'     ,$P"'   .    $$$    </span><span style="color: #fbbf24;">Majors:</span> CS & Math
-<span style="color: #60a5fa;"> $$P      d$'     ,    $$P    </span><span style="color: #fbbf24;">Interests:</span> AI, Optimization, Databases, Security, Systems
-<span style="color: #60a5fa;"> $$:      $$.   -    ,d$$'    </span><span style="color: #fbbf24;">Languages:</span> TypeScript, Python, C, Go, Rust
-<span style="color: #60a5fa;"> $$;      Y$b._   _,d$P'      </span><span style="color: #fbbf24;">Tools:</span> Git, Docker, Linux, VS Code
-<span style="color: #60a5fa;"> Y$$.    \`.\`"Y$$$P"'          </span>
-<span style="color: #60a5fa;"> \`$$b      "-.__              </span><svg width="14" height="14" viewBox="0 0 24 24" fill="#e5e7eb" style="display: inline; vertical-align: middle; margin-right: 4px;"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg> <span style="color: #a78bfa;"><a href="https://github.com/Espiobest" class="hover:underline" target="_blank">github.com/espiobest</a></span> ${githubStatsLine}
-<span style="color: #60a5fa;">  \`Y$$                        </span>${lastCommitLine}
-<span style="color: #60a5fa;">   \`Y$$.                      </span><span style="color: #34d399;">●</span> Type <span style="color: #60a5fa;">'projects'</span> or <span style="color: #60a5fa;">'help'</span>`;
+          return `<span style="color:#93c5fd">       _,met$$$$$gg.          </span>${info.split('\n')[0]}
+<span style="color:#93c5fd">    ,g$$$$$$$$$$$$$$$P.       </span>${info.split('\n')[1]}
+<span style="color:#93c5fd">  ,g$$P"     """Y$$.".        </span>${info.split('\n')[2]}
+<span style="color:#93c5fd"> ,$$P'              \`$$$.     </span>${info.split('\n')[3]}
+<span style="color:#93c5fd">',$$P       ,ggs.     \`$$b:   </span>${info.split('\n')[4]}
+<span style="color:#93c5fd">\`d$$'     ,$P"'   .    $$$    </span>${info.split('\n')[5]}
+<span style="color:#93c5fd"> $$P      d$'     ,    $$P    </span>${info.split('\n')[6]}
+<span style="color:#93c5fd"> $$:      $$.   -    ,d$$'    </span>${info.split('\n')[7]}
+<span style="color:#93c5fd"> $$;      Y$b._   _,d$P'      </span>${info.split('\n')[8]}
+<span style="color:#93c5fd"> Y$$.    \`.\`"Y$$$P"'          </span>${info.split('\n')[9]}
+<span style="color:#93c5fd"> \`$$b      "-.__              </span>${info.split('\n')[10]}
+<span style="color:#93c5fd">  \`Y$$                        </span>${info.split('\n')[11] ?? ''}
+<span style="color:#93c5fd">   \`Y$$.                      </span>`;
+        }
 
         case '':
           return '';
 
         default:
-          return `<span style="color: #ef4444;">Command not found:</span> ${baseCommand}
-Type <span style="color: #60a5fa;">'help'</span> for available commands.`;
+          return `<span style="color:#f87171">command not found:</span> ${baseCommand} — try <span style="color:#93c5fd">help</span>`;
       }
     },
     [commandHistory, onClose, githubStats, currentDir],
   );
 
-  // Typewriter effect for typing the command itself
   const typeCommand = useCallback(
     async (command: string) => {
       setIsTyping(true);
       setTypingCommand('');
-
       for (let i = 0; i <= command.length; i++) {
         setTypingCommand(command.slice(0, i));
-        await new Promise((resolve) => setTimeout(resolve, 100)); // Typing speed for command
+        await new Promise((r) => setTimeout(r, 80));
       }
-
-      // Small pause after typing completes
-      await new Promise((resolve) => setTimeout(resolve, 300));
-
+      await new Promise((r) => setTimeout(r, 200));
       const output = executeCommand(command);
-      const promptDir =
-        currentDir === '/home/ayush/portfolio' ? '~' : `~/${currentDir.split('/').pop()}`;
-      setHistory((prev) => [...prev, { command, output, directory: promptDir }]);
+      const dir = currentDir === '/home/ayush/portfolio' ? '~' : `~/${currentDir.split('/').pop()}`;
+      setHistory((prev) => [...prev, { command, output, directory: dir }]);
       setTypingCommand('');
       setIsTyping(false);
     },
     [executeCommand, currentDir],
   );
 
-  const getPromptDir = (): string => {
-    if (currentDir === '/home/ayush/portfolio') return '~';
-    const parts = currentDir.split('/');
-    return `~/${parts[parts.length - 1]}`;
-  };
+  const getPromptDir = () =>
+    currentDir === '/home/ayush/portfolio' ? '~' : `~/${currentDir.split('/').pop()}`;
 
-  // Fetch GitHub stats on mount so they're ready when terminal opens
   useEffect(() => {
-    if (!githubStats) {
-      getGitHubStats().then((stats) => {
-        if (stats) setGithubStats(stats);
-      });
-    }
+    if (!githubStats) getGitHubStats().then((s) => s && setGithubStats(s));
   }, [githubStats]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
-
-      // Auto-run neofetch only if terminal is clear (no history) and hasn't been run yet
       if (history.length === 0 && !hasRunNeofetch.current) {
         hasRunNeofetch.current = true;
         setTimeout(() => {
@@ -403,29 +271,21 @@ Type <span style="color: #60a5fa;">'help'</span> for available commands.`;
         }, 100);
       }
     } else if (!isOpen) {
-      // Reset the flag and directory when terminal is closed
       hasRunNeofetch.current = false;
       setCurrentDir('/home/ayush/portfolio');
     }
-  }, [isOpen, history.length, typeCommand, githubStats]);
+  }, [isOpen, history.length, typeCommand]);
 
   useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-    }
+    if (terminalRef.current) terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
   }, [history]);
 
   const handleCommand = () => {
     if (!currentCommand.trim()) return;
-
-    const cmd = currentCommand.trim().toLowerCase();
-
-    if (cmd !== 'clear') {
-      // Execute all commands normally (no typing animation for user input)
+    if (currentCommand.trim().toLowerCase() !== 'clear') {
       const output = executeCommand(currentCommand);
       setHistory([...history, { command: currentCommand, output, directory: getPromptDir() }]);
     }
-
     setCommandHistory([...commandHistory, currentCommand]);
     setHistoryIndex(-1);
     setCurrentCommand('');
@@ -437,27 +297,26 @@ Type <span style="color: #60a5fa;">'help'</span> for available commands.`;
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (commandHistory.length > 0) {
-        const newIndex =
-          historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
-        setHistoryIndex(newIndex);
-        setCurrentCommand(commandHistory[newIndex]);
+        const idx = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        setHistoryIndex(idx);
+        setCurrentCommand(commandHistory[idx]);
       }
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
       if (historyIndex !== -1) {
-        const newIndex = Math.min(commandHistory.length - 1, historyIndex + 1);
-        if (newIndex === commandHistory.length - 1 && historyIndex === commandHistory.length - 1) {
+        const idx = Math.min(commandHistory.length - 1, historyIndex + 1);
+        if (idx === commandHistory.length - 1 && historyIndex === commandHistory.length - 1) {
           setHistoryIndex(-1);
           setCurrentCommand('');
         } else {
-          setHistoryIndex(newIndex);
-          setCurrentCommand(commandHistory[newIndex]);
+          setHistoryIndex(idx);
+          setCurrentCommand(commandHistory[idx]);
         }
       }
-    } else if (e.key === 'l' && e.ctrlKey) {
+    } else if (e.ctrlKey && e.key === 'l') {
       e.preventDefault();
       setHistory([]);
-    } else if (e.key === 'c' && e.ctrlKey) {
+    } else if (e.ctrlKey && e.key === 'c') {
       e.preventDefault();
       setCurrentCommand('');
     }
@@ -466,255 +325,103 @@ Type <span style="color: #60a5fa;">'help'</span> for available commands.`;
   if (!isOpen) return null;
 
   return (
-    <Box
-      sx={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-        zIndex: 9999,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-        animation: 'fadeIn 0.2s ease',
-        '@media (max-width: 768px)': {
-          padding: '0.5rem',
-        },
-      }}
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8 bg-black/70 backdrop-blur-sm"
       onClick={onClose}
     >
-      <Box
+      <div
+        className="w-full max-w-3xl h-[80vh] md:h-[75vh] flex flex-col rounded-xl overflow-hidden border border-[var(--border)] shadow-2xl"
+        style={{ background: '#0e0e0e' }}
         onClick={(e) => e.stopPropagation()}
-        sx={{
-          width: '100%',
-          maxWidth: '900px',
-          height: '80vh',
-          backgroundColor: '#1a1a1a',
-          borderRadius: '0.75rem',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.5)',
-          border: '1px solid #333',
-          '@media (max-width: 768px)': {
-            height: '95vh',
-            maxWidth: '100%',
-            borderRadius: '0.5rem',
-            margin: '0.5rem',
-          },
-        }}
       >
-        {/* Terminal Header */}
-        <Box
-          sx={{
-            backgroundColor: '#2d2d2d',
-            padding: '0.75rem 1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            borderBottom: '1px solid #444',
-          }}
+        {/* Title bar */}
+        <div
+          className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border)]"
+          style={{ background: '#141414' }}
         >
-          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Box
-              sx={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: '#ff5f56',
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                setHistory([]);
-                setCommandHistory([]);
-                onClose();
-              }}
+          <div className="flex items-center gap-1.5">
+            <button
+              className="w-3 h-3 rounded-full bg-[#ff5f56] hover:opacity-80 transition-opacity"
+              onClick={() => { setHistory([]); setCommandHistory([]); onClose(); }}
+              aria-label="Close"
             />
-            <Box
-              sx={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: '#ffbd2e',
-              }}
-            />
-            <Box
-              sx={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                backgroundColor: '#27c93f',
-              }}
-            />
-          </Box>
-          <Typography
-            variant="body2"
-            sx={{
-              color: '#888',
-              fontFamily: 'var(--font-jetbrains-mono)',
-              fontSize: '0.875rem',
-            }}
-          >
+            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+            <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+          </div>
+          <span className="mono text-xs text-[var(--text-muted)]">
             ayush@portfolio: {getPromptDir()}
-          </Typography>
-          <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-            <IconButton size="small" sx={{ color: '#888' }} onClick={onClose}>
-              <MinimizeIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="small"
-              sx={{ color: '#888' }}
-              onClick={() => {
-                setHistory([]);
-                setCommandHistory([]);
-                onClose();
-              }}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Box>
-        </Box>
+          </span>
+          <button
+            onClick={onClose}
+            className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+            aria-label="Close terminal"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
 
-        {/* Terminal Content */}
-        <Box
+        {/* Output area */}
+        <div
           ref={terminalRef}
-          sx={{
-            flex: 1,
-            overflow: 'auto',
-            overflowX: 'auto',
-            padding: '1rem',
-            fontFamily: 'var(--font-jetbrains-mono)',
-            fontSize: '0.9rem',
-            color: '#9ca3af',
-            backgroundColor: '#1a1a1a',
-            '@media (max-width: 768px)': {
-              padding: '0.75rem',
-              fontSize: '0.7rem',
-              overflowX: 'scroll',
-            },
-          }}
+          className="flex-1 overflow-y-auto p-4 mono text-sm text-[#9ca3af] leading-relaxed"
+          style={{ fontSize: '0.82rem' }}
+          onClick={() => inputRef.current?.focus()}
         >
-          {/* Welcome Message */}
-          <Box sx={{ marginBottom: '1rem' }}>
-            <Typography sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#4ade80' }}>
-              Welcome to Ayush&apos;s Portfolio Terminal
-            </Typography>
-            <Typography sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#9ca3af' }}>
-              Type &apos;help&apos; to see available commands
-            </Typography>
-            <Typography sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#9ca3af' }}>
-              ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            </Typography>
-          </Box>
+          <p className="text-[#86efac] mb-0.5">Welcome to Ayush&apos;s terminal</p>
+          <p className="text-[var(--text-muted)] mb-4">Type &apos;help&apos; for available commands</p>
 
-          {/* Command History */}
-          {history.map((item, index) => (
-            <Box key={index} sx={{ marginBottom: '1rem' }}>
-              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                <Typography
-                  component="span"
-                  sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#3b82f6' }}
-                >
-                  ayush@portfolio:{item.directory || '~'}$
-                </Typography>
-                <Typography
-                  component="span"
-                  sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#ffffff' }}
-                >
-                  {item.command}
-                </Typography>
-              </Box>
+          {history.map((item, i) => (
+            <div key={i} className="mb-3">
+              <div className="flex gap-2">
+                <span className="text-[#93c5fd] shrink-0">
+                  ayush@portfolio:{item.directory ?? '~'}$
+                </span>
+                <span className="text-white">{item.command}</span>
+              </div>
               {item.output && (
-                <Typography
-                  component="div"
-                  sx={{
-                    fontFamily: 'inherit',
-                    fontSize: 'inherit',
-                    color: '#9ca3af',
-                    marginTop: '0.5rem',
-                    whiteSpace: 'pre-wrap',
-                    wordBreak: 'break-word',
-                    '& span': {
-                      fontFamily: 'inherit',
-                    },
-                    animation:
-                      item.command.toLowerCase().trim() === 'neofetch'
-                        ? 'slideUpFade 0.4s ease-out'
-                        : 'none',
-                    '@keyframes slideUpFade': {
-                      '0%': {
-                        opacity: 0,
-                        transform: 'translateY(20px)',
-                      },
-                      '100%': {
-                        opacity: 1,
-                        transform: 'translateY(0)',
-                      },
-                    },
-                  }}
+                <div
+                  className="mt-1 whitespace-pre-wrap break-words"
                   dangerouslySetInnerHTML={{ __html: item.output }}
                 />
               )}
-            </Box>
+            </div>
           ))}
 
-          {/* Typing Command Animation */}
           {isTyping && typingCommand !== '' && (
-            <Box sx={{ marginBottom: '1rem' }}>
-              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                <Typography
-                  component="span"
-                  sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#3b82f6' }}
-                >
-                  ayush@portfolio:{getPromptDir()}$
-                </Typography>
-                <Typography
-                  component="span"
-                  sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#ffffff' }}
-                >
-                  {typingCommand}
-                </Typography>
-              </Box>
-            </Box>
+            <div className="mb-3 flex gap-2">
+              <span className="text-[#93c5fd] shrink-0">
+                ayush@portfolio:{getPromptDir()}$
+              </span>
+              <span className="text-white">{typingCommand}</span>
+            </div>
           )}
 
-          {/* Current Input */}
           {!isTyping && (
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <Typography
-                component="span"
-                sx={{ fontFamily: 'inherit', fontSize: 'inherit', color: '#3b82f6' }}
-              >
+            <div className="flex gap-2 items-center">
+              <span className="text-[#93c5fd] shrink-0">
                 ayush@portfolio:{getPromptDir()}$
-              </Typography>
-              <Box sx={{ position: 'relative', flex: 1, display: 'flex', alignItems: 'center' }}>
+              </span>
+              <div className="relative flex-1 flex items-center">
                 <input
                   ref={inputRef}
                   type="text"
                   value={currentCommand}
                   onChange={(e) => setCurrentCommand(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  style={{
-                    flex: 1,
-                    background: 'transparent',
-                    border: 'none',
-                    outline: 'none',
-                    color: '#ffffff',
-                    fontFamily: 'var(--font-jetbrains-mono)',
-                    fontSize: '0.9rem',
-                    caretColor: '#ffffff',
-                  }}
+                  className="flex-1 bg-transparent border-none outline-none text-white mono"
+                  style={{ fontSize: 'inherit', caretColor: 'var(--accent)' }}
                   autoFocus
+                  autoComplete="off"
+                  spellCheck={false}
                 />
-              </Box>
-            </Box>
+              </div>
+            </div>
           )}
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };
 
