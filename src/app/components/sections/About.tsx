@@ -1,21 +1,12 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
-// Chunk is only downloaded when <Setup /> actually renders
 const Setup = dynamic(() => import('../Setup'), { ssr: false, loading: () => null });
 
 export default function About() {
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
-
-  useEffect(() => {
-    // Trigger on first scroll
-    const onScroll = () => { setShouldLoad(true); };
-    window.addEventListener('scroll', onScroll, { passive: true, once: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const [showSetup, setShowSetup] = useState(false);
 
   return (
     <section id="about" className="section">
@@ -63,17 +54,27 @@ export default function About() {
             </div>
           </div>
 
-          {/* 3D model - hidden on mobile, deferred on desktop */}
-          <div ref={sentinelRef} className="hidden sm:flex flex-col items-center gap-3">
-            <div
-              className="w-full rounded-xl overflow-hidden border border-[var(--border)]"
-              style={{ background: 'transparent', height: '240px' }}
-            >
-              {/* {shouldLoad && <Setup />} */}
+          {/* Photo / Setup toggle */}
+          <div className="hidden sm:flex flex-col gap-2">
+            <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)]" style={{ height: '280px' }}>
+              {showSetup ? (
+                <Setup />
+              ) : (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/images/profile.jpg"
+                  alt="Ayush"
+                  className="w-full h-full object-cover"
+                  style={{ filter: 'grayscale(100%) contrast(1.05)', display: 'block' }}
+                />
+              )}
             </div>
-            <p className="text-[0.65rem] text-[var(--text-muted)] tracking-wide uppercase">
-              my desk · drag to rotate
-            </p>
+            <button
+              onClick={() => setShowSetup((v) => !v)}
+              className="text-[0.65rem] text-[var(--text-muted)] hover:text-[var(--accent)] tracking-wide uppercase transition-colors text-center"
+            >
+              {showSetup ? 'view photo' : 'view my desk ↗'}
+            </button>
           </div>
         </div>
       </div>
