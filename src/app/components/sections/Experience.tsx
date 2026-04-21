@@ -52,7 +52,7 @@ export default function Experience() {
                 <ul className="space-y-2 mb-4">
                   {exp.work.map((item, i) => (
                     <li key={i} className="flex gap-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">
-                      <span className="text-[var(--text-muted)] mt-[3px] shrink-0">—</span>
+                      <span className="shrink-0 w-1 h-1 rounded-full mt-2 block" style={{ background: 'rgba(232,197,71,0.45)' }} />
                       <span>{item}</span>
                     </li>
                   ))}

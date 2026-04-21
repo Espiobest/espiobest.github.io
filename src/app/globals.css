@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design Tokens — Dark (default) ────────────── */
 :root {
   --bg: #181818;
   --surface: #1e1e1e;
@@ -20,7 +19,6 @@
   --radius: 0.75rem;
 }
 
-/* ─── Light mode (toggle via data-theme="light") ─── */
 [data-theme='light'] {
   --bg: #f2f2ef;
   --surface: #ffffff;
@@ -35,7 +33,6 @@
   --accent-dim: rgba(184, 144, 32, 0.1);
 }
 
-/* ─── Base ───────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -62,7 +59,6 @@ body {
   line-height: 1.75;
 }
 
-/* ─── Typography helpers ─────────────────────────── */
 .label {
   font-size: 0.7rem;
   font-weight: 500;
@@ -71,7 +67,6 @@ body {
   color: var(--text-muted);
 }
 
-/* ─── Scrollbar ──────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -86,19 +81,16 @@ body {
   background: #333;
 }
 
-/* ─── Selection ──────────────────────────────────── */
 ::selection {
   background: var(--accent-dim);
   color: var(--accent);
 }
 
-/* ─── Links ──────────────────────────────────────── */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* ─── Cards ──────────────────────────────────────── */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -112,7 +104,6 @@ a {
   border-color: var(--border-hover);
 }
 
-/* ─── Section layout ─────────────────────────────── */
 .section {
   padding: 6rem 0;
 }
@@ -123,7 +114,6 @@ a {
   padding: 0 1.5rem;
 }
 
-/* ─── Accent underline on section titles ─────────── */
 .section-title {
   font-size: 0.7rem;
   font-weight: 600;
@@ -133,12 +123,10 @@ a {
   margin-bottom: 3rem;
 }
 
-/* ─── Terminal font ──────────────────────────────── */
 .mono {
   font-family: var(--mono);
 }
 
-/* ─── Tag / Badge ────────────────────────────────── */
 .tag {
   display: inline-block;
   font-size: 0.7rem;
@@ -151,14 +139,12 @@ a {
   white-space: nowrap;
 }
 
-/* ─── Accent tag (for awards) ────────────────────── */
 .tag-accent {
   background: var(--accent-dim);
   border-color: rgba(232, 197, 71, 0.25);
   color: var(--accent);
 }
 
-/* ─── Blog styles ────────────────────────────────── */
 .blog-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -207,7 +193,6 @@ a {
   font-size: 0.78rem;
 }
 
-/* ─── Code blocks ────────────────────────────────── */
 .code-block-wrapper {
   position: relative;
   margin: 1.5rem 0;
@@ -251,7 +236,6 @@ a {
   color: var(--text);
 }
 
-/* ─── Syntax highlighting (hljs overrides) ───────── */
 .hljs {
   background: #0e0e0e !important;
   color: #e2e2e2 !important;
@@ -287,7 +271,6 @@ a {
   color: #93c5fd !important;
 }
 
-/* ─── Blog prose overrides ───────────────────────── */
 .prose-dark h1,
 .prose-dark h2,
 .prose-dark h3,
@@ -394,7 +377,6 @@ a {
   color: #c8c8c8;
 }
 
-/* ─── Modal animations ───────────────────────────── */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -433,7 +415,6 @@ a {
   animation: fadeUp 0.5s ease forwards;
 }
 
-/* ─── Terminal cursor blink ──────────────────────── */
 @keyframes blink {
   0%,
   100% {

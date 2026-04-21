@@ -11,7 +11,7 @@ export default function About() {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    // Trigger on first scroll — guarantees Three.js never loads on initial page paint
+    // Trigger on first scroll
     const onScroll = () => { setShouldLoad(true); };
     window.addEventListener('scroll', onScroll, { passive: true, once: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -26,14 +26,13 @@ export default function About() {
           {/* Text */}
           <div className="space-y-4 text-[var(--text-secondary)] leading-[1.85]">
             <p>
-              I&apos;m a senior at UMass Amherst studying Computer Science and Mathematics. I build
-              things that range from data pipelines serving researchers to poker-playing neural
-              networks — I just like making stuff that works well.
+              Senior at UMass Amherst, CS + Math. I build things that range from data pipelines
+              serving researchers to poker-playing agents - I just like making stuff that works well.
             </p>
             <p>
-              I care about systems that are fast, correct, and maintainable. Outside of coding
-              I&apos;m into security research, competitive programming, and occasionally writing
-              about things I&apos;ve dug into.
+              I care about backend systems that are correct every time, not just most of the time.
+              ML and security live nearby; I like that both punish shallow understanding. Outside of
+              code: games, anime, gym, and a tendency to go one tab too deep on things adjacent to whatever I&apos;m building.
             </p>
             <p>
               Looking for new grad software engineering roles starting 2026.{' '}
@@ -53,7 +52,7 @@ export default function About() {
               {[
                 ['Based in', 'Massachusetts, USA'],
                 ['School', 'UMass Amherst'],
-                ['Focus', 'Systems · ML · Security'],
+                ['Focus', 'Backend · Data · ML'],
                 ['Open to', 'New Grad 2026 roles'],
               ].map(([k, v]) => (
                 <div key={k}>
@@ -64,13 +63,13 @@ export default function About() {
             </div>
           </div>
 
-          {/* 3D model — hidden on mobile, deferred on desktop */}
+          {/* 3D model - hidden on mobile, deferred on desktop */}
           <div ref={sentinelRef} className="hidden sm:flex flex-col items-center gap-3">
             <div
               className="w-full rounded-xl overflow-hidden border border-[var(--border)]"
               style={{ background: 'transparent', height: '240px' }}
             >
-              {shouldLoad && <Setup />}
+              {/* {shouldLoad && <Setup />} */}
             </div>
             <p className="text-[0.65rem] text-[var(--text-muted)] tracking-wide uppercase">
               my desk · drag to rotate

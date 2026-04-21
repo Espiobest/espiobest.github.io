@@ -2,6 +2,7 @@ export const getProjects = () => [
   {
     name: 'RouteAble',
     title: 'RouteAble',
+    year: '2023',
     shortDescription: 'Map-based accessibility app (🏆 UChicago & HackUMass Winner)',
     description:
       'A map-based application that uses crowd-sourced data to help disabled people determine accessible areas.',
@@ -14,6 +15,7 @@ export const getProjects = () => [
   {
     name: 'Poker Bot',
     title: 'Poker Bot',
+    year: '2025',
     shortDescription: "DQN agent for Texas Hold'em",
     description:
       "Deep Q-Network agent for Heads-Up Limit Texas Hold'em using reinforcement learning. Ranked 4th out of 23 in tournament evaluation.",
@@ -25,6 +27,7 @@ export const getProjects = () => [
   {
     name: 'Travy',
     title: 'Travy',
+    year: '2025',
     shortDescription: 'Full-stack travel planning app',
     description:
       'Centralizes travel planning by aggregating flights, transit, and rideshare data in one place.',
@@ -35,6 +38,7 @@ export const getProjects = () => [
   {
     name: 'Spotify Stats',
     title: 'Spotify Stats',
+    year: '2025',
     shortDescription: 'Listening history dashboard',
     description: 'Dashboard that visualizes Spotify listening history, top artists, and habits over time.',
     technologies: ['Next.js', 'React', 'TypeScript', 'Spotify API'],
@@ -45,6 +49,7 @@ export const getProjects = () => [
   {
     name: 'Instilt Educate',
     title: 'Instilt Educate Website',
+    year: '2022-2025',
     shortDescription: 'Educational platform website',
     description:
       'Connects students and organizations globally with a redesigned, user-friendly interface.',
@@ -56,6 +61,7 @@ export const getProjects = () => [
   {
     name: 'Discord Bot',
     title: 'Discord Bot',
+    year: '2022',
     shortDescription: 'Moderation bot for 30,000+ community',
     description:
       'Moderation bot for a Discord community of 30,000+ members. Enhances community safety and engagement.',
@@ -72,10 +78,10 @@ export const getExperiences = () => [
     period: 'Sep 2025 - Present',
     stack: ['React', 'TypeScript', 'FastAPI', 'Flutter', 'PostgreSQL', 'S3', 'Docker', 'Geospatial Data'],
     work: [
-      'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
+      'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for MassMarsh, a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
       'Implemented fault-tolerant NAS synchronization across heterogeneous formats with schema mapping and incremental batch processing',
       'Developed a multi-tenant web portal (React, FastAPI) with role-based access control and containerized deployment, managing 1,000+ weekly field records',
-      'Built a Flutter mobile app for field data collection replacing third-party tooling — GPS capture, RTK location matching, multi-plot surveys, and a QC pipeline for pre-ingestion validation',
+      'Built a Flutter mobile app for field data collection replacing third-party tooling - GPS capture, RTK location matching, multi-plot surveys, and a QC pipeline for pre-ingestion validation',
       'Built containerized React tools with interactive geospatial visualizations for Woodwell Climate Research Center',
     ],
     impact:
@@ -97,6 +103,20 @@ export const getExperiences = () => [
       'Found $120K+ in wasted GPU resources and cut log analysis time by 80%, directly improving resource allocation across a major HPC cluster.',
     link: 'https://www.mghpcc.org/',
     github: 'https://github.com/UnityHPC/ds4cg-job-analytics',
+  },
+  {
+    title: 'Undergraduate Course Assistant',
+    org: 'Manning College of Informatics and Computer Science, UMass Amherst — COMPSCI 426 & 240',
+    period: 'May 2025 - Present',
+    stack: ['Microservices', 'Redis', 'Caching', 'React', 'Probability', 'Bayesian Reasoning', 'Mentorship'],
+    work: [
+      'Won the Outstanding UCA Award for contributions to COMPSCI 240',
+      'Mentoring student teams 1-on-1 in CS426 (Scalable Web Systems) on distributed systems projects involving microservices, Redis, caching, and React',
+      'Held discussion sections and office hours for 150+ students in CS240, covering probability, statistics, and reasoning under uncertainty',
+      'Clarified complex topics including Bayesian reasoning, probabilistic modeling, and statistical inference through guided problem-solving',
+    ],
+    impact: 'Recognized with the Outstanding UCA Award while teaching probability and guiding teams through building production-grade distributed systems.',
+    link: 'https://www.cics.umass.edu/',
   },
   {
     title: 'Head of Technical Operations',

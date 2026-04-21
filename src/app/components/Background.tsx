@@ -3,20 +3,17 @@
 export default function Background() {
   return (
     <>
-      {/* Solid base color — owns the page background so body can be transparent */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0"
         style={{ zIndex: 0, background: '#181818' }}
       />
 
-      {/* Orbs — sit above base, below content */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0 overflow-hidden"
         style={{ zIndex: 1 }}
       >
-        {/* Top-left — amber */}
         <div
           style={{
             position: 'absolute',
@@ -29,7 +26,6 @@ export default function Background() {
             filter: 'blur(70px)',
           }}
         />
-        {/* Bottom-right — indigo */}
         <div
           style={{
             position: 'absolute',
@@ -44,7 +40,6 @@ export default function Background() {
         />
       </div>
 
-      {/* Grain overlay */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0"

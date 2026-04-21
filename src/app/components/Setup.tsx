@@ -166,7 +166,6 @@ const Setup = () => {
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {/* Cached WebP snapshot — visible instantly on return visits */}
       {snapshot && (
         <img
           src={snapshot}
@@ -184,7 +183,6 @@ const Setup = () => {
           }}
         />
       )}
-      {/* Live canvas — fades in once model is ready */}
       <div
         ref={mount}
         style={{

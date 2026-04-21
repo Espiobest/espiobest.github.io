@@ -35,9 +35,10 @@ export default function Projects() {
                     }`}>
                       {project.name}
                     </h3>
-                    {project.awards && (
-                      <span className="text-[var(--accent)] text-xs shrink-0 mt-0.5">★</span>
-                    )}
+                    <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
+                      {project.awards && <span className="text-[var(--accent)] text-xs">★</span>}
+                      {project.year && <span className="text-[0.65rem] text-[var(--text-muted)] mono">{project.year}</span>}
+                    </div>
                   </div>
                   <p className="text-xs text-[var(--text-muted)] leading-relaxed line-clamp-2">{project.description}</p>
                   <div className="flex flex-wrap gap-1 mt-auto pt-1">
@@ -75,7 +76,10 @@ export default function Projects() {
               )}
 
               <div className="p-5 space-y-3" key={selected.name} style={{ animation: 'fadeIn 0.15s ease' }}>
-                <h2 className="text-base font-medium text-[var(--text)]">{selected.name}</h2>
+                <div className="flex items-baseline justify-between gap-2">
+                  <h2 className="text-base font-medium text-[var(--text)]">{selected.name}</h2>
+                  {selected.year && <span className="text-xs text-[var(--text-muted)] mono shrink-0">{selected.year}</span>}
+                </div>
 
                 {selected.awards && (
                   <div className="space-y-0.5">

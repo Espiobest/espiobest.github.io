@@ -54,7 +54,7 @@ export default function Contact() {
           <div>
             <h2 className="text-2xl font-light text-[var(--text)] mb-4">Let&apos;s connect.</h2>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-8">
-              Whether it&apos;s a job opportunity, collaboration, or just a question — I&apos;m open to it.
+              Whether it&apos;s a job opportunity, collaboration, or just a question - I&apos;m open to it.
             </p>
             <div className="space-y-4">
               {[

@@ -13,5 +13,5 @@ export const getUptime = (dob: Date) => {
     months += 12;
   }
 
-  return `${years} years, ${months} months, ${days} days`;
+  return `${years} years, ${months} month${months !== 1 ? 's' : ''}, ${days} day${days !== 1 ? 's' : ''}`;
 };

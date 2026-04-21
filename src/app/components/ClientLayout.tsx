@@ -23,7 +23,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <>
-      {/* Fixed background — grain + orbs */}
+      {/* Fixed background - grain + orbs */}
       <Background />
 
       {/* All content sits above background layers */}
