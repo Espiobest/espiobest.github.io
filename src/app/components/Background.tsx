@@ -6,7 +6,7 @@ export default function Background() {
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0"
-        style={{ zIndex: 0, background: '#181818' }}
+        style={{ zIndex: 0, background: 'var(--bg)' }}
       />
 
       <div
