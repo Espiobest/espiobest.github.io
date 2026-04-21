@@ -55,8 +55,8 @@ export default function About() {
           </div>
 
           {/* Photo / Setup toggle */}
-          <div className="hidden sm:flex flex-col gap-2">
-            <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)]" style={{ height: '280px' }}>
+          <div className="flex flex-col gap-2">
+            <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)]" style={{ height: '220px' }}>
               {showSetup ? (
                 <Setup />
               ) : (

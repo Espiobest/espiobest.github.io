@@ -52,7 +52,7 @@ export const getProjects = () => [
     year: '2022-2025',
     shortDescription: 'Educational platform website',
     description:
-      'Connects students and organizations globally with a redesigned, user-friendly interface.',
+      'Website for a nonprofit connecting students and organizations globally.',
     technologies: ['JavaScript', 'HTML', 'CSS', 'Bootstrap'],
     github: 'https://github.com/Instilt-Educate/instilt-educate.github.io',
     link: 'https://edu.instilt.com',
