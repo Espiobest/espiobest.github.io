@@ -59,7 +59,7 @@ export default function Projects() {
             <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden">
               {/* Image */}
               {selected.image ? (
-                <div className="w-full h-40 bg-[var(--surface-2)] flex items-center justify-center px-6">
+                <div className="w-full h-40 bg-[var(--surface-2)] flex items-center justify-center" style={{ backgroundColor: '#1e1e1e' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     key={selected.name}

@@ -139,29 +139,53 @@ export const getExperiences = () => [
 
 export const getResearch = () => [
   {
-    type: 'Poster',
-    title: 'Salt Marsh Data Infrastructure for Massachusetts DEP',
+    type: 'Applied Research',
+    title: 'Unity HPC Cluster Usage Analysis',
     venue: 'CDS-AI Summer Research',
     date: 'Summer 2025',
     description:
-      'Presented work on building scalable data pipelines and a multi-tenant web portal to manage salt marsh field data across 20+ organizations for a Massachusetts DEP-funded initiative.',
-    link: undefined as string | undefined,
+      'Built a Python analytics module for HPC workload telemetry and presented findings on usage patterns and resource allocation in the Unity HPC cluster. Sponsored by Adobe Research.',
+    links: [
+      {
+        label: 'Poster',
+        href: '/images/research/UnityPoster.png',
+      },
+      {
+        label: 'Code',
+        href: 'https://github.com/UnityHPC/ds4cg-job-analytics',
+      },
+    ],
   },
   {
     type: 'Paper',
-    title: 'TODO: Add your independent study title',
-    venue: 'UMass Amherst — Independent Study',
-    date: 'Spring 2025',
-    description: 'TODO: Short description of your independent study project and key findings.',
-    link: undefined as string | undefined,
-  },
-  {
-    type: 'Paper',
-    title: 'TODO: Add your class project title',
+    title: 'Exploiting CVE-2016-5764: Stack Buffer Overflow in Rumba FTP Client',
     venue: 'UMass Amherst',
-    date: 'Spring 2025',
-    description: 'TODO: Short description of the class project and what problem it addressed.',
-    link: undefined as string | undefined,
+    date: 'Fall 2025',
+    description:
+      'Analyzed a stack-based buffer overflow in the Rumba FTP client, documented the SEH overwrite exploitation path, and summarized the reverse engineering findings in a companion writeup.',
+    links: [
+      {
+        label: 'Paper',
+        href: '/documents/Rumba_BO_Analysis.pdf',
+      },
+      {
+        label: 'Related Blog',
+        href: '/blog/rumba-ftp-exploit-cve-2016-5764',
+      },
+    ],
+  },
+  {
+    type: 'Paper',
+    title: 'Physics-Informed Neural Networks for Non-Equilibrium Stochastic Systems',
+    venue: 'UMass Amherst - Independent Study',
+    date: 'Fall 2025',
+    description: 'Studied stochastic systems using Fokker-Planck equations, comparing classical numerical solvers and physics-informed neural networks on double-well and non-equilibrium dynamics. Analyzed accuracy, stability, and scalability in high-dimensional diffusion problems.',
+    links: [
+      {
+        label: 'Paper',
+        href: '/documents/PINNs_for_NELDs.pdf',
+      },
+    ],
   },
 ];
 
