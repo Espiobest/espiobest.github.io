@@ -115,22 +115,24 @@ a {
   font-family: var(--mono);
 }
 
-.tag {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-family: var(--mono);
-  padding: 0.2em 0.55em;
-  border-radius: 0.25rem;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
+@layer components {
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-family: var(--mono);
+    padding: 0.2em 0.55em;
+    border-radius: 0.25rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    white-space: nowrap;
+  }
 
-.tag-accent {
-  background: var(--accent-dim);
-  border-color: rgba(232, 197, 71, 0.25);
-  color: var(--accent);
+  .tag-accent {
+    background: var(--accent-dim);
+    border-color: rgba(232, 197, 71, 0.25);
+    color: var(--accent);
+  }
 }
 
 .blog-card {

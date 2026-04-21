@@ -5,11 +5,12 @@ import { useState } from 'react';
 interface BlogSearchProps {
   allTags: string[];
   onSearchChange: (query: string) => void;
-  onTagFilter: (tag: string | null) => void;
-  selectedTag: string | null;
+  onTagToggle: (tag: string) => void;
+  onClearTags: () => void;
+  selectedTags: string[];
 }
 
-export default function BlogSearch({ allTags, onSearchChange, onTagFilter, selectedTag }: BlogSearchProps) {
+export default function BlogSearch({ allTags, onSearchChange, onTagToggle, onClearTags, selectedTags }: BlogSearchProps) {
   const [query, setQuery] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +41,9 @@ export default function BlogSearch({ allTags, onSearchChange, onTagFilter, selec
       {allTags.length > 0 && (
         <div className="flex flex-wrap gap-2">
           <button
-            onClick={() => onTagFilter(null)}
+            onClick={onClearTags}
             className={`tag cursor-pointer transition-colors ${
-              selectedTag === null
+              selectedTags.length === 0
                 ? 'bg-[var(--accent-dim)] border-[rgba(232,197,71,0.25)] text-[var(--accent)]'
                 : 'hover:border-[var(--border-hover)]'
             }`}
@@ -52,9 +53,9 @@ export default function BlogSearch({ allTags, onSearchChange, onTagFilter, selec
           {allTags.map((tag) => (
             <button
               key={tag}
-              onClick={() => onTagFilter(tag)}
+              onClick={() => onTagToggle(tag)}
               className={`tag cursor-pointer transition-colors ${
-                selectedTag === tag
+                selectedTags.includes(tag)
                   ? 'bg-[var(--accent-dim)] border-[rgba(232,197,71,0.25)] text-[var(--accent)]'
                   : 'hover:border-[var(--border-hover)]'
               }`}

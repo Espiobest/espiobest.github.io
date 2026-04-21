@@ -12,11 +12,18 @@ interface BlogIndexClientProps {
 
 export default function BlogIndexClient({ initialPosts, initialTags }: BlogIndexClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
 
   const filteredPosts = useMemo(() => {
     let posts = initialPosts;
-    if (selectedTag) posts = posts.filter((p) => p.tags.includes(selectedTag));
+    if (selectedTags.length > 0)
+      posts = posts.filter((p) => selectedTags.every((t) => p.tags.includes(t)));
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       posts = posts.filter(
@@ -28,7 +35,7 @@ export default function BlogIndexClient({ initialPosts, initialTags }: BlogIndex
       );
     }
     return posts;
-  }, [searchQuery, selectedTag, initialPosts]);
+  }, [searchQuery, selectedTags, initialPosts]);
 
   return (
     <div className="max-w-[900px] mx-auto px-6 py-16">
@@ -43,8 +50,9 @@ export default function BlogIndexClient({ initialPosts, initialTags }: BlogIndex
       <BlogSearch
         allTags={initialTags}
         onSearchChange={setSearchQuery}
-        onTagFilter={setSelectedTag}
-        selectedTag={selectedTag}
+        onTagToggle={toggleTag}
+        onClearTags={() => setSelectedTags([])}
+        selectedTags={selectedTags}
       />
 
       {filteredPosts.length === 0 ? (
