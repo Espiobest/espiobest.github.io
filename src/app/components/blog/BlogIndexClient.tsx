@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import BlogCard from './BlogCard';
 import BlogSearch from './BlogSearch';
 import { BlogPost } from '@/lib/blog';
@@ -40,6 +41,9 @@ export default function BlogIndexClient({ initialPosts, initialTags }: BlogIndex
   return (
     <div className="max-w-[900px] mx-auto px-6 py-16">
       <div className="mb-12">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors mb-6">
+          ← home
+        </Link>
         <p className="section-title">writing</p>
         <h1 className="text-3xl font-light text-[var(--text)]">Blog</h1>
         <p className="text-sm text-[var(--text-muted)] mt-2">
