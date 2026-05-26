@@ -7,17 +7,18 @@ const Setup = dynamic(() => import('../Setup'), { ssr: false, loading: () => nul
 
 export default function About() {
   const [showSetup, setShowSetup] = useState(false);
+  const [hoverPhoto, setHoverPhoto] = useState(false);
 
   return (
     <section id="about" className="section">
       <div className="mx-auto max-w-[900px] px-6">
         <p className="section-title">about</p>
 
-        <div className="grid md:grid-cols-[1fr_240px] gap-10 md:gap-16 items-start">
+        <div className="grid md:grid-cols-[1fr_260px] gap-10 md:gap-16 items-start">
           {/* Text */}
           <div className="space-y-4 text-[var(--text-secondary)] leading-[1.85]">
             <p>
-              Senior at UMass Amherst, CS + Math. I build things that range from data pipelines
+              New Grad from UMass Amherst, CS + Math. I build things that range from data pipelines
               serving researchers to poker-playing agents - I just like making stuff that works well.
             </p>
             <p>
@@ -56,16 +57,18 @@ export default function About() {
 
           {/* Photo / Setup toggle */}
           <div className="flex flex-col gap-2">
-            <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)]" style={{ height: '220px' }}>
+            <div className="rounded-xl overflow-hidden border border-[var(--border)] bg-[var(--surface)]" style={{ height: '250px' }}>
               {showSetup ? (
                 <Setup />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src="/images/profile.jpg"
+                  src="/images/profile.png"
                   alt="Ayush"
-                  className="w-full h-full object-cover"
-                  style={{ filter: 'grayscale(100%) contrast(1.05)', display: 'block' }}
+                  className="w-full h-full object-cover transition-[filter] duration-300"
+                  style={{ filter: hoverPhoto ? 'grayscale(20%) contrast(1.05)' : 'grayscale(60%) contrast(1.05)', display: 'block', transform: 'scale(1.3)' }}
+                  onMouseEnter={() => setHoverPhoto(true)}
+                  onMouseLeave={() => setHoverPhoto(false)}
                 />
               )}
             </div>
