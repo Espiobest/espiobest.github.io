@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 const NAV_LINKS = [
+  { label: 'about', id: 'about' },
   { label: 'work', id: 'work' },
   { label: 'projects', id: 'projects' },
   { label: 'research', id: 'research' },
