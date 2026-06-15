@@ -100,7 +100,7 @@ export default function Contact() {
 
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
-          <span>Ayush Ravi Chandran</span>
+          <span>Ayush Ravi Chandran &middot; {new Date().getFullYear()}</span>
           <span>Built with Next.js + Tailwind</span>
         </div>
       </div>
