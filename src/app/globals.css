@@ -426,3 +426,51 @@ a {
 .cursor-blink {
   animation: blink 1s step-end infinite;
 }
+
+.theme-toggle-icon > :is(.sun, .sun-beams) {
+  transform-origin: center;
+}
+
+.theme-toggle-icon > .sun {
+  transition: transform 0.5s cubic-bezier(0.5, 1.25, 0.75, 1.25);
+}
+
+.theme-toggle-icon > .sun-beams {
+  transition:
+    transform 0.5s cubic-bezier(0.5, 1.5, 0.75, 1.25),
+    opacity 0.4s ease;
+}
+
+.theme-toggle-icon .moon > circle {
+  transition: transform 0.4s cubic-bezier(0, 0, 0, 1);
+}
+
+.theme-toggle-icon > .sun {
+  transform: scale(1.75);
+}
+.theme-toggle-icon > .sun-beams {
+  opacity: 0;
+  transform: rotate(-25deg);
+}
+.theme-toggle-icon .moon > circle {
+  transform: translateX(-7px);
+}
+
+[data-theme='light'] .theme-toggle-icon > .sun {
+  transform: scale(1);
+}
+[data-theme='light'] .theme-toggle-icon > .sun-beams {
+  opacity: 1;
+  transform: rotate(0);
+}
+[data-theme='light'] .theme-toggle-icon .moon > circle {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-icon > .sun,
+  .theme-toggle-icon > .sun-beams,
+  .theme-toggle-icon .moon > circle {
+    transition: none;
+  }
+}
