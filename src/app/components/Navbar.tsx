@@ -157,6 +157,14 @@ export default function Navbar({ onTerminalOpen }: NavbarProps) {
         {/* Mobile */}
         <div className="flex md:hidden items-center gap-3">
           <button
+              onClick={toggleTheme}
+              title="Toggle light/dark mode"
+              className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors duration-200"
+              aria-label="Toggle theme"
+            >
+              {light ? <SunIcon /> : <MoonIcon />}
+          </button>
+          <button
             onClick={onTerminalOpen}
             className="text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
             aria-label="Open terminal"
