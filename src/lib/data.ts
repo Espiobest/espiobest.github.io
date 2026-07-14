@@ -13,6 +13,18 @@ export const getProjects = () => [
     image: './images/projects/routeable.png',
   },
   {
+    name: 'Commit Bingo',
+    title: 'Commit Bingo',
+    year: '2026',
+    shortDescription: 'AI commit classifier & roaster on Cloudflare Workers',
+    description:
+      'Connects to GitHub via OAuth and uses Cloudflare Workers AI (Llama 4 Scout + Llama 3.3 70B) to classify your commits into bingo "tropes" and generate a sarcastic dev archetype, superpower, and chaos rating from your history.',
+    technologies: ['React', 'TypeScript', 'Hono', 'Cloudflare Workers', 'Workers AI', 'GitHub OAuth'],
+    github: 'https://github.com/Espiobest/cf_ai_commit_bingo',
+    link: 'https://bingo.espiobest.me',
+    image: './images/projects/commit-bingo.png',
+  },
+  {
     name: 'Poker Bot',
     title: 'Poker Bot',
     year: '2025',
