@@ -97,7 +97,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
           if (currentDir === '/home/ayush/portfolio/blog') {
             const b = getBlogPosts()[fileIndex];
             if (!b) return '<span style="color:#f87171">cat: invalid file number</span>';
-            return `<span style="color:#a78bfa;font-weight:600">${b.title}</span>\n${'─'.repeat(40)}\n${b.description}\n\n<span style="color:var(--accent)">Read at:</span> /blog/${b.slug}`;
+            return `<span style="color:#a78bfa;font-weight:600">${b.title}</span>\n${'─'.repeat(40)}\n${b.description}\n\n<span style="color:var(--accent)">Read at:</span> <a target="_blank" href="/blog/${b.slug}" style="color:#93c5fd;text-decoration:underline;cursor:pointer">/blog/${b.slug}</a>`;
           }
           if (currentDir === '/home/ayush/portfolio/experience') {
             const e = getExperiences()[fileIndex];

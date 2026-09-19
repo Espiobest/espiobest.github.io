@@ -230,6 +230,12 @@ export const getResearch = () => [
 
 export const getBlogPosts = () => [
   {
+    slug: 'sambacry-exploit-cve-2017-7494',
+    title: 'SambaCry Exploitation: From Initial Access to C2 Persistence',
+    description:
+      'A technical breakdown of exploiting CVE-2017-7494 (SambaCry) into a complete post-exploitation chain: path traversal, privilege escalation, staged delivery, C2 communication, and operator control.',
+  },
+  {
     slug: 'rumba-ftp-exploit-cve-2016-5764',
     title: 'Rumba FTP Exploit (CVE-2016-5764)',
     description: 'Deep dive into a buffer overflow vulnerability in the Rumba FTP client.',
