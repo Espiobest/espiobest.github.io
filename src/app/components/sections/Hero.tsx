@@ -19,7 +19,7 @@ export default function Hero() {
         {/* Status */}
         <div className="mb-10 space-y-2 hero-fade" style={{ animationDelay: '120ms' }}>
           <p className="text-base text-[var(--text-secondary)]">
-            CS & Mathematics @ UMass Amherst &nbsp;&middot;&nbsp; New Grad 2026
+            M.S. Computer Science @ UMass Amherst &nbsp;&middot;&nbsp; New Grad 2027
           </p>
           <p className="text-base text-[var(--text-secondary)]">
             Currently: SWE Intern{' '}

@@ -1,5 +1,17 @@
 export const getProjects = () => [
   {
+    name: 'Salt Marsh Data Platform',
+    title: 'Salt Marsh Data Platform',
+    year: '2025-2026',
+    shortDescription: 'Environmental monitoring platform in production, used by 100+ researchers',
+    description:
+      'Massachusetts DEP-funded platform for salt marsh monitoring, used by 100+ researchers across 20+ organizations. A React + FastAPI web portal and an offline-first Flutter field app with GPS/RTK capture, nested surveys, and automated QC before data reaches PostgreSQL.',
+    technologies: ['React', 'FastAPI', 'Flutter', 'PostgreSQL', 'SQLite', 'Azure', 'Docker'],
+    github: 'https://github.com/UMassCDS/salt-marsh-data-app',
+    link: 'https://saltmarshdata.org',
+    image: './images/projects/salt-marsh.png',
+  },
+  {
     name: 'RouteAble',
     title: 'RouteAble',
     year: '2023',
@@ -88,17 +100,31 @@ export const getExperiences = () => [
     title: 'Software Engineering Intern',
     org: 'CDS-AI',
     period: 'Sep 2025 - Present',
-    stack: ['React', 'TypeScript', 'FastAPI', 'Flutter', 'PostgreSQL', 'S3', 'Docker', 'Geospatial Data'],
+    stack: ['React', 'TypeScript', 'FastAPI', 'Flutter', 'PostgreSQL', 'SQLite', 'Azure', 'S3', 'Docker', 'Geospatial Data'],
     work: [
-      'Built backend data pipelines (PostgreSQL, S3) to ingest, standardize, and store multi-organization salt marsh data for MassMarsh, a Massachusetts DEP-funded initiative, supporting 100+ researchers across 20+ organizations',
+      'Sole engineer on the Salt Marsh Data Platform (saltmarshdata.org), owning the web portal, data pipelines, and mobile app in production',
+      'Built backend data pipelines (PostgreSQL, Azure/S3 storage) to ingest, standardize, and store multi-organization salt marsh data for the Massachusetts DEP-funded Salt Marsh Data Platform, supporting 100+ researchers across 20+ organizations',
       'Implemented fault-tolerant NAS synchronization across heterogeneous formats with schema mapping and incremental batch processing',
-      'Developed a multi-tenant web portal (React, FastAPI) with role-based access control and containerized deployment, managing 1,000+ weekly field records',
-      'Built a Flutter mobile app for field data collection replacing third-party tooling - GPS capture, RTK location matching, multi-plot surveys, and a QC pipeline for pre-ingestion validation',
+      'Developed a multi-tenant web portal (React, FastAPI, PostgreSQL) with five-tier role-based access control and containerized deployment, managing 1,000+ weekly field records',
+      'Built an offline-first Flutter mobile app for field data collection replacing third-party tooling - local SQLite storage, GPS capture with RTK location matching, nested survey workflows, and automated QC validation before ingestion',
       'Built containerized React tools with interactive geospatial visualizations for Woodwell Climate Research Center',
     ],
     impact:
-      'Replaced third-party tooling and manual workflows with a full-stack data platform serving 100+ researchers across Massachusetts DEP-funded salt marsh research.',
+      'Replaced third-party tooling and manual workflows with a full-stack environmental monitoring platform serving 100+ researchers across Massachusetts DEP-funded salt marsh research.',
     link: 'https://ds.cs.umass.edu/',
+  },
+  {
+    title: 'Graduate Teaching Assistant',
+    org: 'Manning College of Information and Computer Sciences, UMass Amherst - COMPSCI 240',
+    period: 'Sep 2026 - Present',
+    stack: ['Probability', 'Statistics', 'Bayesian Reasoning', 'Teaching'],
+    work: [
+      'Teaching Assistant for COMPSCI 240 (Reasoning Under Uncertainty), appointed through the Bay State Fellowship',
+      'Lead weekly discussion sections and hold office hours for 200+ students',
+      'Prepare exam questions and grade assignments and exams',
+    ],
+    impact: 'Supporting 200+ students in probability and statistics as part of the Bay State Fellowship.',
+    link: 'https://www.cics.umass.edu/',
   },
   {
     title: 'Software Engineering Intern',
@@ -118,8 +144,8 @@ export const getExperiences = () => [
   },
   {
     title: 'Undergraduate Course Assistant',
-    org: 'Manning College of Informatics and Computer Science, UMass Amherst — COMPSCI 426 & 240',
-    period: 'May 2025 - Present',
+    org: 'Manning College of Information and Computer Sciences, UMass Amherst - COMPSCI 426 & 240',
+    period: 'May 2025 - May 2026',
     stack: ['Microservices', 'Redis', 'Caching', 'React', 'Probability', 'Bayesian Reasoning', 'Mentorship'],
     work: [
       'Won the Outstanding UCA Award for contributions to COMPSCI 240',

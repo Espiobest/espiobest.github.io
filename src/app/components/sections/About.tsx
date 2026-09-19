@@ -18,8 +18,13 @@ export default function About() {
           {/* Text */}
           <div className="space-y-4 text-[var(--text-secondary)] leading-[1.85]">
             <p>
-              New Grad from UMass Amherst, CS + Math. I build things that range from data pipelines
-              serving researchers to poker-playing agents - I just like making stuff that works well.
+              B.S. in CS + Math from UMass Amherst, now doing my M.S. in CS there as a
+              Bay State Fellow. I build things that range from data pipelines serving researchers to
+              poker-playing agents - I just like making stuff that works well.
+            </p>
+            <p>
+              Along the way: Chancellor&apos;s Scholarship, Dean&apos;s International Scholarship,
+              Flynn Research Scholarship, Dean&apos;s List, and an Outstanding UCA Award for CS 240.
             </p>
             <p>
               I care about backend systems that are correct every time, not just most of the time.
@@ -27,7 +32,7 @@ export default function About() {
               code: games, anime, gym, and a tendency to go one tab too deep on things adjacent to whatever I&apos;m building.
             </p>
             <p>
-              Looking for new grad software engineering roles starting 2026.{' '}
+              Looking for new grad software engineering roles starting 2027.{' '}
               <button
                 onClick={() =>
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
@@ -44,8 +49,10 @@ export default function About() {
               {[
                 ['Based in', 'Massachusetts, USA'],
                 ['School', 'UMass Amherst'],
+                ['Degree', "M.S. CS '27 · B.S. CS & Math '26"],
+                ['Fellowship', 'Bay State Fellow'],
                 ['Focus', 'Backend · Data · ML'],
-                ['Open to', 'New Grad 2026 roles'],
+                ['Open to', 'New Grad 2027 roles'],
               ].map(([k, v]) => (
                 <div key={k}>
                   <p className="text-[0.68rem] text-[var(--text-muted)] uppercase tracking-[0.1em] mb-1">{k}</p>

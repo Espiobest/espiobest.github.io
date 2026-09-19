@@ -119,7 +119,8 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
         case 'about':
           return `<span style="color:#a78bfa;font-weight:700">Ayush Ravi Chandran</span>
 ${'─'.repeat(40)}
-<span style="color:#93c5fd">CS & Math</span> @ UMass Amherst
+<span style="color:#93c5fd">M.S. CS</span> @ UMass Amherst · Bay State Fellow
+B.S. CS & Math '26 · New Grad 2027
 Building software, doing research, writing occasionally.
 
 Interested in <span style="color:var(--accent)">systems</span>, <span style="color:var(--accent)">ML</span>, <span style="color:var(--accent)">databases</span>, and <span style="color:var(--accent)">security</span>.`;
@@ -201,7 +202,7 @@ ${'─'.repeat(22)}
 <span style="color:var(--accent)">Name:</span>      Ayush Ravi Chandran
 <span style="color:var(--accent)">Uptime:</span>    ${getUptime(dob)}
 <span style="color:var(--accent)">School:</span>    UMass Amherst
-<span style="color:var(--accent)">Majors:</span>    CS & Math
+<span style="color:var(--accent)">Degrees:</span>   M.S. CS '27 · B.S. CS & Math '26
 <span style="color:var(--accent)">Interests:</span> AI · Systems · Databases · Security
 <span style="color:var(--accent)">Languages:</span> TypeScript, Python, C, Go, Rust
 <span style="color:var(--accent)">GitHub:</span>    <a href="https://github.com/Espiobest" target="_blank" style="color:#a78bfa;text-decoration:underline">github.com/espiobest</a>

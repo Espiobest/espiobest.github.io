@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Ayush Ravi Chandran',
   description:
-    'CS & Math student at UMass Amherst. Building software, doing research, writing occasionally.',
+    "M.S. CS student and Bay State Fellow at UMass Amherst (B.S. CS & Math '26). Seeking 2027 new grad SWE roles.",
   keywords: ['Ayush Ravi Chandran', 'UMass Amherst', 'Software Engineering', 'Portfolio'],
   authors: [{ name: 'Ayush Ravi Chandran' }],
   creator: 'Ayush Ravi Chandran',
