@@ -12,6 +12,28 @@ export const getProjects = () => [
     image: './images/projects/salt-marsh.png',
   },
   {
+    name: 'Docker Watchdog',
+    title: 'Docker Watchdog',
+    year: '2026',
+    shortDescription: 'Go supervisor for Docker containers with crash-loop detection and auto-recovery',
+    description:
+      'A Go CLI and service that monitors Docker container health, detects crash-loops, and recovers them with exponential backoff. One goroutine per container, a semaphore capping concurrent Docker API calls, and retry state persisted to SQLite before each restart so recovery survives a crash. Docker events plus periodic reconciliation, with a Bubble Tea dashboard, live logs, an HTTP API, and Prometheus metrics.',
+    technologies: ['Go', 'Docker Engine SDK', 'SQLite', 'Prometheus', 'Bubble Tea'],
+    github: 'https://github.com/Espiobest/docker-watchdog',
+    image: './images/projects/docker-watchdog.png',
+  },
+  {
+    name: 'FieldGuide',
+    title: 'FieldGuide',
+    year: '2026',
+    shortDescription: 'Multi-agent RAG search over field SOPs with cited answers',
+    description:
+      'Multi-agent RAG document search built for field researchers across 10+ organizations on the Salt Marsh Data Platform, cutting SOP lookup from ~10 minutes to under 10 seconds with cited answers. Hybrid BM25 + dense retrieval via reciprocal-rank fusion and an answerer/verifier pipeline that abstains instead of hallucinating. On a 50-question human-verified eval, hybrid retrieval raised source recall from 0.943 to 0.969 and verified answers from 65.8% to 78.9%. The public repo is a sanitized standalone CLI without the private SOP corpus.',
+    technologies: ['Python', 'LangChain', 'FAISS', 'HuggingFace', 'Gemini API', 'PySpark', 'Databricks'],
+    github: 'https://github.com/Espiobest/FieldGuide',
+    image: './images/projects/fieldguide.png',
+  },
+  {
     name: 'RouteAble',
     title: 'RouteAble',
     year: '2023',
