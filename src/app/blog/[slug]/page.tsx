@@ -47,14 +47,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const redirectTarget = getShortUrlRedirects()[slug];
   if (redirectTarget) {
     const target = `/blog/${redirectTarget}`;
-    return (
-      <>
-        <meta httpEquiv="refresh" content={`0;url=${target}`} />
-        <p>
-          Redirecting to <a href={target}>{target}</a>
-        </p>
-      </>
-    );
+    return <meta httpEquiv="refresh" content={`0;url=${target}`} />;
   }
   const post = getPostBySlug(slug);
 
