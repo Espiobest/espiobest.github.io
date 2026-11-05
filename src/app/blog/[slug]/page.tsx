@@ -1,6 +1,11 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
-import { getAllPostSlugs, getPostBySlug, extractTableOfContents } from '@/lib/blog';
+import {
+  getAllPostSlugs,
+  getPostBySlug,
+  getShortUrlRedirects,
+  extractTableOfContents,
+} from '@/lib/blog';
 import BlogPostLayout from '@/app/components/blog/BlogPostLayout';
 import type { Metadata } from 'next';
 import 'highlight.js/styles/github-dark.css';
@@ -12,13 +17,17 @@ interface BlogPostPageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs();
+  const slugs = [...getAllPostSlugs(), ...Object.keys(getShortUrlRedirects())];
   return slugs.map((slug) => ({ slug }));
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const redirectTarget = getShortUrlRedirects()[slug];
+  if (redirectTarget) {
+    return { alternates: { canonical: `/blog/${redirectTarget}` }, robots: { index: false } };
+  }
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -35,6 +44,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
+  const redirectTarget = getShortUrlRedirects()[slug];
+  if (redirectTarget) {
+    const target = `/blog/${redirectTarget}`;
+    return (
+      <>
+        <meta httpEquiv="refresh" content={`0;url=${target}`} />
+        <p>
+          Redirecting to <a href={target}>{target}</a>
+        </p>
+      </>
+    );
+  }
   const post = getPostBySlug(slug);
 
   if (!post) {

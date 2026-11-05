@@ -11,6 +11,7 @@ export interface BlogPost {
   tags: string[];
   author?: string;
   coverImage?: string;
+  shortUrl?: string;
   readingTime: string;
   content?: string;
 }
@@ -51,6 +52,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
       tags: data.tags || [],
       author: data.author || 'Ayush Ravi Chandran',
       coverImage: data.coverImage,
+      shortUrl: data.shortUrl,
       readingTime: readingTime(content).text,
       content,
     };
@@ -58,6 +60,15 @@ export function getPostBySlug(slug: string): BlogPost | null {
     console.error(`Error reading post ${slug}:`, error);
     return null;
   }
+}
+
+export function getShortUrlRedirects(): Record<string, string> {
+  const redirects: Record<string, string> = {};
+  for (const slug of getAllPostSlugs()) {
+    const shortUrl = getPostBySlug(slug)?.shortUrl;
+    if (shortUrl && shortUrl !== slug) redirects[shortUrl] = slug;
+  }
+  return redirects;
 }
 
 // Get all blog posts sorted by date (newest first)
