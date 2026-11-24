@@ -34,6 +34,17 @@ export const getProjects = () => [
     image: './images/projects/fieldguide.png',
   },
   {
+    name: 'Cappy',
+    title: 'Cappy',
+    year: '2026',
+    shortDescription: 'Chrome extension that adapts any website to your accessibility needs with AI agents',
+    description:
+      'Built at HackUMass XIV. A Chrome extension where you say (or point at and say) what you need, and an agent edits the live page: dark mode, colorblind filters, text scaling, hiding or reranking feeds, easier forms. Each change is checked against the page\'s own accessibility stats and reverted if it made things worse. The model never writes JavaScript: CSS is scanned and DOM operations come from an allowlist, with a prompt-injection check before any model call. Supports voice, camera hand-pointer control, per-site memory with consent, and ChatGPT, Claude, OpenAI or Gemini models.',
+    technologies: ['TypeScript', 'Chrome Extension', 'Bun', 'Express', 'Claude', 'OpenAI', 'Gemini'],
+    github: 'https://github.com/Riddhimaan-Senapati/cappy',
+    image: './images/projects/cappy.png',
+  },
+  {
     name: 'RouteAble',
     title: 'RouteAble',
     year: '2023',
